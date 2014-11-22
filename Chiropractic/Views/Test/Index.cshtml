@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "Test";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    var mainMod = angular.module("TestMod", ['ngResource']);
+    mainMod.controller("MainCont", function($http, $scope) {
+        $scope.clickMe = function() {
+            $http.post("/test/send");
+        };
+    });
+</script>
+<h2>Send Email</h2>
+<div ng-app="TestMod" ng-controller="MainCont">
+    <button ng-click="clickMe()">Send Test</button>
+</div>

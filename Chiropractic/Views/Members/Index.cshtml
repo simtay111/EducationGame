@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Patients";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script>
+    var module = angular.module("MainModule", ['ngResource', 'ngRoute', 'ui.utils', 'ngTouch']);
+    module.config(function ($httpProvider, $routeProvider) {
+        $routeProvider.when("/manageMembersPanel", {
+            templateUrl: "/Templates/Members/ManageMembersPanel.html"
+        }).otherwise({
+            templateUrl: "/Templates/Members/ManageMembersPanel.html"
+        });
+    });
+</script>
+<script src="/CustomScripts/Members/ManageMembersPanel.js"></script>
+
+<div id="registrationApp" ng-app="MainModule" >
+    <div class="container visible">
+        <div ng-view></div>
+    </div>
+</div>

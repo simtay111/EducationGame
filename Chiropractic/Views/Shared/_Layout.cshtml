@@ -1,0 +1,191 @@
+﻿@using Chiropractic
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link rel="SHORTCUT ICON" href="@Url.Content("~/Images/Icon/image.jpg")"/>
+    <meta name="viewport" content="width=device-width" />
+    <link type="text/css" href="~/bootstrap/fonts/glyphicons-halflings-regular.ttf" />
+    <link type="text/css" rel="stylesheet" href="~/Bootstrap/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="~/Bootstrap/css/bootstrap-theme.min.css" />
+    <link type="text/css" rel="stylesheet" href="~/CustomCss/Master.css" />
+    <link type="text/css" rel="stylesheet" href="~/CustomCss/OfficePages.css" />
+    <link type="text/css" rel="stylesheet" href="~/Content/introjs.min.css" />
+    <script type="text/javascript" src="~/Scripts/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/underscore.min.js"></script>
+    <script type="text/javascript" src="~/Bootstrap/js/bootstrap.js"></script>
+    <script src="~/Scripts/intro.min.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/angular-resource.min.js"></script>
+    <script src="~/Scripts/angular-route.min.js"></script>
+    <script src="~/Scripts/angular-touch.min.js"></script>
+    <script src="~/scripts/BootstrapPlugin/FileInput.js"></script>
+    <script src="~/Scripts/angular-ui/ui-utils.js"></script>
+    <script src="~/Scripts/angular-ui/ui-utils.min.js"></script>
+    <script src="~/scripts/FileUpload/load-image.debug.js"></script>
+    <script src="~/scripts/FileUpload/canvas-to-blob.debug.js"></script>
+    <script src="~/scripts/FileUpload/jqueryui/jquery.ui.widget.js"></script>
+    <script src="~/scripts/FileUpload/jquery.iframe-transport.js"></script>
+    <script src="~/scripts/FileUpload/jquery.fileupload.js"></script>
+    <script src="~/scripts/FileUpload/jquery.fileupload-process.js"></script>
+    <script src="~/scripts/FileUpload/jquery.fileupload-image.js"></script>
+    <link rel="stylesheet" href="~/bootstrap/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="~/Content/font-awesome-4.2.0/css/font-awesome.min.css" />
+    <style>
+        /* Sticky footer styles
+-------------------------------------------------- */
+        html {
+            position: relative;
+            min-height: 100%;
+        }
+
+        body {
+            /* Margin bottom by footer height */
+            margin-bottom: 60px;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            /* Set the fixed height of the footer here */
+            height: 60px;
+            background-color: #f5f5f5;
+        }
+    </style>
+    <script>
+        function tabsHelpIntro() {
+            var intro = introJs();
+            intro.setOptions({
+                showBullets: false, showStepNumbers: false,
+                steps: [
+                    {
+                        element: '#UserHomeLink',
+                        intro: "This is where you are currently at. Here you will get a broad view of how PracticeOwl is working."
+                    },
+                    {
+                        element: '#PatientsLink',
+                        intro: "On this tab you add/update/delete patients. You can also manage patient prizes, view history, and send text messages to patients to start games from here."
+                    },
+                    {
+                        element: '#AccountsLink',
+                        intro: "Here you can manage your chiropractic account including <br/><ul><li>Basic Practice Info</li><li>Add Assistant Accounts</li><li>Setup Custom Rewards</li><li>Upload Your Logo</li><li>Modifiy Payment Methods</li>"
+                    },
+                    {
+                        element: '#LessonsLink',
+                        intro: "On this tab you can review, edit game text, reorder and choose which games will be used in your practice."
+                    },
+                    {
+                        element: '#ReportsLink',
+                        intro: "Here you can run reports for your practice including <ul><li>Practice Stats</li><li>Member Education Report</li><li>Games Played Report</li><li>Awarded Prizes Report</li><li>Receipt History</li></ul>"
+                    },
+                    {
+                        element: '#TutorialsLink',
+                        intro: "Here is some very important information on some of the advanced features of PracticeOwl.  This is a must read for anyone wanting to take their education even further" +
+                            "with PracticeOwl."
+                    }
+                ]
+            });
+            intro.start();
+        }
+    </script>
+    <script>
+        var maskHiding = _.debounce(function () {
+            console.log('hiding mask');
+            $('#LoadingModal').modal('hide');
+        }, 500);
+        var abdGlobals = {
+            showMask: function (doNotUseTimeout, msgToShow) {
+                $('#LoadingModal').modal('show');
+                $('#LoadingModalMsg').empty();
+                if (msgToShow && msgToShow.length > 0)
+                    $('#LoadingModalMsg').text(msgToShow);
+                if (!doNotUseTimeout) {
+                    window.setTimeout(function () {
+                        abdGlobals.hideMask();
+                    }, 2500);
+                }
+            },
+            hideMask: function () {
+                maskHiding();
+            }
+        };
+        var logout = function () {
+            $.post("/login/logout", function () {
+
+                window.location = "http://www.practiceowl.com";
+            });
+        };
+    </script>
+</head>
+<nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only"><a href="http://www.practiceowl.com">PracticeOwl</a></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="http://www.practiceowl.com">PracticeOwl</a>
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav" id="NavBar">
+            @if (HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                <li id="UserHomeLink"><a href="/Home/UserHome"><i class="fa fa-home"></i>My Home</a></li>
+                <li id="PatientsLink"><a href="/Members"><i class="fa fa-male"></i>Patients</a></li>
+                if (((int)Session[SessionConstants.AcctPermissionLevel]) >= 100)
+                {
+                <li id="AccountsLink"><a href="/Accounts/Manage"><i class="fa fa-gear"></i>Account</a></li>
+                <li id="LessonsLink"><a href="/Stories/MyStories"><i class="fa fa-soccer-ball-o"></i>Games</a></li>
+                <li id="ReportsLink"><a href="/Reports"><i class="fa fa-bar-chart"></i>Reports</a></li>
+                }
+                <li id="TutorialsLink"><a href="/Tutorial"><i class="fa fa-question"></i>Tutorial</a></li>
+                <li onclick="tabsHelpIntro()"><a><i class="fa fa-road"></i>Walk-Through</a></li>
+            }
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            @if (HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                <li><a onclick="logout()">Logout</a></li>
+            }
+            @if (!HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                <li><a href="/Login">Login</a></li>
+            }
+        </ul>
+    </div>
+    <!-- /.navbar-collapse -->
+</nav>
+<div class="container visible">
+    @RenderBody()
+</div>
+<div class="footer text-center">
+    <p class="">Thanks for choosing PracticeOwl. Contact us at: <a >info@practiceowl.com</a></p>
+</div>
+<div id="LoadingModal" data-backdrop="false" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Loading</h4>
+            </div>
+            <div class="modal-body">
+                <h3>Loading</h3>
+                <br />
+                <h4 id="LoadingModalMsg"></h4>
+                <div class="progress progress-striped active">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+                        <span class="sr-only"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+</div>
+<!-- /.modal-dialog -->
+</html>

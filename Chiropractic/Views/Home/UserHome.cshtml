@@ -1,0 +1,264 @@
+﻿@{
+    ViewBag.Title = "PracticeOwl";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .item {
+        min-height: 400px;
+        color: rgb(86, 86, 86);
+        background-color: grey;
+    }
+
+    .carousel-container {
+        border-radius: 4px;
+        border: solid 1px #ddd;
+        padding: 15px;
+    }
+</style>
+
+<script type="text/javascript">
+    var module = angular.module("UserHomeModule", []);
+    module.controller("UserHomeController", ['$scope', '$http', '$interval', function ($scope, $http, $interval) {
+        $scope.notifyNeedsHelp = false;
+        $scope.basicNeedsHelp = false;
+        $scope.assistantsNeedsHelp = false;
+        $scope.paymentNeedsHelp = false;
+        $scope.accountInfo = {};
+        $scope.accountIsDone = true;
+        $scope.account = {};
+        var updatePage = function () {
+            $http.get("/Accounts/GetAccountInfoSummary").success(function (response) {
+                $scope.accountInfo = response.acctInfo;
+                $scope.account = response.acct;
+                $scope.summaries = response.summaries;
+            });
+            $http.get("/Accounts/GetLatestHistory").success(function (response) {
+                $scope.histories = response;
+            });
+        };
+
+        $http.get("/Accounts/GetAccountCompletionState").success(function (response) {
+            $scope.notifyNeedsHelp = !response.notify;
+            $scope.basicNeedsHelp = !response.basic;
+            $scope.paymentNeedsHelp = !response.payment;
+            $scope.assistantsNeedsHelp = response.assistants;
+            $scope.accountIsDone = response.accountIsDone;
+        });
+
+        updatePage();
+        $interval(updatePage, 1000 * 60 * 10);
+    }]);
+    $('.carousel').carousel({
+        interval: 2000
+    });
+</script>
+<div ng-app="UserHomeModule" ng-controller="UserHomeController">
+    @*<h2 ng-if="account.permissionLevel == 10">Welcome {{account.displayName}}. You've accumulated {{(account.points / 100)| currency}} dollars in your wallet.</h2>*@
+    @*<h3 ng-if="account.permissionLevel == 10">When you have enough, YOU can redeem rewards for yourself! <a href="/Prizes">Browse Here</a></h3>*@
+    <div>
+        <div class="row page-header" style="font-size: 18px">
+            <div class="col-md-4 col-lg-4">
+                <div style="font-size: 22px">
+                    Welcome to the dashboard for:
+                    <br />
+                    <span style="font-size: 28px">{{accountInfo.officeName}}</span>
+                </div>
+                <br />
+                <div>Here you can get a birds eye view of your education program</div>
+
+            </div>
+            <div class="col-md-4 col-lg-4 text-center">
+                <div style="font-size: 28px">
+                    Daily Token: {{accountInfo.dailyToken}}<br />
+                    Clinic Id: {{accountInfo.id}}<br />
+                    <a class="btn btn-info btn-lg" href="/Home/PrintableDaily">Printable Version.</a>
+                </div>
+                <a ng-click="showDailyTokenHelp = !showDailyTokenHelp">{{ !showDailyTokenHelp ? 'What is this?': 'Close Help'}}</a>
+                <div style="font-size: 14px" ng-show="showDailyTokenHelp">
+                    The <strong>Daily Token</strong> is how we make sure that patients do not play
+                    the game at home on their free time.  It is required to start a game.  This ensures that patients are learning in your office.
+                    <br />
+                    <br />
+                    The <strong>Printable Version</strong> button brings you to a Ready-To-Print page that you can print and display
+                    in your office for patients to view the daily token so they don't have to ask for it. 
+                    <br />
+                    <br />
+                    Lastly, the <strong>Clinic Id</strong> is a number for patients to use if they are adding themselves to the
+                    system. They will need this to identify which clinic they are going to.  
+                 
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-4 text-center">
+                We highly recommend reading our 
+                <a onclick="$('#BestPracticesModal').modal('show')">Best Practices</a>. It takes 5 minutes and 
+                will make presenting PracticeOwl a breeze!
+                <br />
+                <br />
+                <button class="btn btn-info" onclick="$('#BestPracticesModal').modal('show')">Best Practices</button>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-6 col-lg-6" id="PatientSummaryWell">
+                <div class="" id="PracticeHealthWell">
+                    <div ng-show="!accountIsDone">
+                        <h3 class="error-text">You must finish these items before you can begin doing games with patients (Except "Subscriptions" when trying the game out):</h3>
+                        <ul>
+                            <li style="padding: 5px" ng-show="paymentNeedsHelp"><a href="/Accounts/Manage#/paymentSetup" class="btn btn-sm btn-danger">Fix! <span class="glyphicon glyphicon-wrench"></span></a><span style="font-size: 18px">Need a Subscription</span></li>
+                            <li style="padding: 5px" ng-show="basicNeedsHelp"><a href="/Accounts/Manage#/basicInfoPanel" class="btn btn-sm btn-danger">Fix! <span class="glyphicon glyphicon-wrench"></span></a><span style="font-size: 18px">Basic Practice Info</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="well well-sm">
+                    <div style="padding: 25px">
+                        <span style="font-size: 16px">Here is a quick bird's eye view of how your practice is doing with PracticeOwl:</span>
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="summary in summaries">
+                                    <td>{{summary.name}}</td>
+                                    <td>{{summary.value}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h4>Latest Completions:</h4>
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Game</th>
+                                <th>Time Completed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="history in histories">
+                                <td>{{history.member.firstName}} {{history.member.lastName}}</td>
+                                <td>{{history.storyName}}</td>
+                                <td>{{history.dateCompleted | date: 'short'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <br />
+            </div>
+            <div class="col-md-6">
+                <div class="carousel-container">
+                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                            <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+                            <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+                        </ol>
+
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner">
+                            <div class="item text-center active">
+                                <div style="padding: 25px">
+                                    <h1>
+                                        <br />
+                                        Your patients
+                                        <br />
+                                        want a chiropractor...<br />
+                                        NOT a salesman.<br />
+                                        <br />
+                                        Solution = PracticeOwl!
+                                    </h1>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div style="padding: 25px">
+                                    <h1>"Don't forget, each time you come in, you can play our Chiro-Game from your phone. It only takes a couple minutes and we'll send you gift-cards to your favorite places!"</h1>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div style="padding: 25px">
+                                    <h1>PracticeOwl recognizes how invaluable the front desk staff are in educating patients.</h1>
+                                </div>
+                                <div class="text-center" style="padding: 25px">
+                                    <h1>High five to you!</h1>
+                                </div>
+
+                            </div>
+                            <div class="item text-center">
+                                <div style="padding: 25px">
+                                    <h1>Educated patients choose chiropractic.<br />
+                                        <br />
+                                        AND<br />
+                                        <br />
+                                        Follow through!<br />
+                                        Refer others!<br />
+                                        Come back for more!
+
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Controls -->
+                        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div id="BestPracticesModal" data-backdrop="true" class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="modal-title">The Best Practices For Using PracticeOwl. </h3>
+            </div>
+            <div class="modal-body">
+                <div class="row" style="margin: 10px">
+                    <h4>Follow these simple steps to achieve the best results from PracticeOwl</h4>
+                </div>
+                <div class="row">
+                    <div style="font-size: 20px">#1: Use the Daily Printout!</div>
+                    <div>
+                        This has all the information in the easiest to read form for a 
+                        patient to figure out how to play the games.
+                    </div>
+                    <br />
+                    <div style="font-size: 20px">#2: Get patients excited about the game!</div>
+                    <div>
+                        Its as simple as saying this to patients when they first come in:
+                        <span style="font-size: 16px; color: maroon">"Don't forget, each time you come in, you can play our 
+                            Chiro-Game from your phone. It only takes a couple minutes and we'll send you gift-cards to your favorite places!"</span>
+                    </div>
+                    <br />
+                    <div style="font-size: 20px">#3: Have fun with it.</div>
+                    <div>
+                        Most importantly... have fun!  Most patients will love playing the game and look forward to playing it again
+                        on their next visit.  
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

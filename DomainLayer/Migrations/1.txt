@@ -1,0 +1,2 @@
+﻿alter table Member add PastFirstQuiz bit
+update member set PastFirstQuiz = 1

@@ -1,0 +1,4 @@
+﻿alter table accountInformation add FirstAwardValue  nvarchar (255)  default ''
+update AccountInformation set firstAwardValue = ''
+
+alter table accountInformation add NotifyEmail2  nvarchar (255)  default ''

@@ -1,0 +1,118 @@
+﻿@{
+    ViewBag.Title = "Prizes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script>
+    var mainModule = angular.module("AccountPrizes", ['ngResource']);
+    mainModule.controller("prizesController", function ($scope, $http) {
+        $http.get("/Prizes/GetPublicPrizes").success(function (response) {
+            $scope.allPrizes = _.sortBy(response.publicPrizes, function (item) {
+                return item.points;
+            });
+        });
+        $http.get("/Accounts/GetAccountInfoSummary").success(function (response) {
+            $scope.account = response.acct;
+        });
+        $scope.emailsMatch = function () {
+            return $scope.email == $scope.email2;
+        };
+        $scope.orderPrize = function () {
+            $scope.ordering = true;
+            $http.post("/Prizes/OrderPrizeForAccount", { email: $scope.email, accountId: $scope.account.id, prizeId: $scope.selectedPrize.id }).success(function (response) {
+                alert("Your reward was ordered! Check your email for your E Gift Card! Thanks for being amazing at education patients!");
+                $("#ExaminePrizeDialog").modal("hide");
+                window.location = "/Prizes";
+            }).error(function () {
+                alert("Something went wrong in the order process! We're on it!");
+                $scope.ordering = false;
+            });
+        };
+
+        $scope.selectItem = function (item) {
+            $scope.selectedPrize = item;
+            $scope.email = "";
+            $scope.email2 = "";
+            $http.get("/Prizes/AccountCanRedeem?accountId=" + $scope.account.id + "&prizeId=" + $scope.selectedPrize.id).success(function (response) {
+                $scope.serverCurrentPoints = response.currentPoints;
+                $scope.canRedeem = response.canRedeem;
+                $scope.disclaimer = response.disclaimer;
+                $("#ExaminePrizeDialog").modal("show");
+            });
+        };
+    });
+</script>
+<div ng-app="AccountPrizes" ng-controller="prizesController">
+    <div class="text-center">
+        <h3>The <strong style="color: green">green </strong>rewards are what is available to you! Grow your wallet by: 
+            <br/>Patients added = $0.50<br/>Printing the daily printout = $0.25 <br/> Lastly having patients take the quizzes = $0.10</h3>
+        <h3>You currently have {{account.points/ 100 | currency}}</h3>
+        <br />
+        <div class="" style="display: inline-block;">
+            <div ng-repeat="prize in allPrizes" class="prize-item" style="display: inline-block;">
+                <div style="display: inline-block; width: 150px; min-height: 140px; max-height: 140px" ng-class="{available: prize.points <= account.points, 'not-available' : prize.points > account.points}" ng-click="selectItem(prize)" class="gift-option">
+                    <div style="padding-top: 3px; font-size: 18px">{{prize.name}}</div>
+                    <div>{{prize.points /100 | currency}}</div>
+                    <img ng-src="{{prize.imageUrl || acctLogo}}" style="padding: 5px; width: 130px" />
+                </div>
+            </div>
+        </div>
+
+        <div id="ExaminePrizeDialog" data-backdrop="false" class="modal fade" style="text-shadow: none !important">
+            <div class="modal-dialog" style="color: black">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">{{selectedPrize.name}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        Points Required: {{selectedPrize.points / 100 | currency}}
+                        <br />
+                        Available Points: {{serverCurrentPoints / 100 | currency}}
+                        <br />
+                        <br />
+                        <span style="font-size: 18px">{{disclaimer.description}}</span>
+                        <br />
+                        <form name="orderPrizeForm">
+                            <div ng-show="canRedeem && !selectedPrize.preferred">
+                                Enter your email to redeem this reward:
+                        <br />
+                                <input type="email" ng-model="email" required class="input-lg form-control" />
+                                <br />
+                                Confirm Email:
+                        <br />
+                                <input type="email" ng-model="email2" class="input-lg form-control" />
+                                <br />
+
+                            </div>
+                            <div ng-show="canRedeem && selectedPrize.preferred">
+                                Awesome! You have enough points to redeem this reward!
+                            <br />
+                                If you choose this reward you will need to ask the front desk to redeem it!
+                            </div>
+                            <h3 ng-show="!canRedeem">Keep doing the games and you'll have enough points for this!</h3>
+                            <span style="font-size: 14px; color: red" ng-show="!emailsMatch()">Please make sure your emails match.</span>
+                            <button ng-show="!selectedPrize.preferred" ng-disabled="ordering||!canRedeem || orderPrizeForm.$invalid || !emailsMatch()" class="btn btn-lg btn-success" ng-click="orderPrize()">I want it!</button>
+                            <button ng-show="selectedPrize.preferred" ng-disalbed="!canRedeem" class="btn btn-lg btn-success" ng-click="orderPrize()">I want it!</button>
+                            <div ng-show="disclaimer.disclaimer">
+                                Disclaimer
+                            <div style="font-size: 10px">{{disclaimer.disclaimer}}</div>
+                            </div>
+                            <div ng-show="disclaimer.termsAndConditions">
+                                Terms And Conditions
+                            <div style="font-size: 10px">{{disclaimer.termsAndConditions}}</div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-success" data-dismiss="modal">Done</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+        </div>
+    </div>
+
+
+</div>

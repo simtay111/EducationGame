@@ -1,0 +1,7 @@
+C:\Users\Simtay111\Documents\GitHub\Chiropractic\WePaySDK\bin\Release\WePaySDK.dll
+C:\Users\Simtay111\Documents\GitHub\Chiropractic\WePaySDK\bin\Release\WePaySDK.pdb
+C:\Users\Simtay111\Documents\GitHub\Chiropractic\WePaySDK\bin\Release\Newtonsoft.Json.dll
+C:\Users\Simtay111\Documents\GitHub\Chiropractic\WePaySDK\bin\Release\Newtonsoft.Json.xml
+C:\Users\Simtay111\Documents\GitHub\Chiropractic\WePaySDK\obj\Release\WePaySDK.csprojResolveAssemblyReference.cache
+C:\Users\Simtay111\Documents\GitHub\Chiropractic\WePaySDK\obj\Release\WePaySDK.dll
+C:\Users\Simtay111\Documents\GitHub\Chiropractic\WePaySDK\obj\Release\WePaySDK.pdb

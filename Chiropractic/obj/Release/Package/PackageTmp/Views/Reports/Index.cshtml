@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "Reports";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    var reportingModule = angular.module("reportingModule", ['ngRoute']);
+    reportingModule.config(function ($routeProvider) {
+        $routeProvider.when("/MemberCostReport", {
+            templateUrl: "/templates/reports/MemberCostReport.html",
+            controller: "memberCostReport"
+        }).when("/AwardedPrizesReport", {
+            templateUrl: "/templates/reports/AwardedPrizesReport.html",
+            controller: "awardedPrizesReport"
+        }).when("/ReceiptReport", {
+            templateUrl: "/templates/reports/ReceiptReport.html",
+            controller: "receiptReport"
+        }).when("/SummaryReport", {
+            templateUrl: "/templates/reports/SummaryReport.html",
+            controller: "summaryReport"
+        }).when("/MemberEducation", {
+            templateUrl: "/templates/reports/MemberEducationReport.html",
+            controller: "memberEducationReport"
+        }).otherwise({
+            templateUrl: "/templates/reports/SummaryReport.html",
+            controller: "summaryReport"
+        });
+    });
+    reportingModule.controller("reportingCont", ['$scope', '$location', function ($scope, $location) {
+        var currentReportNumber = 4;
+        $scope.isActive = function (number) {
+            return number == currentReportNumber;
+        };
+
+        $scope.memberCostReport = function () {
+            currentReportNumber = 1;
+            $location.path("/MemberCostReport");
+        };
+        $scope.awardedPrizesReport = function () {
+            currentReportNumber = 2;
+            $location.path("/AwardedPrizesReport");
+        };
+        $scope.receiptReport = function () {
+            currentReportNumber = 3;
+            $location.path("/ReceiptReport");
+        };
+        $scope.memberEducationReport = function () {
+            currentReportNumber = 5;
+            $location.path("/MemberEducation");
+        };
+
+        $scope.basicInfoReport = function () {
+            currentReportNumber = 4;
+            $location.path("/SummaryReport");
+        };
+    }]);
+</script>
+<script src="/CustomScripts/Reports/AwardedPrizeReport.js"></script>
+<script src="/CustomScripts/Reports/MemberCostReport.js"></script>
+<script src="/CustomScripts/Reports/ReceiptReport.js"></script>
+<script src="/CustomScripts/Reports/SummaryReport.js"></script>
+<script src="/CustomScripts/Reports/MemberEducationReport.js"></script>
+
+<div ng-app="reportingModule" ng-controller="reportingCont" class="text-center">
+    <h3>YOUR CUSTOM PracticeOwl REPORTS</h3>
+    <button ng-click="basicInfoReport()" ng-class="{'active' : isActive(4)}" class="btn btn-primary">Practice Stats</button>
+    <button ng-click="memberEducationReport()" ng-class="{'active' : isActive(5)}" class="btn btn-primary">Member Education Report</button>
+    <button ng-click="memberCostReport()" ng-class="{'active' : isActive(1)}" class="btn btn-primary">Games Played Report</button>
+    <button ng-click="awardedPrizesReport()" ng-class="{'active' : isActive(2)}" class="btn btn-primary">Awarded Prizes Report</button>
+    <button ng-click="receiptReport()" ng-class="{'active' : isActive(3)}" class="btn btn-primary">Receipt History</button>
+    <div ng-view></div>
+
+</div>

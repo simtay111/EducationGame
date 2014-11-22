@@ -1,0 +1,68 @@
+﻿<div customer-register-panel>
+    <div class="text-center" ng-show="isLoading">
+        <h1>Loading...</h1>
+    </div>
+    <div ng-show="!isLoading">
+        <div class="text-center">
+            <img src="/Images/Logo.png" width="33%" />
+        </div>
+        <div class="col-md-6">
+            <h4>Signing up with PracticeOwl is simple and quick.</h4>
+            <h4>Before you know it, you will be able to start educating your patients like never before.</h4>
+            <div class="well well-sm">
+                <form name="loginForm" class="css-form" style="text-align: left">
+                    <br />
+                    <span>Email: (To be used as login)</span>
+                    <br />
+                    <input class="form-control" ng-model="email" required name="email" type="email" placeholder="Email" />
+                    <br />
+                    <span>Password:<span> (Min 8 Characters)</span></span>
+                    <br />
+                    <input id="FirstPass" class="form-control" ng-model="pwd" required ng-minlength="8" name="pwd" type="password" placeholder="Password" />
+                    <br />
+                    <span>Confirm Password:<span></span></span>
+                    <br />
+                    <input id="SecondPass" class="form-control" ng-model="confPwd" required ng-minlength="8" name="confPwd" type="password" placeholder="Confirm Password" />
+                    <br />
+                    <h3 ng-show="errors" class="error-text">{{errors}}</h3>
+                    <div>
+                        <button type="submit" id="RegisterButton" class="btn btn-primary" ng-disabled="!loginForm.$dirty || loginForm.$invalid" ng-click="showContractModal()">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-6 text-center">
+            <img class="reg-img" src="/Images/Reg1.jpg" />
+
+
+        </div>
+        <div id="RegistrationDisclaimerModal" data-backdrop="true" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Terms and Conditions</h4>
+                        <h5>Do you agree with the terms and conditions?</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="pre-scrollable" style="max-height: 200px">
+                            <div>
+                                <the-terms></the-terms>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div style="text-align: center">
+                            <a type="button" class="btn btn-default" data-dismiss="modal" style="color: black">Disagree</a>
+                            <a type="button" data-dismiss="modal" ng-click="registerBtnClickHandler()" class="btn btn-primary">Agree</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+    </div>
+
+</div>

@@ -1,0 +1,2 @@
+﻿alter table account drop column Roles
+alter table account add permissionLevel  INT DEFAULT 0

@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Games";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script>
+    var mainModule = angular.module("MainModule", ['ngRoute']);
+    mainModule.controller("MainController", ['$scope','$location',  function ($scope, $location) {
+        $scope.goToPanel = function (id) {
+            $location.path("/" + id);
+        };
+    }]);
+    mainModule.config(function ($httpProvider, $routeProvider) {
+        $routeProvider.when("/editor", {
+            templateUrl: "/Templates/Lessons/StoryManagement.html",
+            controller: "storyManagement"
+        }).when("/quizManage", {
+            templateUrl: "/Templates/Lessons/story_summary.html",
+            controller: "storySummary"
+        })
+         .otherwise({
+             template: '<h2>Select an option to continue</h2>'
+         });
+    });
+</script>
+<script src="/CustomScripts/Stories/story_summary.js"></script>
+<script src="/CustomScripts/Stories/story_management.js"></script>
+<div ng-app="MainModule">
+    <div ng-controller="MainController" >
+        <div class="text-center">
+            <div class="btn-group btn-group-lg text-center">
+                <button type="button" class="btn btn-lg btn-primary" ng-click="goToPanel('editor')">Add/Edit Games</button>
+                <button type="button" class="btn btn-lg btn-primary" ng-click="goToPanel('quizManage')">Review/Blacklist Games</button>
+            </div>
+        </div>
+        <div ng-view>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+﻿alter table accountInformation add creditCardToken  BIGINT DEFAULT 0
+
+
+/****** Object:  Table [dbo].[AccountInformation]    Script Date: 05/12/2014 22:01:13 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[MemberAddedPaymentInfo](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](255) NULL,
+	[PatientPhone] [nvarchar](255) NULL,
+	[PayedFor] [bit] NULL,
+	[DatePayed] [datetime] NULL,
+	[DateAdded] [datetime] NULL,
+	[CheckoutId] [bigint] NULL,
+	[AccountInformationId] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[MemberAddedPaymentInfo]  WITH CHECK ADD  CONSTRAINT [FK_ACCT_INFO_PAY_INFO] FOREIGN KEY([AccountInformationId])
+REFERENCES [dbo].[AccountInformation] ([Id])
+GO
+
+ALTER TABLE [dbo].[MemberAddedPaymentInfo] CHECK CONSTRAINT [FK_ACCT_INFO_PAY_INFO]
+GO
+
+

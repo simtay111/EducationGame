@@ -1,0 +1,50 @@
+﻿<div>
+    <h2>Manage Rewards</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <h1 ng-show="loading">Loading....</h1>
+            <ul>
+                <li ng-repeat="choice in currentAwards">
+                    <div style="border: solid 3px">
+                        <ul>
+                            <li>{{choice.name}} - {{choice.id}}</li>
+                            <li>Cost: {{choice.cost}}</li>
+                            <li>SKU: {{choice.sku}}</li>
+                            <li>
+                                <img ng-src="{{choice.imageUrl}}" /></li>
+                            <li>Points: {{choice.points}}</li>
+                            <li>
+                                <button class="btn btn-danger" ng-click="removeAward(choice)">Remove</button></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <ul>
+                <li ng-repeat="choice in availableChoices">
+                    <div style="border: solid 1px">
+                        <ul>
+                            <li>{{choice.description}}</li>
+                            <li>
+                                <img ng-src="{{choice.image_url}}" /></li>
+                            <li ng-repeat="reward in choice.rewards">
+                                <ul>
+                                    <li>{{reward.sku}}</li>
+                                    <li>{{reward.description}}</li>
+                                    <li>{{reward.unit_price}}</li>
+                                    <li ng-show="reward.unit_price < 0">{{reward.min_price}}</li>
+                                    <li ng-show="reward.unit_price < 0">{{reward.max_price}}</li>
+                                    <li>available: {{reward.available}}</li>
+                                    <li>
+                                        <button class="btn btn-primary" ng-click="addToAvailable(choice, reward)">ADD TO AVAILABLE</button></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+﻿<div class="text-left">
+    <h1>Member Education Report</h1>
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="row in rows">
+                <td style="width: 15%">{{row.memberName}} - {{row.points}}
+                </td>
+                <td>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" ng-style="{width: getWidth(row) + '%'}">
+                            <!--<span class="sr-only">60% Complete</span>-->
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+

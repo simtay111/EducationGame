@@ -1,0 +1,32 @@
+﻿<div login-panel>
+    <br />
+    <div class="text-center">
+        <img src="/Images/Logo.png" style="width: 50%" />
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <form name="LoginForm">
+                <h4>Please Sign In To Continue:</h4>
+                <span id="LoginErrorMessageSpan" style="font-size: 16px; color: red">{{errors}}</span>
+                <br />
+                <span>Username (Email)</span>
+                <input class="form-control" type="email" ng-model="loginName" name="username" placeholder="Email Username" />
+                <br />
+                <span>Password</span>
+                <input class="form-control" type="password" ng-model="password" placeholder="Password" />
+                <br />
+                <button type="submit" class="btn btn-primary" ng-click="customerLogin()">Login</button>&nbsp;&nbsp;
+            </form>
+            <br />
+            <br />
+            <br />
+            <a ng-click="goToPanel('forgotPasswordPanel')">Forgot Password?</a>
+            <br />
+            <a href="/Register">Register</a>
+            <br />
+            <br />
+        </div>
+    </div>
+</div>
+
+</div>

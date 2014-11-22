@@ -1,0 +1,45 @@
+﻿<div>
+    <h2>Receipt History</h2>
+    <div class="row">
+        <div class="col-md-5">
+            Start:<input class="report-input form-control" ng-model="start" type="date" />
+        </div>
+        <div class="col-md-5">
+            End:<input class="report-input form-control" ng-model="end" type="date" />
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-success btn-lg" ng-click="runReport()">Run Report</button>
+        </div>
+    </div>
+    <div ng-show="loading">
+        <h3>Loading...</h3>
+    </div>
+    <div class="text-left">
+        <table ng-hide="loading" class="table">
+            <thead>
+                <tr>
+                    <th>Receipt Text</th>
+                    <th>Cost</th>
+                    <th>Date Billed</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody ng-repeat="range in report">
+                <tr class="active">
+                    <td>{{range[0].dateBilled | date : "MM/dd/yyyy"}}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr ng-repeat="item in range">
+                    <td>{{item.receiptText}}</td>
+                    <td>{{item.cost | currency}}</td>
+                    <td>{{item.dateBilled | date : "HH:mm"}}</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

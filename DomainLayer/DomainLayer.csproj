@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{948820E3-902D-4FF8-960F-C0B2557F4CEB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DomainLayer</RootNamespace>
+    <AssemblyName>DomainLayer</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ImageResizer">
+      <HintPath>..\packages\ImageResizer.3.4.2\lib\ImageResizer.dll</HintPath>
+    </Reference>
+    <Reference Include="LinqToExcel">
+      <HintPath>..\packages\LinqToExcel.1.10.1\lib\LinqToExcel.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Chiropractic\bin\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion">
+      <HintPath>..\packages\LinqToExcel.1.10.1\lib\Remotion.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion.Data.Linq">
+      <HintPath>..\packages\LinqToExcel.1.10.1\lib\Remotion.Data.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Remotion.Interfaces">
+      <HintPath>..\packages\LinqToExcel.1.10.1\lib\Remotion.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp.104.4.0\lib\net4\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Twilio.Api">
+      <HintPath>..\packages\Twilio.3.6.11\lib\3.5\Twilio.Api.dll</HintPath>
+    </Reference>
+    <Reference Include="WePaySDK">
+      <HintPath>..\WePaySDK\bin\Debug\WePaySDK.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Accounts\AccountCompletionStateGetter.cs" />
+    <Compile Include="Authentication\CreateUserRequestHandler.cs" />
+    <Compile Include="Authentication\IAuthenticateUsers.cs" />
+    <Compile Include="Authentication\LoginRequestHandler.cs" />
+    <Compile Include="Authentication\PasswordHasher.cs" />
+    <Compile Include="Authentication\PasswordMatcher.cs" />
+    <Compile Include="Authentication\RolesStatic.cs" />
+    <Compile Include="DailyTokens\DailyTokenUpdater.cs" />
+    <Compile Include="ECards\ECardOrderer.cs" />
+    <Compile Include="ECards\TangoAcctInfoProvider.cs" />
+    <Compile Include="ECards\TangoCallType.cs" />
+    <Compile Include="Email\DailyPrintoutSender.cs" />
+    <Compile Include="Email\ReceiptSender.cs" />
+    <Compile Include="Entities\AvailablePrize.cs" />
+    <Compile Include="Entities\AccountPrize.cs" />
+    <Compile Include="Entities\RewardDisclaimer.cs" />
+    <Compile Include="Entities\Stories\DefaultSlide.cs" />
+    <Compile Include="Entities\Stories\DefaultQuestion.cs" />
+    <Compile Include="Entities\Stories\DefaultStory.cs" />
+    <Compile Include="Entities\PaymentAudit.cs" />
+    <Compile Include="Entities\Receipt.cs" />
+    <Compile Include="Entities\TangoAudit.cs" />
+    <Content Include="moo.sql" />
+    <Compile Include="OrderProcessing\SubscriptionCharger.cs" />
+    <Compile Include="OrderProcessing\QuizCharger.cs" />
+    <Compile Include="OrderProcessing\AwardCharger.cs" />
+    <Compile Include="OrderProcessing\PaymentProcessor.cs" />
+    <Compile Include="PaymentStatus.cs" />
+    <Compile Include="Points\AccountPointAdder.cs" />
+    <Compile Include="Points\PointValues.cs" />
+    <Compile Include="Quizzes\QuizStarter.cs" />
+    <Compile Include="RepoInterfaces\IDefaultQuestionRepository.cs" />
+    <Compile Include="RepoInterfaces\IDefaultSlideRepository.cs" />
+    <Compile Include="RepoInterfaces\IDefaultStoryRepository.cs" />
+    <Compile Include="RepoInterfaces\IMemberQuizStatusRepository.cs" />
+    <Compile Include="RepoInterfaces\IReceiptRepository.cs" />
+    <Compile Include="RepoInterfaces\IPaymentAuditRepository.cs" />
+    <Compile Include="RepoInterfaces\IQuestionRepository.cs" />
+    <Compile Include="RepoInterfaces\ISlideRepository.cs" />
+    <Compile Include="RepoInterfaces\IStoryRepository.cs" />
+    <Compile Include="RepoInterfaces\ITangoAuditRepository.cs" />
+    <Compile Include="RepoInterfaces\IPrizeRepository.cs" />
+    <Compile Include="RepoInterfaces\IAwardedPrizeRepository.cs" />
+    <Compile Include="Reports\NameValue.cs" />
+    <Compile Include="Reports\SummaryBuilder.cs" />
+    <Compile Include="Stories\NewAccountStoryAdder.cs" />
+    <Compile Include="StoryManagement\StoryUpdater.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Email\DocStatReportEmailSender.cs" />
+    <Compile Include="Email\TwoWeekEmailSender.cs" />
+    <Compile Include="Email\EmailSender.cs" />
+    <Compile Include="Email\SmsSender.cs" />
+    <Compile Include="Entities\AuditLog.cs" />
+    <Compile Include="Entities\AccountInformation.cs" />
+    <Compile Include="Entities\AwardedPrize.cs" />
+    <Compile Include="Entities\SystemState.cs" />
+    <Compile Include="Entities\ForgotPasswordToken.cs" />
+    <Compile Include="Entities\IHaveAuthorizationCredentials.cs" />
+    <Compile Include="Entities\Member.cs" />
+    <Compile Include="Entities\Account.cs" />
+    <Compile Include="Entities\CustomPrize.cs" />
+    <Compile Include="Entities\Quizes\MemberQuizStatus.cs" />
+    <Compile Include="Entities\Stories\Question.cs" />
+    <Compile Include="Entities\Stories\Slide.cs" />
+    <Compile Include="Entities\Stories\Story.cs" />
+    <Compile Include="Entities\StoryBlackList.cs" />
+    <Compile Include="ImageResizerTool.cs" />
+    <Compile Include="ProfanityFilter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegexLibrary.cs" />
+    <Compile Include="RepoInterfaces\IAccountRepository.cs" />
+    <Compile Include="RepoInterfaces\IAuditLogRepository.cs" />
+    <Compile Include="RepoInterfaces\IMemberRepository.cs" />
+    <Compile Include="RepoInterfaces\ISystemStateRepository.cs" />
+    <Compile Include="Reports\AccountInfoDataUpdater.cs" />
+    <Compile Include="ResponseCode.cs" />
+    <Compile Include="SystemConfig.cs" />
+    <Compile Include="TraceCategory.cs" />
+    <Compile Include="TraceLog.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Migrations\1.txt" />
+    <Content Include="Migrations\2.txt" />
+    <Content Include="Migrations\3.txt" />
+    <Content Include="Migrations\4.txt" />
+    <Content Include="Migrations\5.txt" />
+    <Content Include="Migrations\6.txt" />
+    <Content Include="Migrations\7.txt" />
+    <Content Include="Migrations\8.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TangoApi\TangoApi.csproj">
+      <Project>{40453100-6F3C-4371-8FD8-95AFF98212C4}</Project>
+      <Name>TangoApi</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

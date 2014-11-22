@@ -1,0 +1,71 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    var adminModule = angular.module("AdminModule", ['ngRoute']);
+
+    adminModule.controller("AdminController", ['$scope', '$http', '$location', function ($scope, $http, $location) {
+        $scope.activateAll = function () {
+            $http.get("/master/ActivateAllAccounts");
+        };
+        $scope.ordersReport = function () {
+            $location.path("/orders");
+        };
+        $scope.tangoHistory = function () {
+            $location.path("/tangoHistory");
+        };
+        $scope.orderGames = function () {
+            $http.post("/master/orderGames");
+        };
+        $scope.sendReceipts = function () {
+            $http.post("/master/sendReceipts");
+        };
+        $scope.orderAwards = function () {
+            $http.post("/master/orderAwards");
+        };
+        $scope.setNewId = function() {
+            $location.path("/setNewAcctId");
+        };
+        $scope.managePrizes = function () {
+            $location.path("/managePrizes");
+        };
+    }]);
+    adminModule.config(function ($httpProvider, $routeProvider) {
+        $routeProvider.when("/orders", {
+            templateUrl: "/Templates/Admin/AwardsOrderReport.html",
+            controller: "awardsOrderController"
+        }).when("/managePrizes", {
+            templateUrl: "/Templates/Admin/ManagePrizesPanel.html",
+            controller: "managePrizesController"
+        }).when("/setNewAcctId", {
+            templateUrl: "/Templates/Admin/SetNewAcctId.html",
+            controller: "setNewAcctIdController"
+        }).when("/tangoHistory", {
+            templateUrl: "/Templates/Admin/TangoOrderHistory.html",
+            controller: "tangoOrderHistory"
+        })
+            .otherwise({
+                templateUrl: "/Templates/Admin/ManagePrizesPanel.html",
+                controller: "managePrizesController"
+            });
+    });
+</script>
+<script src="/CustomScripts/Admin/AwardsOrderReport.js"></script>
+<script src="/CustomScripts/Admin/ManagePrizes.js"></script>
+<script src="/CustomScripts/Admin/SetNewAcctId.js"></script>
+<script src="/CustomScripts/Admin/TangoOrderHistoryReport.js"></script>
+<div ng-app="AdminModule" ng-controller="AdminController">
+    <button class="btn btn-primary" ng-click="activateAll()">Activate All Accounts</button>
+    <button class="btn btn-primary" ng-click="ordersReport()">Orders Report</button>
+    <button class="btn btn-danger" ng-click="orderGames()">Order Games</button>
+    <button class="btn btn-danger" ng-click="orderAwards()">Order Awards</button>
+    <button class="btn btn-danger" ng-click="sendReceipts()">Send Receipts</button>
+    <button class="btn btn-primary" ng-click="managePrizes()">Manage Prizes</button>
+    <button class="btn btn-primary" ng-click="tangoHistory()">Tango History</button>
+    <button class="btn btn-primary" ng-click="memberPoints()">Manage Patients</button>
+    <button class="btn btn-primary" ng-click="setNewId()">Update My Acct Id</button>
+
+    <div>
+        <div ng-view></div>
+    </div>
+</div>

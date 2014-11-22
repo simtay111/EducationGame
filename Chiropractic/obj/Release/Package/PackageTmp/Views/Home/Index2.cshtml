@@ -1,0 +1,383 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>PracticeOwl</title>
+    <link rel="SHORTCUT ICON" href="@Url.Content("~/Images/Icon/image.jpg")"/>
+    <meta name="viewport" content="width=device-width" />
+    <link type="text/css" href="~/bootstrap/fonts/glyphicons-halflings-regular.ttf" />
+    <link type="text/css" rel="stylesheet" href="~/Bootstrap/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="~/Bootstrap/css/bootstrap-theme.min.css" />
+    <link type="text/css" rel="stylesheet" href="~/CustomCss/HomeStyle.css" />
+    <link type="text/css" rel="stylesheet" href="~/Content/introjs.min.css" />
+    <link rel="stylesheet" href="~/Content/font-awesome-4.2.0/css/font-awesome.min.css" />
+    <script type="text/javascript" src="~/Scripts/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/underscore.min.js"></script>
+    <script type="text/javascript" src="~/Bootstrap/js/bootstrap.js"></script>
+    <script src="~/Scripts/intro.min.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/angular-resource.min.js"></script>
+    <script src="~/Scripts/angular-route.min.js"></script>
+    <script src="~/Scripts/angular-touch.min.js"></script>
+</head>
+<style>
+    li > a {
+        font-size: 16px;
+        margin: 17px;
+    }
+
+    #CollapseMenu {
+        margin: 17px;
+    }
+</style>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button id="CollapseMenu" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <img alt="Brand" src="~/Images/Logo.png" style="width: 225px" />
+                </a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a>Home</a>
+                    </li>
+                    <li>
+                        <a href="/Home/Features">Features</a>
+                    </li>
+                    <li>
+                        <a href="/Home/Pricing">Pricing</a>
+                    </li>
+                    <li>
+                        <a href="/Home/Faq">FAQs</a>
+                    </li>
+                    <li>
+                        <a href="/Home/ContactUs">Contact Us</a>
+                    </li>
+                    <li>
+                        <a href="/Register">Register</a>
+                    </li>
+                    <li>
+                        <a href="/Login">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="BannerRowSm" class="row hidden-lg hidden-desktop">
+        <div class="col-md-12 text-center" style="color: black">
+            <div id="HealthyChoicesTextSm">
+                <div class="header-padding-small"></div>
+                <div class="header-padding-medium"></div>
+                You shouldn't have to<br />
+                sell healthy choices.
+            </div>
+            <div id="HeaderSummaryTextSm">
+                A <strong>fun game </strong>that consistently and measurably<br />
+                automates chiropractic patient education,<br />
+                so <strong>you </strong>can stop selling forever.
+            </div>
+            <div>
+                <div id="WatchItLinkContainer">
+                    <a id="WatchItLink" class="register-button" style="color: black !important" onclick="$('body').scrollTo('#VideoLayer')">Watch it in action <i class="fa fa-chevron-down"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="page-header"></div>
+    </div>
+    <header class="hidden-xs hidden-sm hidden-md row" id="BannerRowLg">
+        <div class="col-md-6"></div>
+        <div class="col-md-5 text-center" style="color: white">
+            <div class="hidden-sm hidden-xs hidden-md" id="HealthyChoicesTextLg">
+                <div class="header-padding-small"></div>
+                <div class="header-padding-medium"></div>
+                You shouldn't have to<br />
+                sell healthy choices.
+            </div>
+            <div class="hidden-sm hidden-xs hidden-md" id="HeaderSummaryTextLg">
+                A <strong>fun game </strong>that consistently and measurably<br />
+                automates chiropractic patient education,<br />
+                so <strong>you </strong>can stop selling forever.
+            </div>
+            <div>
+                <div id="WatchItLinkContainer">
+                    <a id="WatchItLink" class="register-button" onclick="$('body').scrollTo('#VideoLayer')">Watch it in action <i class="fa fa-chevron-down"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </header>
+    <div class="container-fluid">
+
+        <div class="row" id="TriplePointRow">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="triple-point-icon"><i class="fa fa-clock-o"></i></div>
+                    <span class="triple-point-title">Only 3-minutes to register!</span>
+                    <br />
+                    <span class="triple-point-content">Your patients can start playing immediately once you’re registered and there’s no technology to buy.</span>
+                </div>
+                <div class="col-md-4">
+                    <div class=" triple-point-icon"><i class="fa fa-usd"></i></div>
+                    <span class="triple-point-title">Collect an <u>extra</u> $81,000!</span>
+                    <br />
+                    <span class="triple-point-content">When educated by PracticeOwl, your patients will come in for care up to 4 more times<br />
+                        . . . that adds up! (Up to $81k*)</span>
+                </div>
+                <div class="col-md-4">
+                    <div class="triple-point-icon"><i class="fa fa-graduation-cap"></i></div>
+                    <span class="triple-point-title">Patients will actually learn!</span>
+                    <br />
+                    <span class="triple-point-content">Thanks to our unique reward system, patients are self-motivated to continue learning and playing.
+This is the last, complete patient education tool you’ll ever need.</span>
+                </div>
+            </div>
+        </div>
+        <div class="page-header"></div>
+        <div class="row " id="VideoLayer">
+            <br />
+            <br />
+
+            <div class="col-md-5 text-center">
+                <h1 class="page-header" style="font-weight: bolder">Simple and Effective</h1>
+                <div class="lead">
+                    <p>Watch this short two minute video and you will get an idea of just how much <em>PracticeOwl </em>can help your practice with the least amount of effort.</p>
+                </div>
+                <br />
+                <div class="hidden-sm hidden-md hidden-xs register-button-container">
+                    <a href="/Register" class="register-button register-black">Register Now </a>
+                </div>
+
+            </div>
+            <div class="col-md-7">
+                <p>
+                    <script src="http://redemptor1.evsuite.com/player/UG93bEZpbmFsaW50cm92aWQzTVA0c2l6ZXJhdGlvLTIubXA0/?responsive=1&amp;autoResponsive=1&amp;container=evp-FU3AB7L45U" type="text/javascript"></script>
+                </p>
+                <div id="evp-FU3AB7L45U" data-role="evp-video" data-evp-id="UG93bEZpbmFsaW50cm92aWQzTVA0c2l6ZXJhdGlvLTIubXA0"></div>
+                <div style="padding-top: 15px; margin-top: 15px" class="hidden-lg hidden-desktop register-button-container">
+                    <a href="/Register" class="register-button register-black">Register Now </a>
+                </div>
+            </div>
+        </div>
+        <div class="page-header hidden-sm hidden-xs hidden-md"></div>
+        <div class="row hidden-xs" id="SampleLayer">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-5">
+                <iframe src="http://chiroplay.com/Quiz?generatedId=73277&memberId=200#/storyPage" class="sample-iframe" style="width: 100%; max-width: 700px; min-height: 700px"></iframe>
+            </div>
+            <div class="col-md-5 text-center">
+                <br />
+                <br />
+                <span style="font-size: 40px; font-weight: bold">Try it for yourself!</span>
+                <br />
+                <br />
+                <span style="font-size: 20px;">Imagine patients waiting in your lobby and instead of zoning out on 
+                    some news web site or on their favorite social media they are playing your game, earning points and getting educated!
+                </span>
+                <br />
+                <br />
+                <span style="font-size: 20px;">And you don't have to do a thing...
+                </span>
+                <div class="register-button-container">
+                    <a href="/Register" class="register-button register-black">Register Now </a>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="page-header hidden-lg hidden-desktop"></div>
+        <div class="row" id="SummaryRow">
+            <div class="row">
+                <h1 class="" style="font-weight: bolder">Educating patients becomes easy when it's fun.
+                </h1>
+            </div>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-3">
+                    <img style="width: 75%" src="/Images/Home/iphone-lesson-slide-FIN.png" />
+                </div>
+                <div class="col-md-4" id="SummaryRowPoints">
+                    <div><i class="fa fa-check"></i>They come in and play.</div>
+                    <div><i class="fa fa-check"></i>They earn points for learning.</div>
+                    <div style="font-size: 24px !important"><i class="fa fa-check" ></i>They exchange points for rewards!</div>
+                    <div class="panel-group" id="MoreInfoCollapse" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab">
+                                <span class="panel-title">
+                                    <a id="CollapseHeader" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Click here for more details <i class="fa fa-chevron-down"></i>
+                                    </a>
+                                </span>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="panel-body">
+                                    <ul>
+                                        <li class="lead">Your patients will play a short, 2-minute education game each time they come in.</li>
+                                        <li class="lead">Each game consistes for 4 engaging lesson slides followed by 3 true/false questions that are fun!</li>
+                                        <li class="lead">PracticeOwl automatically tracks and provides you with your collective patients' GPA.</li>
+                                        <li class="lead">Correct answers earn your patients points, which can be later redeemed for rewards <strong>and creates a strong desire to continue playing.</strong></li>
+                                        <li class="lead">Educated patients are more likely to follow through with your recommendations and refer others.</li>
+                                        <li class="lead">Everyone loves games and adding PracticeOwl to your office will instantly life the fun-factor and success of your clinic.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <img style="width: 75%" src="/Images/Home/Iphone-SALES-Quest-only-fin2.png" />
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <div class="hidden-lg hidden-desktop register-button-container">
+                <a href="/Register" class="register-button register-black">Register Now </a>
+            </div>
+        </div>
+        <div class="page-header"></div>
+        <div class="row text-center" id="TestimonialsRow">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <div class="row" style="padding: 20px">
+                        <div style="font-size: 45px; font-weight: bold">What our colleagues are saying</div>
+                        <div class="lead" style="font-size: 25px">Don’t just take it from us, let our customers do the talking! </div>
+                        <br />
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="testimonial-div">
+                                <img src="/Images/Home/andrew.jpg" class="testimonial-pic" />
+                                <div class="testimonial-text ">
+                                    “PracticeOwl was the perfect addition to my practice. My partner and I spend several hours each week educating our practice members both individually and in groups. PracticeOwl gives us confidence that our practice members are getting vitalistic education so that we can spend more time adjusting and serving. After all, the word “doctor” means teacher! <strong>PracticeOwl is Chiropractic Gold!</strong> Your practice deserves this!”
+                        <br />
+                                    <br />
+                                    <strong>Dr. Andrew T'orchio</strong>
+                                    <br />
+                                    Chiropractor, Oregon
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-4">
+                            <div class="testimonial-div">
+                                <img src="/Images/Home/amanda.jpg" class="testimonial-pic" />
+                                <div class="testimonial-text ">
+                                    “Using PracticeOwl has made educating my patients effortless. I like the fact that it was so easy to get it going and my patients loved it the first time they played. I would highly recommend this for any docs sick and tired of constantly having to sell chiropractic, it takes all the pressure off of you. ” 
+                         <br />
+                                    <br />
+                                    <strong>Dr. Amanda K.</strong><br />
+                                    Chiropractor, Washington
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="testimonial-div">
+                                <img src="/Images/Home/nevin.jpg" class="testimonial-pic" />
+                                <div class="testimonial-text ">
+                                    “Very rarely do I believe that a practice tool has the ability to really make a huge difference . PracticeOwl is a rare find that absolutely lives up to its tag line of being a Game-Changer. My patients finally Get It and education in my office is finally consistent and streamlined. I like knowing that each and every one of my patients get the same, high quality education in a consistent repeatable way — without ANY effort on my part!” 
+                         <br />
+                                    <br />
+                                    <strong>Dr. Nevin R.</strong><br />
+                                    Chiropractor, Minnesota
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+
+        </div>
+        <div class="row" id="RegisterNowRow">
+            <div class="col-md-2"></div>
+            <div class="col-md-8" style="background-color: #2EA3F2; padding: 25px">
+                <div class="row" style="color: white">
+                    <div style="font-size: 35px">Sick of selling?</div>
+                    <div style="font-size: 16px">Say goodbye to healthcare classes and timely patient education once and for all.</div>
+
+                    <div class="register-button-container">
+                        <a href="/Register" class="register-button">Register Now </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+        <div class="page-header"></div>
+        <div class="row text-left">
+            <div class="col-md-9 text-left">
+                * Assuming your clinic is performing at the current chiropractic clinic national averages (28 NP/month, $60 collection/vs). 
+            <br />
+                PracticeOwl has been proven to increase your patient visit average (the number of times a patient visits your office for care) by up to 4 additional visits.
+                <br />
+                (4 additional visits) x ($60 collected) = $240.00 X 12 months X 28 NP’s = $80,640.00
+            <br />
+                PracticeOwl does not guarantee results. Every office’s results are unique. Results may vary.
+            <br />
+                <a href="http://www.chiroeco.com/joomla/images/stories/2011SalarySurvey.pdf">Source: Click Here to be taken to the research.</a>
+            </div>
+            <div class="col-md-3">
+                <img style="max-height: 100px" src="/Images/Home/fb-image.jpg" />
+            </div>
+        </div>
+        <nav class="navbar navbar-default navbar-inverse" role="navigation">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a>Home</a>
+                    </li>
+                    <li>
+                        <a href="/Home/Features">Features</a>
+                    </li>
+                    <li>
+                        <a href="/Home/Pricing">Pricing</a>
+                    </li>
+                    <li>
+                        <a href="/Home/Faq">FAQs</a>
+                    </li>
+                    <li>
+                        <a href="/Home/ContactUs">Contact Us</a>
+                    </li>
+                    <li>
+                        <a href="/Register">Register</a>
+                    </li>
+                    <li>
+                        <a href="/Login">Login</a>
+                    </li>
+                </ul>
+            </div>
+            <span style="color: white">Designed by PracticeOwl,LLC. | Powered by PracticeOwl,LLC. 2014 Copyrights, All Rights Reserved, Patents Pending. 
+            </span>
+        </nav>
+    </div>
+    <script>
+        jQuery.fn.scrollTo = function (target, options, callback) {
+            if (typeof options == 'function' && arguments.length == 2) { callback = options; options = target; }
+            var settings = jQuery.extend({
+                scrollTarget: target,
+                offsetTop: 50,
+                duration: 500,
+                easing: 'swing'
+            }, options);
+            return this.each(function () {
+                var scrollPane = jQuery(this);
+                var scrollTarget = (typeof settings.scrollTarget == "number") ? settings.scrollTarget : jQuery(settings.scrollTarget);
+                var scrollY = (typeof scrollTarget == "number") ? scrollTarget : scrollTarget.offset().top + scrollPane.scrollTop() - parseInt(settings.offsetTop);
+                scrollPane.animate({ scrollTop: scrollY }, parseInt(settings.duration), settings.easing, function () {
+                    if (typeof callback == 'function') { callback.call(this); }
+                });
+            });
+        }
+    </script>
+</body>
+</html>

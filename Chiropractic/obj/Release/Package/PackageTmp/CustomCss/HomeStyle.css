@@ -1,0 +1,194 @@
+﻿
+.triple-point-title {
+    font-size: 45px;
+    font-weight: bold;
+}
+
+.triple-point-content {
+    font-size: 20px;
+}
+
+.triple-point-icon {
+    text-align: center;
+}
+
+    .triple-point-icon > i {
+        font-size: 100px;
+    }
+    .triple-point-icon > span{
+        font-size: 100px;
+    }
+
+#TriplePointRow > .row {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+#SampleLayer {
+    padding: 50px;
+}
+
+.blue-bar {
+    background-color: #00ccff;
+    box-shadow: 0px 0px 45px #00ccff;
+}
+
+#evp-FU3AB7L45U {
+    box-shadow: 0px 0px 45px black;
+}
+
+.evp-bar {
+    background-color: grey !important;
+    border-color: grey !important;
+    background-image: none !important;
+    box-shadow: 0px 0px 45px black;
+}
+
+.sample-iframe {
+    box-shadow: 0px 0px 45px black;
+}
+
+.row {
+    text-align: center;
+}
+
+body, html {
+    height: 100%;
+}
+
+#BannerRowLg {
+    background-image: url("/Images/Home/PracticeOwl-Main-Background-pic.jpg");
+    background-color: white;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: left top;
+    min-height: 850px;
+    height: 70%;
+    /*height: 100%*/
+}
+#BannerRowSm {
+    /*background-image: url("/Images/Home/PracticeOwl-Main-Background-pic.jpg");*/
+    /*background-color: white;*/
+    /*background-size: 100%;*/
+    /*background-repeat: no-repeat;*/
+    /*background-position: left top;*/
+    /*min-height: 850px;*/
+    /*height: 100%*/
+}
+
+.header-padding-small {
+    margin-top: 50px;
+}
+
+.header-padding-medium {
+    margin-top: 250px;
+}
+
+#HealthyChoicesTextLg {
+    font-weight: bolder;
+    font-size: 45px;
+}
+
+#HeaderSummaryTextLg {
+    font-size: 25px;
+}
+
+#HealthyChoicesTextSm {
+    font-weight: bolder;
+    font-size: 25px;
+}
+
+#HeaderSummaryTextSm {
+    font-size: 20px;
+}
+
+.register-button {
+    color: white;
+    font-size: 25px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 45px;
+    padding-right: 45px;
+    border: solid 2px white;
+}
+
+.register-black {
+    border: solid 2px grey;
+    border-radius: 8px;
+    background-color: #2EA3F2
+}
+
+.register-button-container {
+    margin-top: 25px;
+    
+}
+
+#SummaryRowPoints {
+    font-size: 28px;
+    text-align: left;
+}
+
+#MoreInfoCollapse {
+    font-size: 15px;
+}
+
+#CollapseHeader {
+    font-size: 25px;
+}
+
+#SummaryRowPoints > div {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+#TestimonialsRow {
+    text-align: center;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+
+#SummaryRowPoints i {
+    color: rgb(0, 222, 255);
+    margin-right: 15px;
+}
+
+
+.testimonial-div {
+    /*width: 80%;*/
+    background-color: #f5f5f5;
+    box-shadow: 0px 0px 25px rgb(226, 226, 226);
+    padding: 35px;
+}
+
+.testimonial-text {
+    text-align: left;
+    font-size: 19px;
+}
+
+.testimonial-pic {
+    width: 90px;
+    border-radius: 45px;
+    border: solid grey 1px;
+    margin-bottom: 15px;
+}
+
+#WatchItLinkContainer {
+    margin-top: 25px;
+}
+
+.container-fluid {
+    text-align: center;
+}
+
+
+
+    .container-fluid > .row {
+        margin: 15px;
+    }
+
+#VideoLayer {
+    /*background-color: rgb(226, 226, 226);*/
+    /*box-shadow: 0px 0px 25px rgb(226, 226, 226);*/
+    padding-bottom: 75px;
+}

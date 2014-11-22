@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript" src="https://static.wepay.com/min/js/tokenization.v2.js"></script>
+<script src="/CustomScripts/Registration/RegistrationBase.js"></script>
+<script src="/CustomScripts/Registration/RegistrationPanelsHttp.js"></script>
+<script src="/CustomScripts/Registration/RegistrationPanel.js"></script>
+<script src="/CustomScripts/Registration/BasicInfoPanel.js"></script>
+<script src="/CustomScripts/Registration/AddAssistantPanel.js"></script>
+<script src="/CustomScripts/Registration/SetupPrizesPanel.js"></script>
+<script src="/CustomScripts/Registration/PaymentSetup.js"></script>
+<script src="/CustomScripts/Directives/passwordMatch.js"></script>
+<div id="registrationApp" ng-app="RegisterModule" ng-controller="registrationBaseController">
+    <div ng-view></div>
+</div>

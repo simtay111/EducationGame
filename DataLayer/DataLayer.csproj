@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{ACEE0DE6-3F67-439F-AF72-9AEA74E00ED4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataLayer</RootNamespace>
+    <AssemblyName>DataLayer</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FluentNHibernate">
+      <HintPath>..\packages\FluentNHibernate.1.4.0.0\lib\net35\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\packages\NHibernate.3.3.3.4001\lib\Net35\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AuditLogRepository.cs" />
+    <Compile Include="Configuration\NHibernateHelper.cs" />
+    <Compile Include="ConnectionProvider.cs" />
+    <Compile Include="AwardedPrizeRepository.cs" />
+    <Compile Include="AccountPrizeRepository.cs" />
+    <Compile Include="Mappings\AccountPrizeMapping.cs" />
+    <Compile Include="RewardDisclaimerRepository.cs" />
+    <Compile Include="DefaultQuestionRepository.cs" />
+    <Compile Include="DefaultSlideRepository.cs" />
+    <Compile Include="DefaultStoryRepository.cs" />
+    <Compile Include="Mappings\RewardDisclaimerMapping.cs" />
+    <Compile Include="Mappings\DefaultQuestionMapping.cs" />
+    <Compile Include="Mappings\DefaultSlideMapping.cs" />
+    <Compile Include="Mappings\DefaultStoryMapping.cs" />
+    <Compile Include="PaymentAuditRepository.cs" />
+    <Compile Include="Mappings\PaymentAuditMapping.cs" />
+    <Compile Include="TangoAuditRepository.cs" />
+    <Compile Include="Mappings\TangoAuditMapping.cs" />
+    <Compile Include="ReceiptRepository.cs" />
+    <Compile Include="Mappings\AvailablePrizeMapping.cs" />
+    <Compile Include="Mappings\ReceiptMapping.cs" />
+    <Compile Include="Mappings\AuditLogMapping.cs" />
+    <Compile Include="SystemStateRepository.cs" />
+    <Compile Include="Mappings\AwardedPrizeMapping.cs" />
+    <Compile Include="StoryBlackListRepository.cs" />
+    <Compile Include="Mappings\AccountInformationMapping.cs" />
+    <Compile Include="Mappings\AccountMapping.cs" />
+    <Compile Include="Mappings\SystemStateMapping.cs" />
+    <Compile Include="Mappings\StoryBlackListMapping.cs" />
+    <Compile Include="Mappings\ForgotPasswordTokenMapping.cs" />
+    <Compile Include="Mappings\MemberMapping.cs" />
+    <Compile Include="Mappings\MemberQuizStatusMapping.cs" />
+    <Compile Include="Mappings\CustomPrizeMapping.cs" />
+    <Compile Include="Mappings\QuestionMapping.cs" />
+    <Compile Include="Mappings\SlideMapping.cs" />
+    <Compile Include="Mappings\StoryMapping.cs" />
+    <Compile Include="MemberQuizStatusRepository.cs" />
+    <Compile Include="PrizeRepository.cs" />
+    <Compile Include="QuestionRepository.cs" />
+    <Compile Include="SlideRepository.cs" />
+    <Compile Include="StoryRepository.cs" />
+    <Compile Include="HistoryRepository.cs" />
+    <Compile Include="MemberRepository.cs" />
+    <Compile Include="ForgotPasswordTokenRepository.cs" />
+    <Compile Include="IConnectionProvider.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AccountRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DomainLayer\DomainLayer.csproj">
+      <Project>{948820E3-902D-4FF8-960F-C0B2557F4CEB}</Project>
+      <Name>DomainLayer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

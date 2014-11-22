@@ -1,0 +1,87 @@
+﻿<div ng-show="!isEditing">
+    <button class="btn btn-info" ng-click="addNew()">Add New Game</button>
+    <span style="float: right" ng-style="{color: orderSaved ? 'green' : 'red'}">{{orderSaved ? "Order Of Games Saved" : "Saving Order"}}</span>
+    <table class="table table-condensed table-striped">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Order</td>
+                <td>Sooner</td>
+                <td>Later</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="story in stories">
+                <td>{{story.name}}</td>
+                <td>{{story.storyOrder}}</td>
+                <td>
+                    <button class="btn btn-default" ng-click="moveUp(story)" ng-show="story.storyOrder > 1">
+                        <span class="glyphicon glyphicon-arrow-up"></span>
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-default" ng-click="moveDown(story)" ng-hide="story.storyOrder == stories.length">
+                        <span class="glyphicon glyphicon-arrow-down"></span>
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-info" ng-click="editStory(story)">Edit</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div ng-show="isEditing && (loading < 2)">
+    <h2>Loading.....</h2>
+</div>
+<div ng-show="isEditing && (loading > 1)">
+    <button class="btn btn-info" ng-click="cancelEdit()">Close</button>
+    <button class="btn btn-success" ng-click="saveEdit()" ng-disabled="!editStoryForm.$dirty">Save</button>
+    <h3 ng-show="errors" class="error-text">{{errors}}</h3>
+    <form name="editStoryForm" class="css-form">
+        <div class="well well-sm">
+            <h3>Game: </h3>
+            <h4>Name:</h4>
+            <input class="form-control" required ng-model="storyBeingEdited.name" />
+            <h4>Summary:</h4>
+            <input class="form-control" required ng-model="storyBeingEdited.summary" />
+        </div>
+        <div class="well well-sm">
+            <h3>Slides:</h3>
+            <div ng-repeat="slide in slides">
+                <textarea required ng-model="slide.body" class="form-control" rows="3"></textarea>
+                <br />
+            </div>
+        </div>
+        <div class="well well-sm">
+            <h3>Questions:</h3>
+            <div style="border: solid 1px grey;"></div>
+            <div ng-repeat="question in questions">
+                <h4>Question - MUST BE TRUE OR FALSE</h4>
+                <textarea required ng-model="question.query" class="form-control" rows="3"></textarea>
+                <h4>Answer</h4>
+                <div class="radio radio-inline">
+                    <label>
+                        <input type="radio" name="{{$index}}" required ng-model="question.answerBool" value="true" ng-value="true">
+                        TRUE
+                    </label>
+                </div>
+                <div class="radio radio-inline">
+                    <label>
+                        <input type="radio" name="{{$index}}" required ng-model="question.answerBool" value="false" ng-value="false">
+                        FALSE
+                    </label>
+                </div>
+                <h4>Correct Answer Text (what is shown when the patient answers correctly)</h4>
+                <textarea required ng-model="question.correctAnswer" class="form-control" rows="3"></textarea>
+                <h4>Wrong Answer Text (what is shown when the patient incorrectly answers)</h4>
+                <textarea required ng-model="question.wrongAnswer" class="form-control" rows="3"></textarea>
+                <br />
+                <div style="border: solid 1px grey;"></div>
+            </div>
+        </div>
+    </form>
+    <button class="btn btn-info" ng-click="cancelEdit()">Close</button>
+    <button class="btn btn-success" ng-click="saveEdit()" ng-disabled="!editStoryForm.$dirty">Save</button>
+    <h3 ng-show="errors" class="error-text">{{errors}}</h3>
+</div>

@@ -1,0 +1,38 @@
+﻿<table class="table table-condensed">
+    <thead>
+        <tr>
+            <th>Black Listed:</th>
+            <th>Game:</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="item in blackListSummary">
+            <td>
+                <input ng-model="item.isBlackListed" ng-change="toggleBlackListed(item)" type="checkbox" /></td>
+            <td>{{item.story.name}}</td>
+        </tr>
+    </tbody>
+</table>
+<button class="btn btn-info" ng-click="runReport()">See All Game Text</button>
+<ul ng-repeat="storySet in stories">
+    <li>
+        <h4>Game:</h4>
+        <ul>
+            <li>{{storySet.story.name}}</li>
+            <li>{{storySet.story.summary}}</li>
+            <!--<li>{{storySet.story.infoReferences}}</li>-->
+        </ul>
+        <h4>Slides:</h4>
+        <ul ng-repeat="slide in storySet.slides">
+            <li>{{slide.body}}</li>
+        </ul>
+        <h4>Questions:</h4>
+        <ul ng-repeat="question in storySet.questions">
+            <li>{{question.query}}<ul>
+                <li>Correct Answer: {{question.correctAnswer}}</li>
+                <li>Wrong Answer: {{question.wrongAnswer}}</li>
+            </ul>
+            </li>
+        </ul>
+    </li>
+</ul>

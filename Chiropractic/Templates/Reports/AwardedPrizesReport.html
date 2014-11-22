@@ -1,0 +1,49 @@
+﻿<div>
+    <h2>Awarded Rewards Report</h2>
+    <h5><span style="color: green">Green Rows:</span> A reward that was ordered via the PracticeOwl gift service.</h5>
+    <h5><span style="color: red">Red Rows:</span> A reward that you provide for the customer when they earn it that PracticeOwl is not responsible for delivering.</h5>
+    <div class="row">
+        <div class="col-md-5">
+            Start:<input class="report-input form-control" ng-model="start" type="date" />
+        </div>
+        <div class="col-md-5">
+            End:<input class="report-input form-control" ng-model="end" type="date" />
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-success btn-lg" ng-click="runReport()">Run Report</button>
+        </div>
+    </div>
+    <div ng-show="loading">
+        <h3>Loading...</h3>
+    </div>
+    <table ng-hide="loading" class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Reward Name</th>
+                <th>Ordered</th>
+                <th>Date Ordered</th>
+                <th>Sku</th>
+                <th>Points</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody ng-repeat="range in report">
+            <tr class="active">
+                <td>{{range[0].issueDate | date : "MM/dd/yyyy"}}</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr ng-class="{success: item.ordered, danger: !item.ordered }" ng-repeat="item in range">
+                <td>{{item.member.lastName}}, {{item.member.firstName}}</td>
+                <td>{{item.prizeName}}</td>
+                <td>{{item.ordered ? "Yes" : "No"}}</td>
+                <td>{{item.dateOrdered  | date : "MM/dd/yyyy HH:mm"}}</td>
+                <td>{{item.prizeSku}}</td>
+                <td>{{item.prizePoints}}</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

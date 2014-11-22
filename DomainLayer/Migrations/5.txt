@@ -1,0 +1,1 @@
+﻿alter table accountInformation add CouponDisclaimerText  nvarchar (255)  default ''

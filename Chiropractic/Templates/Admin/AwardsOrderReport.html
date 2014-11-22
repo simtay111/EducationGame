@@ -1,0 +1,26 @@
+﻿<div>
+    These are the awards that have not been ordered.
+    <button ng-click="runReport()" class="btn btn-primary">Run Report</button>
+    <table ng-hide="loading" class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Game Name</th>
+                <th>Office Name</th>
+            </tr>
+        </thead>
+
+        <tbody ng-repeat="range in report">
+            <tr class="active">
+                <td>Issue Date: {{range[0].issueDate | date : "MM/dd/yyyy"}}</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr ng-repeat="item in range">
+                <td>{{item.member.lastName}}, {{item.member.firstName}}</td>
+                <td>{{item.prizeName}}</td>
+                <td>{{item.member.accountInformation.officeName}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

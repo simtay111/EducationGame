@@ -1,0 +1,19 @@
+﻿<div>
+    <h1>Practice Stats Report</h1>
+    <span style="font-size: 16px">Here is a quick bird's eye view of how your practice is doing with PracticeOwl:</span>
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="summary in summaries">
+                <td>{{summary.name}}</td>
+                <td>{{summary.value}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+

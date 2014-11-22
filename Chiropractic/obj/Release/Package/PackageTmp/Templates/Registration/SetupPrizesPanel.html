@@ -1,0 +1,51 @@
+﻿<div setup-prizes-panel>
+    <h4>Standard rewards are already built in.  We will manage everything for you, there's nothing you have to do!<br />
+        <br />
+        However, if you would like to add some of your own custom rewards (eg: bottle of muscle relief ointment, clinic t-shirt, local business gift card, etc.) you can add them here at anytime.</h4>
+    <a ng-click="showHelp = true">More Info</a>
+    <div ng-show="showHelp" class="helpText">
+        The rewards you are about to setup are what a patient can earn with accumulated game points.  
+        <br />
+        They will only earn points with correct answers.
+        <br />
+        Be as creative as you like with rewards.
+        <br />
+        Here are some guidelines about how to setup your point amounts:
+        <br />
+        <br />
+        Each game has a total of 100 possible points
+        (That is 33 points for each of the three game questions).<br />
+        <br />
+        Rewards can be updated at any time on this page.
+        <br />
+        500 points = $5.00  You can assign ANY point value you like to your custom rewards.
+        <br />
+        <a ng-click="showHelp = false">Hide Help</a>
+        <br />
+        <br />
+    </div>
+    <div class="well well-sm">
+        <form name="setupPrizesForm" class="css-form">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Reward Name:</th>
+                        <th>Points:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="prize in prizes">
+                        <td class="text-left" style="width: 80% !important">
+                            <input class="form-control input-lg" ng-model="prize.name" style="width: 100% !important" required /></td>
+                        <td class="text-left">
+                            <input class="form-control input-lg" ng-model="prize.points" style="width: 100% !important" required /></td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+        <h3 class="error-text">{{errors}}</h3>
+        <h4 style="color: black" ng-show="setupPrizesForm.$dirty">Unsaved!</h4>
+        <button class="btn btn-primary" ng-click="savePrizes()" ng-disabled="!setupPrizesForm.$dirty">Save</button>
+    </div>
+</div>

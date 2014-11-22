@@ -1,0 +1,7 @@
+C:\Users\Simtay111\Documents\GitHub\Chiropractic\TangoApi\bin\Release\TangoApi.dll
+C:\Users\Simtay111\Documents\GitHub\Chiropractic\TangoApi\bin\Release\TangoApi.pdb
+C:\Users\Simtay111\Documents\GitHub\Chiropractic\TangoApi\bin\Release\Newtonsoft.Json.dll
+C:\Users\Simtay111\Documents\GitHub\Chiropractic\TangoApi\bin\Release\Newtonsoft.Json.xml
+C:\Users\Simtay111\Documents\GitHub\Chiropractic\TangoApi\obj\Release\TangoApi.csprojResolveAssemblyReference.cache
+C:\Users\Simtay111\Documents\GitHub\Chiropractic\TangoApi\obj\Release\TangoApi.dll
+C:\Users\Simtay111\Documents\GitHub\Chiropractic\TangoApi\obj\Release\TangoApi.pdb

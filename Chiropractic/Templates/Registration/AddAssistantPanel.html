@@ -1,0 +1,62 @@
+﻿<div add-assistant-panel>
+    <span style="font-size: 22px" ng-show="accounts.length == 0 && !isAddingAcct">Set up your office personnel accounts (This is optional): <a style="font-size: 16px" ng-click="showHelp = true">More Info</a></span>
+    <div class="helpText" ng-show="!isAddingAccount && showHelp">
+        The purpose of extra accounts is to restrict access to unnecessary adminstrator settings and to simplify their user experience (i.e. clinic name, phone, email notifications). 
+        <br />
+        The <strong>front desk administrator</strong> primarily adds new patients into the system.
+        <br />
+        <a ng-click="showHelp = false">Hide Help</a>
+    </div>
+
+    <div class="text-left" ng-show="!isAddingAcct">
+        <h4 ng-show="accounts.length != 0">Your current office manager accounts:</h4>
+        <h5 ng-show="accounts.length != 0">These can add/edit patients but cannot change the practice information for the account.
+        </h5>
+        <table class="table table-striped" ng-show="accounts.length != 0">
+            <thead>
+                <tr>
+                    <th>Employee Name:</th>
+                    <th>Login:</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="acct in accounts">
+                    <td>{{acct.displayName}}</td>
+                    <td>{{acct.email}}</td>
+                    <td>
+                        <button ng-click="deleteAccount($index)" class="btn btn-danger">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <button style="float: right" class="btn btn-success" ng-show="!isAddingAcct" ng-click="addAssistant()">Add New Account</button>
+    </div>
+    <div ng-show="isAddingAcct">
+        <form name="loginForm" class="css-form" style="text-align: left">
+            <h4>Please enter an email to use for the login. After this you will set whether they 
+                are an font desk administrator or an office assistant.
+            </h4>
+            <span>Employee Name:</span>
+            <br />
+            <input class=" half-input form-control" ng-model="displayName" required name="displayName" type="text" placeholder="Name" />
+            <br />
+            <span>Login Email:</span>
+            <br />
+            <input class=" half-input form-control" ng-model="email" required name="email" type="email" placeholder="Email" />
+            <br />
+            <span>Password:<span> (Min 8 Characters)</span></span>
+            <br />
+            <input class=" half-input form-control" ng-model="pwd" required ng-minlength="8" name="pwd" type="password" placeholder="Password" />
+            <br />
+            <span>Confirm Password:<span></span></span>
+            <br />
+            <input class=" half-input form-control" ng-model="confPwd" required ng-minlength="8" name="confPwd" type="password" placeholder="Confirm Password" />
+            <br />
+        </form>
+        <h3 ng-show="errors" class="error-text">{{errors}}</h3>
+        <button class="btn btn-warning" ng-click="cancelAdd()">Cancel</button>
+        <button class="btn btn-primary" ng-click="saveAccount()">Save</button>
+    </div>
+</div>

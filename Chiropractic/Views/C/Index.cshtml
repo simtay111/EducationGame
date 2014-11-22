@@ -1,0 +1,42 @@
+﻿@model Chiropractic.Controllers.CController.ViewCouponModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Coupon</title>
+    <meta name="viewport" content="width=device-width" />
+    <link type="text/css" rel="stylesheet" href="~/Bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="~/Scripts/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="~/Bootstrap/js/bootstrap.js"></script>
+</head>
+<body>
+    <div class="container text-center visible">
+        @{
+            var fileName = @Model.AccountInformation.Id + ".jpg";
+        }
+        <img src="http://practiceowl.com/Files/AcctLogos/@fileName" width="50%"alt="@Model.AccountInformation.OfficeName"/>
+        <h2>@Model.RefereeName has gifted you a <strong>@Model.Coupon</strong></h2>
+        <span style="font-size: 26px; color: #E8130C; ">DONT MISS OUT!</span><br/>
+        <span style="font-size: 22px; color: #E8130C; ">This offer does not last forever!</span><br/>
+        <span style="font-size: 14px; color: #e8130c; "><strong>Expires: @Model.Expiration.ToShortDateString()</strong></span>
+        <br />
+        <span style="color: #e8130c; ">Normally this costs: $@Model.AccountInformation.FirstAwardValue</span>
+        <h3>Call our office now to schedule this special appointment:
+    <br />
+            <a>
+                @Model.AccountInformation.OfficePhone.Substring(0, 3)-@Model.AccountInformation.OfficePhone.Substring(3, 3)-@Model.AccountInformation.OfficePhone.Substring(6, 4)
+            </a></h3>
+        <span style="font-size: 16px; word-wrap: break-word"><a href="http://@Model.AccountInformation.OfficeWebsite">@Model.AccountInformation.OfficeWebsite</a></span>
+        <br/>
+        <img src="/Images/qrcode.jpg" style="width: 25%" />
+        <br />
+        <span style="font-size: 9px">(This reward can only be claimed by you once and has no cash value)</span>
+        <br />
+        <span style="font-size: 9px">(Limit 1 per customer/person. May not be used by an existing client of the practice.)</span>
+        <br/>
+        <span style="font-size: 9px">@Model.AccountInformation.CouponDisclaimerText</span>
+
+    </div>
+</body>
+</html>

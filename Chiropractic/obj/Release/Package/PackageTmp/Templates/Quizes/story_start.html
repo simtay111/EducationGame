@@ -1,0 +1,30 @@
+<div class="text-center" back-img fade-in>
+    <div class="expand" ng-show="dataLoaded">
+        <br />
+        <div>
+            <h2>Hello {{member.firstName}}</h2>
+            <h3>Today's Game:</h3>
+            <div>
+                <h1>{{story.name}}</h1>
+                <h4>{{story.summary}}</h4>
+            </div>
+            <br />
+            <div class="content-font">
+                There are 4 learning slides followed by 3 True/False questions. 
+                <br />
+                Each correct answer
+            gets you closer to earning your next reward!  
+
+            </div>
+        </div>
+        <br />
+        <br />
+
+        <button class="btn btn-xlg btn-success" ng-click="next()">Let's Go!</button>
+        <br />
+        <br />
+        <br />
+        <button ng-click="browsePrizes()" style="margin-top: -5px" class="btn btn-success">Browse Rewards</button>
+        <br />
+    </div>
+</div>

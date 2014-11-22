@@ -1,0 +1,19 @@
+<div back-img class="text-center">
+    <div browse-prizes-page='storyPage'style="display: inline-block" class="text-center" current-points="currentPoints"></div>
+    <br/>
+    <br/>
+    <div>
+        <button class="btn btn-primary" onclick="doneWithPrizesPage()">All Done!</button>
+    </div>
+    <br/>
+    <br/>
+    <script>
+        var doneWithPrizesPage = function() {
+            if (token == 9999)
+                window.location = "http://www.chiroplay.com";
+            else {
+                window.history.back();
+            }
+        };
+    </script>
+</div>

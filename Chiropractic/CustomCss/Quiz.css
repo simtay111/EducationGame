@@ -1,0 +1,107 @@
+﻿.quiz-panel {
+    background-image: url("/Images/yellowLinedPaper.png");
+    background-repeat: repeat-y;
+    background-size: 100%;
+    height: 100%;
+}
+
+.prize-item {
+    margin-top: 5px;
+    
+}
+.available {
+    background-color: #009708;
+}
+
+.not-available {
+    background-color: #97000E;
+}
+
+body {
+    /*background-color: #646464;*/
+    text-shadow: 0 0 1px rgba(0,0,0, 0.6);
+    /*background-color: #808080;*/
+    /*background-image: url("/Images/greyback.jpg");
+    background-size: cover;*/
+                background-image: url("/Images/blue-tile.jpg");
+            /*background-size: r;*/
+            background-color: black;
+            background-repeat: repeat !important;
+    padding-top: 45px; 
+}
+html {
+    height: 100%;
+    overflow-x: hidden
+}
+
+.basic-border {
+    border-top: solid 8px black;
+}
+
+.slide-border {
+    color: white;
+}
+
+.navbar {
+    background: #003E6A !important;
+    border-bottom: solid 1px;
+}
+
+.expand {
+    position: relative;
+    overflow: hidden;
+}
+
+.prize-summary {
+    color: black;
+    border-radius: 15px;
+}
+
+.btn-lg {
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+@font-face {
+    font-family: comicTypeFont;
+    src: url("/Fonts/Roboto-Regular.ttf");
+    /*src: url("/Fonts/Caricaturista.ttf");*/
+}
+
+@font-face {
+    font-family: caricurista;
+    src: url("/Fonts/Caricaturista.ttf");
+    /*src: url("/Fonts/Caricaturista.ttf");*/
+}
+
+.gift-option {
+    margin: 5px;
+    box-shadow: 5px 5px 5px #575757;
+    border: solid #696969 1px;
+    border-radius: 3px;
+}
+
+* {
+    font-family: comicTypeFont !important;
+}
+
+.finishPageLogo {
+    float: left;
+    position: absolute;
+    opacity: .50;
+}
+
+@font-face {
+    font-family: formalFont;
+    src: url("/Fonts/Designosaur-Regular.ttf");
+}
+
+.formal-font {
+    font-family: formalFont !important;
+}
+
+#PrizeSummaryTitle {
+    font-family: formalFont !important;
+}

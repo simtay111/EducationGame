@@ -1,0 +1,135 @@
+﻿<div payment-setup>
+    <div class="text-center" ng-show="isLoading">
+        <h1>Thank you for your patience. We are currently processing your payment.  Due to the high level of security we maintain this may take a moment.
+        </h1>
+    </div>
+    <div ng-show="!isLoading">
+        <div class="row text-center">
+            <img class="reg-img" src="/Images/PaymentHeader.jpg" />
+        </div>
+        <div class="page-header"></div>
+        <div class="row well well-sm" ng-show="hasCcOnFile">
+            <h3>Your current subscription ends: {{subscriptionEnd}}</h3>
+            <h4>Change your subscription type.</h4>
+            <h5>If you have autorenew turned on this is what will automatically be charged. </h5>
+            <label style="font-size: 20px">
+                <input name="priceStructure" type="radio" ng-model="currentType" ng-change="updateSubscription()" value="1" />
+                $97/Month
+            </label>
+            <label style="font-size: 20px">
+                <input name="priceStructure" type="radio" ng-model="currentType" ng-change="updateSubscription()" value="2" />
+                $997 Annually (Best Value)
+            </label>
+            <br/>
+            <div ng-if="!autoRenew">
+                <button class="btn btn-success" ng-click="startBillingAgain()">Re-up subscription</button>
+                
+            </div>
+        </div>
+        <div class="row ">
+            <div ng-show="hasCcOnFile" class="col-md-6 col-lg-6 well well-sm">
+                <div class="text-center">
+                    <h3>We have a credit card stored on file for you currently.</h3>
+                    <br />
+                    <button ng-click="removeCard()" class="btn btn-info">Update Credit Card</button>
+                </div>
+                <br />
+                <h3>Auto Renew:</h3>
+                <h5>Use autorenew to automatically keep your subscription alive.  This is the safest way to 
+                    ensure that your education remains uninterrupted.
+                </h5>
+                <label>
+                    <input ng-model="autoRenew" ng-change="onAutoRenewChange()" type="checkbox" />
+                    Use AutoRenew
+                </label>
+                <br />
+                <br />
+                <h3>Cancel Service:</h3>
+                <h5>If you cancel your account, you will be able to continue to use PracticeOwl until your subscription date expires
+                <button ng-click="removeCard()" class="btn btn-danger btn-xsm">Cancel Service</button>
+                </h5>
+            </div>
+            <div ng-hide="hasCcOnFile" class="col-md-6 col-lg-6 well well-sm">
+                <form class="css-form normal-inputs" name="paymentSetupForm">
+                    <div class="row">
+                        <div class="col-md-4" ng-if="!payedOnce">
+                            <label>
+                                <input type="radio" ng-model="price" name="price" value="1" />3 Months @ $47/Month</label>
+                        </div>
+                        <div class="col-md-4">
+                            <label>
+                                <input type="radio" ng-model="price" name="price" value="2" />Monthly @ $97/Month</label>
+                        </div>
+                        <div class="col-md-4">
+                            <label>
+                                <input type="radio" ng-model="price" name="price" value="3" />1 Year for $997</label>
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <h3 ng-show="price == 1">3 Months @ $47 Per Month</h3>
+                        <h3 ng-show="price == 2">Monthly @ $97 Per Month</h3>
+                        <h3 ng-show="price == 3">BEST DEAL! 1 year for $997</h3>
+                    </div>
+                    <span><span style="font-size: 20px">Name: </span></span>
+                    <input ng-model="name" required class="form-control" />
+                    <br />
+                    <span><span style="font-size: 20px">Email: </span></span>
+                    <input ng-model="email" required class="form-control" type="email" />
+                    <br />
+                    <span><span style="font-size: 20px">Credit Card Number: </span></span>
+                    <input ng-model="ccNum" required class="form-control" ui-mask="9999-9999-9999-9999" />
+                    <br />
+                    <div class="row">
+                        <div class="col-md-4 col-lg-4">
+                            <span><span style="font-size: 20px">CVV Code: </span></span>
+                            <input ng-model="cvv" ui-mask="999" required class="form-control" />
+                            <br />
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <span><span style="font-size: 20px">Exp. Month: </span></span>
+                            <input ng-model="month" required class="form-control" ui-mask="99" />
+                            <br />
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <span><span style="font-size: 20px">Exp. Year: </span></span>
+                            <input ng-model="year" required class="form-control" ui-mask="9999" />
+                            <br />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6">
+                            <span><span style="font-size: 20px">Billing Zip Code: </span></span>
+                            <input ng-model="zipCode" required class="form-control" />
+                            <br />
+                        </div>
+                        <div class="col-md-6 col-lg-6">
+                            <span><span style="font-size: 20px">Have A Promo Code? </span></span>
+                            <input ng-model="promoCode" class="form-control" />
+                            <br />
+                        </div>
+                    </div>
+                    <div ng-show="errors">
+                        <div style="color: red">{{errors}}</div>
+                        <br />
+                    </div>
+
+                    <button ng-disabled="paymentSetupForm.$invalid" ng-click="saveCard()" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+            <div class="col-md-6 col-lg-6">
+                <h3>How much does it cost?</h3>
+                Its simple, for the low cost of $97.00 your office can run and deliver as much education as your patients want in 
+            a month.  It's that easy and you can cancel anytime!  No obligations! You can also choose our other options to save more 
+            money such as 3 months at $47 dollars a month or 1 year for $997 (Our best deal!).
+            <h3>Hesitant?</h3>
+                There is a <strong>FREE</strong> trial version! Simply skip this page and any patients you add (or that add themselves) can play the first 
+            three games without you needing to enter any payment information in.  <a class="btn btn-sm " href="/Members">Try it out! Add a patient!</a>
+                <h3>How do rewards work for patients?</h3>
+                Rewards are delivered to your patients when they get a certain amount of points playing games.  These rewards come in the form
+            of E-Gift cards (emailed gift cards).  We store your credit card using a hyper secure service provided by <a href="http://www.wepay.com">WePay</a> and will charge
+            the card you enter for the rewards redeemed.  
+
+            </div>
+        </div>
+    </div>
+</div>

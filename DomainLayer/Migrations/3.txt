@@ -1,0 +1,11 @@
+﻿alter table AccountInformation add CreationDate datetime null
+update AccountInformation set CreationDate = '2014-03-20 12:50:36.000'
+
+CREATE TABLE [dbo].[SystemState](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[LastDateChecked] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]

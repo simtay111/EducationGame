@@ -1,0 +1,159 @@
+﻿<div manage-members-panel style="color: black">
+    <div add-new-member-controller class="row">
+    </div>
+    <br />
+    <button class="btn btn-success" ng-click="addNewMember()">Add Patient</button>
+    <br />
+    <br />
+    <div ng-controller="curentMemberListController">
+        <div class="row">
+            <div class="well well-lg">
+                <div ng-show="users.length < 5 && $scope.fullMemberList < 5">
+                    <h2 ng-show="users.length < 1">Try it! Start by adding yourself as a patient. Press "Add Patient"</h2>
+                    <h2 ng-show="users.length == 1">GREAT! We will send them a text message showing them where to start!</h2>
+                    <h2 ng-show="users.length == 1">It really is that simple to get the game up and running!</h2>
+                    <h3 ng-show="users.length > 2">We see that you're new! Want a patient to try the game? Simply add them and we will send them a text message showing them where to start!</h3>
+                </div>
+                <input class="form-control input-lg" ng-model="filter" placeholder="Search by name or phone #" />
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" ng-model="includeInactive" ng-change="inactiveChanged()">
+                        Include Inactive Patients
+                    </label>
+                </div>
+                <div>
+                    <br />
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Last:</th>
+                                <th>First:</th>
+                                <th>Edit:</th>
+                                <th>History:</th>
+                                <th>Rewards:</th>
+                                <!--<th>Send Start:</th>-->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="member in users">
+                                <td>{{member.lastName}}</td>
+                                <td>{{member.firstName}}</td>
+                                <td ng-click="beginEditing(member)"><a>Edit</a></td>
+                                <td ng-click="viewHistory(member)"><a>History</a></td>
+                                <td ng-click="viewPrizes(member)"><a>Rewards</a></td>
+                                <!--<td ng-click="sendStartGame(member.id)"><a ng-class="{'btn btn-success' : users.length < 2}">{{(users.length < 2) ? 'TRY ME TO START YOUR GAME' : 'Send Start'  }}</a></td>-->
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-1"></div>
+            <div id="EditMemberDialog" data-backdrop="false" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h2>{{currentMember.firstName}} {{currentMember.lastName}}:</h2>
+                        </div>
+                        <div class="modal-body">
+                            <h3>First Name:</h3>
+                            <input ng-model="currentMember.firstName" class="form-control" />
+                            <h3>Last Name:</h3>
+                            <input ng-model="currentMember.lastName" class="form-control" />
+                            <h3>Phone Number:</h3>
+                            <input ng-model="currentMember.phoneNumber" ui-mask="(999) 999-9999" class="form-control" />
+                            <h3>Current Points:</h3>
+                            <h4>{{currentMember.totalPoints}}</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" ng-click="updateMember()" data-dismiss="modal" ng-show="!markInactiveStarted">Save/Update</button>
+                            <button class="btn btn-info" ng-click="reactivateMember()" data-dismiss="modal" ng-show="currentMember.inactive">Mark Active</button>
+                            <button class="btn btn-danger" ng-click="beginMark()" ng-show="!markInactiveStarted && !currentMember.inactive">Mark Inactive</button>
+                            <button class="btn btn-info" ng-click="cancelMark()" ng-show="markInactiveStarted">Cancel</button>
+                            <button class="btn btn-warning" ng-click="markMemberInactive()" data-dismiss="modal" ng-show="markInactiveStarted">CONFIRM?</button>
+                            <button class="btn btn-warning" data-dismiss="modal">Cancel/Close</button>
+                        </div>
+
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+        </div>
+
+        <div id="MemberHistoryDialog" data-backdrop="false" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">History</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Game Name</th>
+                                    <th>Points Earned</th>
+                                    <th>Date Completed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="history in memberQuizHistory">
+                                    <td>{{history.storyName}}</td>
+                                    <td>{{history.pointsEarned}}</td>
+                                    <td>{{history.dateCompleted | date: 'short'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-success" data-dismiss="modal">Done</button>
+                    </div>
+
+                </div>
+                <!-- /.modal-content -->
+            </div>
+        </div>
+        <div id="MemberPrizesDialog" data-backdrop="false" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Rewards</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Reward Name</th>
+                                    <th>Confirmation Code</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="awardedPrize in awardedPrizes">
+                                    <td>{{awardedPrize.prizeName}}</td>
+                                    <td>{{awardedPrize.confirmationCode}}</td>
+                                    <td>
+                                        <button ng-click="redeemPrize(awardedPrize)" class="btn btn-primary btn-sm" ng-disabled="awardedPrize.redeemed">{{awardedPrize.redeemed ? 'They got it' : 'Redeem'}}</button>
+                                        <button ng-click="refundPrize(awardedPrize)" class="btn btn-danger btn-sm">Refund Points</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-success" data-dismiss="modal">Done</button>
+                    </div>
+
+                </div>
+                <!-- /.modal-content -->
+            </div>
+        </div>
+
+
+    </div>
+
+</div>

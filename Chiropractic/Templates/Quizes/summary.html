@@ -1,0 +1,20 @@
+<div back-img fade-in>
+    <br />
+    <div class="text-center fade-in-fade-out" ng-show="dataReady">
+        <div>
+            <h2>You're doing great {{user.firstName}}!</h2>
+        </div>
+        <h3>You're getting smarter and closer to your next reward!<br />
+            Let's play again on your next visit.</h3>
+        <prize-summary current-points="currentPoints()"></prize-summary>
+        <br />
+        <div browse-prizes-page="finished" current-points="currentPoints()">
+        </div>
+        <div>
+            <br />
+            <button ng-click="allDone()" class="btn btn-lg btn-primary">All Done</button>
+            <br />
+            <br />
+        </div>
+    </div>
+</div>

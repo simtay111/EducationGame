@@ -1,0 +1,36 @@
+﻿@model Chiropractic.Controllers.CController.ViewAwardModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Award</title>
+    <meta name="viewport" content="width=device-width" />
+    <link type="text/css" rel="stylesheet" href="~/Bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="~/Scripts/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="~/Bootstrap/js/bootstrap.js"></script>
+</head>
+<body>
+    <div class="container text-center visible" style="border: dashed 5px">
+        <h2>YOU'VE EARNED<br />
+            A REWARD!</h2>
+        <h3 style="color: red"><strong>YOU'VE WON<br />
+            **<span style="color: black">@Model.Prize.PrizeName</span>**</strong></h3>
+        <h3><i>You must claim your reward within 45 days of receiving this voucher.</i></h3>
+
+        <span style="font-size:14px;color: red">Expires On: @Model.Expiration.ToShortDateString()</span>
+        @Model.Prize.Member.FirstName
+        <br />
+        @Model.Prize.Member.AccountInformation.OfficeName
+        <br />
+        <a>
+            @Model.Prize.Member.AccountInformation.OfficePhone.Substring(0, 3)-@Model.Prize.Member.AccountInformation.OfficePhone.Substring(3, 3)-@Model.Prize.Member.AccountInformation.OfficePhone.Substring(6, 4)
+        </a>
+        <br />
+        <img src="/Images/qrcode.jpg" style="width: 40%" />
+        <br />
+        <span style="font-size: 9px">Confirmation Code: @Model.Prize.ConfirmationCode</span>
+        <br />
+        <span style="font-size: 9px">(This reward can only be claimed by you once and has no cash value)</span>
+    </div>
+</body>
+</html>

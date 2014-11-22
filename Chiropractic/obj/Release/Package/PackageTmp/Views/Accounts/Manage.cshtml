@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "My Account";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript" src="https://static.wepay.com/min/js/tokenization.v2.js"></script>
+<script src="/CustomScripts/Registration/RegistrationBase.js"></script>
+<script src="/CustomScripts/Management/Management.js"></script>
+<script src="/CustomScripts/Registration/BasicInfoPanel.js"></script>
+<script src="/CustomScripts/Registration/AddAssistantPanel.js"></script>
+<script src="/CustomScripts/Registration/SetupPrizesPanel.js"></script>
+<script src="/CustomScripts/Registration/LogoUploadPanel.js"></script>
+<script src="/CustomScripts/Registration/PaymentSetup.js"></script>
+<script>
+    function startIntro() {
+        var intro = introJs();
+        intro.setOptions({
+            showBullets: false, showStepNumbers: false,
+            steps: [{
+                element: '#OfficeInfoPanel',
+                intro: "Here you can update your email, office name, and other practice contact info."
+            },
+                {
+                    element: '#SetupAssitantsPanel',
+                    intro: "This tab will allow you to setup extra accounts to help run PracticeOwl."
+                }, {
+                    element: '#PrizesPanel',
+                    intro: "Here you can update your prizes and change the points for them."
+                },{
+                    element: "#LogoPanel",
+                    intro: "Want to customize PracticeOwl? Here you can upload your logo for the application."
+                }, {
+                    element: '#PaymentSetup',
+                    intro: "Here you can change your payment method."
+                }
+            ]
+        });
+        intro.start();
+    }
+</script>
+<div id="registrationApp" ng-app="RegisterModule" ng-controller="managementBaseController">
+    <div class="text-center">
+        <div class="btn-group btn-group-lg text-center">
+            <button id="OfficeInfoPanel" type="button" class="btn btn-lg btn-primary" ng-click="goToPanel('basicInfoPanel')">Office Info</button>
+            <button id="SetupAssitantsPanel" type="button" class="btn btn-lg btn-primary" ng-click="goToPanel('addAssistantPanel')">Assistant Accounts</button>
+            <button id="PrizesPanel" type="button" class="btn btn-lg btn-primary" ng-click="goToPanel('setupPrizesPanel')">Custom Rewards</button>
+            <button id="LogoPanel" type="button" class="btn btn-lg btn-primary" ng-click="goToPanel('logoUploadPanel')">Logo Upload</button>
+            <button id="PaymentSetup" type="button" class="btn btn-lg btn-primary" ng-click="goToPanel('paymentSetup')">Payment Setup</button>
+            <button type="button" class="btn btn-lg btn-info" onclick="startIntro()">Quick Start Guide.</button>
+        </div>
+    </div>
+    <br />
+    <div class="container visible">
+        <div ng-view></div>
+    </div>
+</div>

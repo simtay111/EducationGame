@@ -1,0 +1,2 @@
+﻿alter table AccountInformation add IsVerified bit
+update AccountInformation set IsVerified = 1

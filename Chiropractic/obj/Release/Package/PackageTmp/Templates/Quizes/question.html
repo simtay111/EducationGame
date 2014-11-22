@@ -1,0 +1,32 @@
+<div id="QuestionSlide" style="color: black; " class="view-page quiz-panel text-center" fade-in>
+    <br />
+    <div class="text-center content-font">
+        <h3>Question {{currentQuestionId}} of 3:</h3>
+        {{question.query}}
+        <br />
+        <br />
+        <div ng-show="!question.wasAnswered">
+            <button ng-click="answerWith(true)" class="btn btn-lg btn-info">True</button>&nbsp;&nbsp;
+            <button ng-click="answerWith(false)" class="btn btn-lg btn-info">False</button>
+        </div>
+        <div ng-show="question.wasAnswered" class="expand">
+            <div ng-show="question.wasCorrect">
+                <h3 style="color: green">CORRECT!</h3>
+                <div style="color: green">
+                    {{question.correctAnswer}}
+                </div>
+            </div>
+            <div ng-show="!question.wasCorrect">
+                <h3 style="color: red">OOPS!</h3>
+                <div style="color: red">
+                    {{question.wrongAnswer}}
+                    </div>
+                </div>
+
+            </div>
+            <br />
+        </div>
+        <button class="btn btn-lg btn-primary" ng-show="question.wasAnswered" ng-click="next()">Next</button>
+        <br />
+        <br />
+    </div>

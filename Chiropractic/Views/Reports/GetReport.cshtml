@@ -1,0 +1,65 @@
+﻿@model EducationGame.Controllers.ReportModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                <th>Office Name</th>
+                <th># Of Patients</th>
+                <th>Time Completed</th>
+                <th>Member Name</th>
+                <th>Finished Game</th>
+                <th>Story Name</th>
+                <th>Story Id</th>
+                </tr>
+            </thead>
+            @foreach (var quiz in Model.Quizes)
+            {
+                <tr>
+                <td>@quiz.Member.AccountInformation.OfficeName</td> 
+                <td>@quiz.Member.AccountInformation.NumberOfPatients</td> 
+                <td>@quiz.DateCompleted</td> 
+                <td>@quiz.Member.FirstName</td> 
+                <td>@quiz.Member.LastName</td> 
+                <td>@quiz.Completed</td> 
+                <td>@quiz.StoryName</td> 
+                <td>@quiz.StoryId</td> 
+                </tr>
+            }
+
+        </table>
+    </div>
+    <div>
+        <h1>Offices</h1>
+        <table>
+            <thead>
+                <tr>
+                <th>Id</th>
+                <th>Office Name</th>
+                <th>Has CC Token</th>
+                <th>Cost Per Quiz</th>
+                <th>Notify Email 1</th>
+                </tr>
+            </thead>
+            @foreach (var clinic in Model.Clinics)
+            {
+                <tr>
+                <td>@clinic.Id</td> 
+                <td>@clinic.OfficeName</td> 
+                <td>@(clinic.CreditCardToken > 0)</td> 
+                <td>@clinic.CostPerQuiz</td> 
+                <td>@clinic.NotifyEmail1</td> 
+                </tr>
+            }
+
+        </table>
+    </div>
+</body>
+</html>

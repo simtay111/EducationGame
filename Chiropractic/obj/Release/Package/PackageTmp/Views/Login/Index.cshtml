@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Login";
+}
+<script>
+    var module = angular.module("MainModule", ['ngResource', 'ngRoute']);
+    module.config(function ($httpProvider, $routeProvider) {
+        $routeProvider.when("/loginPanel", {
+            templateUrl: "/Templates/Login/LoginPanel.html"
+        }).when("/changePasswordPanel", {
+            templateUrl: "/Templates/Login/ChangePasswordPanel.html"
+        }).when("/waitForPasswordEmailPanel", {
+            templateUrl: "/Templates/Login/WaitForPasswordEmailPanel.html"
+        }).when("/forgotPasswordPanel", {
+            templateUrl: "/Templates/Login/ForgotPasswordPanel.html"
+        }).otherwise({
+            templateUrl: "/Templates/Login/LoginPanel.html"
+        });
+        $httpProvider.interceptors.push(function ($q, $location) {
+            return {
+                'request': function (config) {
+                    if (config.url.indexOf('.html') != -1)
+                        return config;
+                    abdGlobals.showMask();
+                    return config;
+                },
+
+                'response': function (response) {
+                    if (response.config.url.indexOf('.html') != -1)
+                        return response;
+                    abdGlobals.hideMask();
+                    return response;
+                },
+            };
+        });
+    });
+</script>
+<script src="/CustomScripts/Login/ChangePasswordPanel.js"></script>
+<script src="/CustomScripts/Login/WaitForPasswordEmailPanel.js"></script>
+<script src="/CustomScripts/Login/LoginPanel.js"></script>
+<script src="/CustomScripts/Login/ForgotPasswordPanel.js"></script>
+<body>
+    <div ng-app="MainModule">
+        <div class="container visible">
+            <div ng-view></div>
+        </div>
+    </div>
+</body>

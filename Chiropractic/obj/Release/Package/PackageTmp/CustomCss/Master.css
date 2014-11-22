@@ -1,0 +1,104 @@
+a {
+    cursor: pointer;
+}
+
+.available {
+    background-color: #009708;
+}
+
+.not-available {
+    background-color: #97000E;
+}
+
+.input-xlg {
+    height: 65px;
+    padding: 10px 16px;
+    font-size: 28px;
+    line-height: 1.33;
+    border-radius: 6px;
+}
+
+.btn-xlg {
+    padding: 17px 30px;
+    font-size: 20px;
+    line-height: 1.33;
+    border-radius: 6px;
+}
+
+.invalidInput {
+    border: darkred solid 1px !important;
+    background: lightpink !important;
+}
+
+.front-font {
+    font-size: 20px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+#LoginPanel #backButton {
+    display: none;
+}
+
+.imageborder {
+    border: solid 5px;
+}
+
+.visible {
+    display: block !important;
+}
+
+.container {
+    display: none;
+}
+
+.error-text {
+    color: red;
+}
+
+.css-form input.ng-invalid.ng-dirty {
+    background-color: #FA787E;
+}
+
+.css-form input.ng-valid.ng-dirty {
+    background-color: #78FA89;
+}
+
+.userImage {
+    border: solid 5px grey;
+    border-radius: 10px;
+}
+
+.content-font {
+    font-size: 20px;
+}
+
+.progress-container {
+    background-color: #353535;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: solid 3px black;
+    border-radius: 15px;
+    /*width: 80%;*/
+}
+
+
+.helpText {
+    color: blue;
+}
+
+.reg-img {
+    width: 90%
+}
+
+.gift-option {
+    margin: 5px;
+    box-shadow: 5px 5px 5px #575757;
+    border: solid #696969 1px;
+    border-radius: 3px;
+}

@@ -1,0 +1,43 @@
+﻿.half-input {
+    width: 50% !important;
+}
+
+.report-input {
+    width: 80% !important;
+}
+
+.btn-xsm {
+    padding: 2px 5px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+
+input[type=radio], input[type=checkbox] {
+    width: auto !important;
+}
+
+.normal-inputs {
+    width: 100% !important;
+}
+
+.carousel-inner > .item {
+    background-color: rgba(123, 226, 255, 0.7);
+}
+
+#BestPracticesModal .row {
+    margin: 10px;
+}
+
+#NavBar .fa {
+    margin-right: 5px;
+}
+
+@font-face {
+    font-family: comicTypeFont;
+    src: url("/Fonts/Designosaur-Regular.ttf");
+}
+
+h5, h4, h3, h2, h1, td, a, button {
+    font-family: comicTypeFont !important;
+}

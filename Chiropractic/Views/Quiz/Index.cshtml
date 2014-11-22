@@ -1,0 +1,79 @@
+﻿@model EducationGame.Controllers.QuizStartModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Game</title>
+    <link rel="SHORTCUT ICON" href="@Url.Content("~/Images/Icon/image.jpg")"/>
+    <link type="text/css" rel="stylesheet" href="~/Bootstrap/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="~/CustomCss/Master.css" />
+    <link type="text/css" rel="stylesheet" href="~/CustomCss/Quiz.css" />
+    <script type="text/javascript" src="~/Scripts/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/Better2Web-jquery/src/jquery.percentageloader-0.1.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jQuery-Knob-master/js/jquery.knob.js"></script>
+    <script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/underscore.min.js"></script>
+    <script type="text/javascript" src="~/Bootstrap/js/bootstrap.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/angular-resource.min.js"></script>
+    <script src="~/Scripts/angular-route.min.js"></script>
+    <script src="~/Scripts/angular-touch.min.js"></script>
+    <script src="~/Scripts/angular-animate.min.js"></script>
+    <script src="~/Scripts/angular-ui/ui-utils.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.10.4.min.js"></script>
+    <script src="~/Scripts/greensock/src/minified/TweenMax.min.js"></script>
+    <script>
+        var isSafari = function() {
+            var ua = navigator.userAgent.toLowerCase();
+            if (ua.indexOf('safari') != -1) {
+                if (ua.indexOf('chrome') > -1 || ua.indexOf("crios") > -1) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+            return false;
+        };
+    </script>
+    <link rel="stylesheet" href="~/bootstrap/css/bootstrap-theme.min.css" />
+    <script>
+        var memberId = @Html.Raw(Model.MemberId);
+        var token = @Html.Raw(Model.Token);
+        window.addEventListener("load",function() {
+            // Set a timeout...
+            setTimeout(function(){
+                // Hide the address bar!
+                window.scrollTo(0, 1);
+            }, 0);
+        });
+    </script>
+    <script src="~/CustomScripts/Quizes/controller.js"></script>
+    <script src="~/CustomScripts/Quizes/question_page.js"></script>
+    <script src="~/CustomScripts/Quizes/slide_page.js"></script>
+    <script src="~/CustomScripts/Quizes/summary_page.js"></script>
+    <script src="~/CustomScripts/Quizes/finish_page.js"></script>
+    <script src="~/CustomScripts/Quizes/browse_prizes_page.js"></script>
+    <script src="~/CustomScripts/Directives/fadein.js"></script>
+    <script src="~/CustomScripts/Quizes/story_start_page.js"></script>
+    <script src="~/CustomScripts/Quizes/Services/StoryService.js"></script>
+    <script src="~/CustomScripts/Quizes/prizes_summary.js"></script>
+    <script src="~/CustomScripts/Quizes/Services/BackImgService.js"></script>
+    <script src="~/CustomScripts/Directives/progress.js"></script>
+    <script src="~/CustomScripts/animations.js"></script>
+</head>
+<body ng-app="mainModule" ng-controller="myController">
+    <div class="navbar navbar-fixed-top " role="navigation">
+        <div class="container visible">
+            <div class="navbar-header navbar-right">
+                <div ng-show="showBasePrizeSummary()" style="" class="slide-border">
+                    <div prize-summary current-points="currentPoints"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div >
+        <div class="slide-border" ng-view></div>
+    </div>
+</body>
+</html>

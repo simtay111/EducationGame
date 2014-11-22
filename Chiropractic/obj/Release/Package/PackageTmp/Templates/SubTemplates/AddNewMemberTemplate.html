@@ -1,0 +1,40 @@
+﻿<div id="AddNewMemberDialog" data-backdrop="false" class="modal fade text-left">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Add Patient</h4>
+            </div>
+            <div class="modal-body">
+                <div class="">
+                    <div>
+                        <form name="newMemberForm" class="css-form ">
+                            <div class="form-group">
+                                <h4>First Name:</h4>
+                                <input ng-model="newMember.firstName" required class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <h4>Last Name:</h4>
+                                <input ng-model="newMember.lastName" required class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <h4>Cell Phone Number:</h4>
+                                <input ng-model="newMember.phoneNumber" ui-mask="(999) 999-9999" required class="form-control" />
+                            </div>
+                            <h4 style="color: red">{{errorMessage}}</h4>
+                            <br />
+                            <h4>
+                                <label><input ng-model="newMember.sendSms" type="checkbox"/> Send text message with game start info.</label>
+                            </h4>
+
+                            <button class="btn btn-success" type="submit" ng-disabled="newMemberForm.$invalid" ng-click="addMember()">Add</button>
+                            <button class="btn btn-negative" ng-click="cancelAdd()">Cancel</button>
+                        </form>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+</div>

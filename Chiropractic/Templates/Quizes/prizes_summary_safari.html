@@ -1,0 +1,19 @@
+<div class="">
+    <h3 id="PrizeSummaryTitle">Your Reward Summary:</h3>
+    <table class="prize-summary text-center " style="margin: 0 auto; ">
+        <tbody>
+            <tr>
+                <td ng-repeat="prize in prizes" style="padding: 5px">
+                    <!--<input class="prize-progress-text dial" progress type="text" current="currentPoints" data-height="100" data-width="100" total-points="prize.points" data-thickness=".3" data-fgcolor="chartreuse" data-bgcolor="grey" data-inputcolor="black"
+                        data-readonly="true" />-->
+                     <h3 style="color: chartreuse">{{getPercentages(prize.points)}}%</h3>
+                    <br />
+                    {{currentPoints}}/{{prize.points}}
+                </td>
+            </tr>
+            <tr >
+                <td ng-repeat="prize in prizes" style="padding: 5px; max-width: 120px;" ><strong>{{prize.name}}</strong></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

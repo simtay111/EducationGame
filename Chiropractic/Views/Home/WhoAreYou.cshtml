@@ -1,0 +1,203 @@
+﻿@{
+    ViewBag.Title = "Patient Access";
+}
+<html>
+<head>
+    <link rel="SHORTCUT ICON" href="@Url.Content("~/Images/Icon/image.jpg")"/>
+    <meta name="viewport" content="width=device-width" />
+    <link type="text/css" href="~/bootstrap/fonts/glyphicons-halflings-regular.ttf" />
+    <link type="text/css" rel="stylesheet" href="~/Bootstrap/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="~/Bootstrap/css/bootstrap-theme.min.css" />
+    <link type="text/css" rel="stylesheet" href="~/CustomCss/Master.css" />
+    @*<link type="text/css" rel="stylesheet" href="~/CustomCss/OfficePages.css" />*@
+    <script type="text/javascript" src="~/Scripts/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/underscore.min.js"></script>
+    <script type="text/javascript" src="~/Bootstrap/js/bootstrap.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/angular-resource.min.js"></script>
+    <script src="~/Scripts/angular-route.min.js"></script>
+    <script src="~/Scripts/angular-touch.min.js"></script>
+    <script src="~/scripts/BootstrapPlugin/FileInput.js"></script>
+    <script src="~/Scripts/angular-ui/ui-utils.js"></script>
+    <script src="~/Scripts/angular-ui/ui-utils.min.js"></script>
+    <style>
+        html, body {
+            background-image: url("/Images/blue-tile.jpg");
+            /*background-size: r;*/
+            background-color: black;
+            background-repeat: repeat !important;
+        }
+    </style>
+
+    <script>
+        var mainModule = angular.module("PatientAccess", ['ui.utils', 'ngTouch']);
+        mainModule.controller("startPageCtrl", ['$scope', '$http', function ($scope, $http) {
+            $scope.btnText = "Begin!";
+            $scope.rememberMe = window.localStorage["chiroRememberMe"] == "true";
+            if ($scope.rememberMe)
+                $scope.phoneNumber = window.localStorage["chiroPhone"];
+            else {
+                $scope.phoneNumber = "";
+            }
+            $scope.showNewPatientWindow = false;
+            $scope.accountId = 0;
+            $scope.firstName = "";
+            $scope.lastName = "";
+            $scope.startQuiz = function () {
+                $scope.errors = "";
+                if ($scope.startQuizViaPhoneForm.$invalid) {
+                    $scope.errors = "Please enter a valid phone number and a 4 digit token.";
+                    return;
+                }
+                $scope.btnText = "Loading!";
+                $http.post("/Quiz/StartQuizViaPhone", { phoneNumber: $scope.phoneNumber, memberId: $scope.memberId, dailyToken: $scope.dailyToken }).success(function (response) {
+                    if (response.failed) {
+                        if (response.multiplePatients) {
+                            $scope.multiplePatients = true;
+                            $scope.multiplePatientChoices = response.clinics;
+                            $scope.errors = response.message;
+                        } else if (response.notFound) {
+                            $scope.notFound = true;
+                            $scope.errors = response.message;
+                            $scope.btnText = "Begin!";
+                        }
+                        else {
+                            $scope.errors = response.message;
+                            $scope.btnText = "Begin!";
+                        }
+                        return;
+                    }
+                    window.localStorage["chiroPhone"] = $scope.phoneNumber;
+                    window.location = "/Quiz?generatedId=" + response.quizToken + "&memberId=" + response.memberId;
+                });
+            };
+
+            $scope.$watch('phoneNumber', function (newValue, oldValue) {
+                if (!newValue || newValue.length == 0) {
+                    return;
+                }
+                if (isNaN(newValue) || newValue.length > 10) {
+                    console.log($scope.phoneNumber);
+                    if (parseInt(oldValue)) {
+                        $scope.phoneNumber = parseInt(oldValue);
+                    } else {
+                        $scope.phoneNumber = "";
+                    }
+                }
+            });
+
+            $scope.$watch('dailyToken', function (newValue, oldValue) {
+                if (!newValue || newValue.length == 0) {
+                    return;
+                }
+                if (isNaN(newValue) || newValue.length > 4) {
+                    console.log($scope.dailyToken);
+                    if (parseInt(oldValue)) {
+                        $scope.dailyToken = parseInt(oldValue);
+                    } else {
+                        $scope.dailyToken = "";
+                    }
+                }
+            });
+
+            $scope.changeRememberMe = function () {
+                window.localStorage['chiroRememberMe'] = $scope.rememberMe;
+                if (!$scope.rememberMe)
+                    window.localStorage['chiroPhone'] = '';
+            };
+            $scope.iAmNew = function () {
+                $scope.showNewPatientWindow = true;
+                $scope.errors = "";
+                $scope.notFound = false;
+            };
+            $scope.submitAddNew = function () {
+                if ($scope.addNewForm.$invalid) {
+                    $scope.errors = "Please fill out all fields.";
+                    return;
+                }
+                $http.post("/members/selfAdd", { clinicId: $scope.clinicId, phoneNumber: $scope.phoneNumber, dailyToken: $scope.dailyToken, firstName: $scope.firstName, lastName: $scope.lastName })
+                    .success(function (response) {
+                        if (!response.success) {
+                            $scope.errors = response.message;
+                            return;
+                        }
+                        alert("Awesome! We added you!");
+                        $scope.showNewPatientWindow = false;
+                        $scope.errors = "";
+                        window.localStorage["chiroPhone"] = $scope.phoneNumber;
+                    });
+            };
+            $scope.selectOffice = function (memberId) {
+                $scope.memberId = memberId;
+                $scope.startQuiz();
+            };
+        }]);
+    </script>
+</head>
+<body>
+    <div ng-app="PatientAccess" ng-controller="startPageCtrl" class="container visible">
+        <div class="text-center">
+            <div class="row">
+                <h2 style="color: white">To start your next game...</h2>
+            </div>
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6">
+                    <form name="startQuizViaPhoneForm" class="css-form" ng-show="!multiplePatients && !showNewPatientWindow">
+                        <h2 style="color: white">Enter your 10-digit cell phone number <br />(ie 1112223333)</h2>
+                        <input class="form-control input-xlg" ng-model="phoneNumber" placeholder="1112223333" required />
+                        <label style="color: white">
+                            <input ng-model="rememberMe" ng-change="changeRememberMe()" type="checkbox" />Remember Me</label>
+                        <br />
+                        <h2 style="color: white">Enter the daily token</h2>
+                        <input class="form-control input-xlg" ng-model="dailyToken" required />
+                        <br />
+                        <h3 style="color: red">{{errors}}</h3>
+                        <button ng-click="startQuiz()" class="btn btn-xlg btn-success" type="submit">{{btnText}}</button>
+                        <div ng-show="notFound">
+                            <br />
+                            <br />
+                            <button ng-click="iAmNew()" class="btn btn-info btn-lg">Are you new?</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
+            <div ng-show="multiplePatients">
+                <h3 style="color: red">{{errors}}</h3>
+                <div ng-repeat="clinic in multiplePatientChoices">
+                    <button class="btn btn-lg btn-success" ng-click="selectOffice(clinic.memberId)">{{clinic.officeName}}</button>
+                    <br />
+                    <br />
+                </div>
+                <button class="btn btn-info" ng-click="multiplePatients = false">Cancel</button>
+
+            </div>
+            <div ng-show="showNewPatientWindow">
+                <h3 style="color: red">{{errors}}</h3>
+                <form name="addNewForm" class="css-form" style="color: white">
+                    <span style="font-size: 20px">First Name:</span>
+                    <br />
+                    <input class="form-control input-lg" ng-model="firstName" required />
+                    <br />
+                    <span style="font-size: 20px">Last Name:</span>
+                    <br />
+                    <input class="form-control input-lg" ng-model="lastName" required />
+                    <br />
+                    <span style="font-size: 20px">Clinic Id:</span>
+                    <br />
+                    <input class="form-control input-lg" type="number" ng-model="clinicId" required />
+                    <br />
+                    <span style="font-size: 20px">Daily Token:</span>
+                    <br />
+                    <input class="form-control input-lg" type="number" ng-model="dailyToken" required />
+                    <br />
+                    <br />
+                    <button ng-disabled="addNewForm.$invalid" class="btn btn-lg btn-success" ng-click="submitAddNew()">Let me play!</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

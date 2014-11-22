@@ -1,0 +1,39 @@
+﻿<div>
+    <h2>Game Cost Report</h2>
+    <h5>This report will tell you total cost on a per day basis for the games that are taken.</h5>
+    <div class="row">
+        <div class="col-md-5">
+            Start:<input class="report-input form-control" ng-model="start" type="date" />
+        </div>
+        <div class="col-md-5">
+            End:<input class="report-input form-control" ng-model="end" type="date" />
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-success btn-lg" ng-click="runReport()">Run Report</button>
+        </div>
+    </div>
+    <div ng-show="loading">
+        <h3>Loading...</h3>
+    </div>
+    <div class="text-left">
+        <table ng-hide="loading" class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Game Name</th>
+                </tr>
+            </thead>
+
+            <tbody ng-repeat="range in report">
+                <tr class="active">
+                    <td>{{range[0].dateCompleted | date : "MM/dd/yyyy"}}</td>
+                    <td></td>
+                </tr>
+                <tr ng-repeat="item in range">
+                    <td>{{item.member.lastName}}, {{item.member.firstName}}</td>
+                    <td>{{item.storyName}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

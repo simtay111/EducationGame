@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace Chiropractic.Filters
+namespace EducationGame.Filters
 {
     public class AllowCrossSiteJsonAttribute : ActionFilterAttribute
     {

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Diagnostics;
-using System.Web;
+﻿using System.Web;
 using System.Web.Security;
-using Chiropractic.Filters;
 using DomainLayer.Authentication;
 using DomainLayer.Entities;
+using EducationGame.Filters;
 
-namespace Chiropractic
+namespace EducationGame
 {
     public class UserAuthenticator : IAuthenticateUsers
     {

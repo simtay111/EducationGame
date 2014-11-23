@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Diagnostics;
-using System.Linq;
 using System.Security.Principal;
-using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -15,7 +11,7 @@ using NHibernate.Context;
 using TangoApi;
 using WePaySDK;
 
-namespace Chiropractic
+namespace EducationGame
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801

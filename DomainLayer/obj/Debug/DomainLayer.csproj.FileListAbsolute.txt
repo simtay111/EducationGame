@@ -41,5 +41,6 @@ C:\Users\Simtay111\Documents\GitHub\EducationGame\DomainLayer\bin\Debug\log4net.
 C:\Users\Simtay111\Documents\GitHub\EducationGame\DomainLayer\bin\Debug\RestSharp.xml
 C:\Users\Simtay111\Documents\GitHub\EducationGame\DomainLayer\bin\Debug\Twilio.Api.xml
 C:\Users\Simtay111\Documents\GitHub\EducationGame\DomainLayer\bin\Debug\WePaySDK.pdb
+C:\Users\Simtay111\Documents\GitHub\EducationGame\DomainLayer\obj\Debug\DomainLayer.csprojResolveAssemblyReference.cache
 C:\Users\Simtay111\Documents\GitHub\EducationGame\DomainLayer\obj\Debug\DomainLayer.dll
 C:\Users\Simtay111\Documents\GitHub\EducationGame\DomainLayer\obj\Debug\DomainLayer.pdb

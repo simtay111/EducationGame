@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-using Chiropractic;
 using DataLayer;
 using DomainLayer;
 using DomainLayer.Authentication;

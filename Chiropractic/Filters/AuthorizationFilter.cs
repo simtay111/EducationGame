@@ -1,9 +1,7 @@
-﻿using System.Security.Authentication;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
-using DataLayer.Configuration;
 
-namespace Chiropractic.Filters
+namespace EducationGame.Filters
 {
     /// <summary>Use this filter for read-only actions.</summary>
     public class AuthorizationFilter : ActionFilterAttribute

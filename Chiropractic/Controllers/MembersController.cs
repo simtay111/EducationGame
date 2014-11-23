@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Web.Mvc;
-using Chiropractic;
 using DataLayer;
 using DomainLayer.Email;
 using DomainLayer.Entities;

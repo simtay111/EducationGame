@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using Chiropractic;
-using Chiropractic.Filters;
 using DataLayer;
 using DomainLayer.Authentication;
 using DomainLayer.Email;
@@ -13,6 +11,7 @@ using DomainLayer.Entities.Stories;
 using DomainLayer.Points;
 using DomainLayer.StoryManagement;
 using EducationGame.Controllers.CustomResults;
+using EducationGame.Filters;
 
 namespace EducationGame.Controllers
 {

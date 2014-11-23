@@ -5,7 +5,7 @@ using DomainLayer;
 using DomainLayer.Email;
 using DomainLayer.Entities;
 
-namespace Chiropractic.Filters
+namespace EducationGame.Filters
 {
     public class ErrorFilter : HandleErrorAttribute
     {

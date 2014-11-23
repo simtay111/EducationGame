@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
-using Chiropractic;
-using Chiropractic.Filters;
 using DataLayer;
 using DomainLayer.Authentication;
 using DomainLayer.ECards;
@@ -11,6 +9,7 @@ using DomainLayer.Entities;
 using DomainLayer.OrderProcessing;
 using DomainLayer.Reports;
 using EducationGame.Controllers.CustomResults;
+using EducationGame.Filters;
 using TangoApi;
 using TangoApi.Entity;
 

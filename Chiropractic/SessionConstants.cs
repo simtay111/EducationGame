@@ -1,4 +1,4 @@
-﻿namespace Chiropractic
+﻿namespace EducationGame
 {
     public class SessionConstants
     {

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using Chiropractic;
 using DataLayer;
 using DomainLayer.ECards;
 using DomainLayer.Email;

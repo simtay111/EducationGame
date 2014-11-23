@@ -1,9 +1,10 @@
-using Backload.Configuration;
 using System.Web.Optimization;
+using Backload.Configuration;
+using EducationGame;
 
-[assembly: WebActivatorEx.PostApplicationStartMethod(typeof(Chiropractic.BackloadConfig), "Initialize")]
+[assembly: WebActivatorEx.PostApplicationStartMethod(typeof(BackloadConfig), "Initialize")]
  
-namespace Chiropractic {
+namespace EducationGame {
     public static class BackloadConfig
     {
         public static void Initialize()

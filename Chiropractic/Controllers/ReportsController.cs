@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using Chiropractic;
-using Chiropractic.Filters;
 using DataLayer;
 using DomainLayer.Authentication;
 using DomainLayer.Email;
 using DomainLayer.Entities;
 using DomainLayer.Entities.Quizes;
 using EducationGame.Controllers.CustomResults;
+using EducationGame.Filters;
 using NHibernate.Linq;
 
 namespace EducationGame.Controllers

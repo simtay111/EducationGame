@@ -1,8 +1,7 @@
-﻿using System.Web;
-using System.Web.Mvc;
-using Chiropractic.Filters;
+﻿using System.Web.Mvc;
+using EducationGame.Filters;
 
-namespace Chiropractic
+namespace EducationGame
 {
     public class FilterConfig
     {

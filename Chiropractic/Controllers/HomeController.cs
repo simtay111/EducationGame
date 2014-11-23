@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-using Chiropractic;
 using DataLayer;
 using DomainLayer.DailyTokens;
 using DomainLayer.Email;

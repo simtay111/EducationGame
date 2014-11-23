@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Web.Mvc;
-using Chiropractic;
 using DomainLayer;
 using EducationGame.Controllers.CustomResults;
 

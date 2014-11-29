@@ -33,10 +33,10 @@ namespace DomainLayer.ECards
                             name = request.RecipientName,
                             email = request.RecipientEmail
                         },
-                    reward_from = request.AccountInformation.OfficeName,
-                    reward_message = "All of us at " + request.AccountInformation.OfficeName + " are commited to helping you be the healthiest you possible. " +
+                    reward_from = "THESITE",
+                    reward_message = "All of us at " + "THESITE" + " are commited to helping you be the healthiest you possible. " +
                                      "We're so glad you're having fun getting there. Enjoy your reward!",
-                    reward_subject = "Reward From " + request.AccountInformation.OfficeName,
+                    reward_subject = "Reward From " + "THESITE",
                     send_reward = true,
                     campaign = string.Empty
                 };

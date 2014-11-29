@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using DataLayer;
-using DomainLayer;
 using DomainLayer.Authentication;
 using DomainLayer.Email;
 using DomainLayer.Entities;
 using DomainLayer.Entities.Quizes;
-using DomainLayer.Stories;
 using EducationGame.Controllers;
 using NHibernate.Linq;
 using NUnit.Framework;
@@ -38,26 +36,20 @@ namespace TestLibrary
             TangoCredentials.Identifier = "PracticeOwlTest";
             TangoCredentials.Key = "UXFnQvLunCciAOsiTQzgFkX9XGT9MbiKHKqAwbdvFhqc6MGXe8gewpTkA";
             TangoCredentials.Endpoint = "https://sandbox.tangocard.com/raas/v1";
-            CreateStories();
-            TestConnectionProvider.Session.Flush();
             CreateMembers();
-            TestConnectionProvider.Session.Flush();
-            CreateMemberHistory();
-            TestConnectionProvider.Session.Flush();
-            CreatePrizes();
             TestConnectionProvider.Session.Flush();
             new DisclaimerBuilder().BuildDescriptionAndSkuData();
             TestConnectionProvider.Session.Flush();
 
 
-            AddTangoPrizes();
+            //AddTangoPrizes();
 
-            new TestConnectionProvider().CreateConnection()
-                                        .CreateSQLQuery("update member set totalpoints = 5000")
-                                        .ExecuteUpdate();
-            new TestConnectionProvider().CreateConnection()
-                                        .CreateSQLQuery("update accountInformation set creditcardtoken = 1690002520")
-                                        .ExecuteUpdate();
+            //new TestConnectionProvider().CreateConnection()
+            //                            .CreateSQLQuery("update member set totalpoints = 5000")
+            //                            .ExecuteUpdate();
+            //new TestConnectionProvider().CreateConnection()
+            //                            .CreateSQLQuery("update accountInformation set creditcardtoken = 1690002520")
+            //                            .ExecuteUpdate();
 
             //new CorbetteDataBuilder().Build();
             TestConnectionProvider.Session.Flush();
@@ -119,8 +111,9 @@ namespace TestLibrary
 
         public void CreateMembers()
         {
-            var registerHandler = new CreateUserRequestHandler(new EmailSender(new AuditLogRepository(new TestConnectionProvider())), new AccountRepository(new TestConnectionProvider()), new PrizeRepository(new TestConnectionProvider()),
-                                                               new PasswordHasher(), new NewAccountStoryAdder(new SlideRepository(new TestConnectionProvider()), new StoryRepository(new TestConnectionProvider()), new QuestionRepository(new TestConnectionProvider()), new DefaultQuestionRepository(new TestConnectionProvider()), new DefaultSlideRepository(new TestConnectionProvider()), new DefaultStoryRepository(new TestConnectionProvider())));
+            var registerHandler =
+                new CreateAccountRequestHandler(new AccountRepository(new TestConnectionProvider()),
+                    new PasswordHasher(), new EmailSender(new AuditLogRepository(new ConnectionProvider())));
 
             registerHandler.Handle(new CreateUserRequest
                                        {
@@ -151,9 +144,6 @@ namespace TestLibrary
                                      {
                                          FirstName = names[newIndex],
                                          LastName = names[lastName],
-                                         PhoneNumber = "5413909003",
-                                         TotalPoints = 30,
-                                         AccountInformation = account.AccountInformation
                                      };
 
                     members.Add(member);
@@ -191,29 +181,6 @@ namespace TestLibrary
             {
                 connection.Save(quiz);
             }
-        }
-        public void CreatePrizes()
-        {
-            var connection = new TestConnectionProvider().CreateConnection();
-
-            var allAccts = (from acct in connection.Query<AccountInformation>() select acct).ToList();
-            var infoRepo = new AccountRepository(new TestConnectionProvider());
-            foreach (var acct in allAccts)
-            {
-                acct.NotifyEmail1 = "nevinrosenberg@gmail.com";
-                acct.OfficePhone = "5413909003";
-                acct.OfficeName = "Simon's Office";
-
-                infoRepo.SaveAccountInformation(acct);
-            }
-        }
-
-        [Test]
-        [Ignore]
-        public void CreateStories()
-        {
-            var quizImporter = new QuizImporter(new TestConnectionProvider());
-            quizImporter.Import(new TestConnectionProvider());
         }
 
         [Test]

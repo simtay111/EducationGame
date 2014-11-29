@@ -10,11 +10,10 @@ namespace DataLayer.Mappings
             Id(x => x.Id);
             Map(x => x.FirstName);
             Map(x => x.LastName);
-            Map(x => x.PhoneNumber);
-            Map(x => x.TotalPoints);
             Map(x => x.Inactive);
-            Map(x => x.QuizToken);
-            References(x => x.AccountInformation).Column("AccountInformationId");
+            Map(x => x.Email);
+            Map(x => x.Password);
+            Map(x => x.PasswordSalt);
         } 
     }
 }

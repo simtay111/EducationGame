@@ -1,6 +1,5 @@
 ﻿using System.Web.Mvc;
 using DataLayer;
-using DomainLayer.DailyTokens;
 using DomainLayer.Email;
 using DomainLayer.Points;
 
@@ -25,6 +24,11 @@ namespace EducationGame.Controllers
             return View();
         }
 
+        public ActionResult Index5()
+        {
+            return View();
+        }
+
         public ActionResult Features()
         {
             return View();
@@ -45,38 +49,13 @@ namespace EducationGame.Controllers
             return View("WhoAreYou");
         }
 
-        public ActionResult UpdateDailyToken()
-        {
-            var updater = new DailyTokenUpdater(new AccountRepository(new ConnectionProvider()));
-            updater.Update();
-            var sender = new DailyPrintoutSender(new AccountRepository(new ConnectionProvider()), new EmailSender(new AuditLogRepository(new ConnectionProvider())));
-            sender.SendDailyPrintout();
-            return View();
-        }
 
         [Authorize]
         public ActionResult UserHome()
         {
-            var updater = new DailyTokenUpdater(new AccountRepository(new ConnectionProvider()));
-
-            updater.Update();
             return View();
         }
 
-        [Authorize]
-        public ActionResult PrintableDaily()
-        {
-            var acctInfoId = (int)Session[SessionConstants.AcctInfoId];
-            var acctInfo = new AccountRepository(new ConnectionProvider()).GetAcctInfoById(acctInfoId);
-            var acctPointUpdater = new AccountPointAdder(new AccountRepository(new ConnectionProvider()));
-            acctPointUpdater.AddPointsToAccount((int)Session[SessionConstants.AccountId], PointValues.PrintDaily, (int)Session[SessionConstants.AcctInfoId]);
-            var model = new PrintableDailyModel
-                {
-                    DailyCode = (int)acctInfo.DailyToken,
-                    ClinicId = acctInfo.Id
-                };
-            return View(model);
-        }
 
         public ActionResult Management()
         {

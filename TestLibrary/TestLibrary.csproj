@@ -82,7 +82,6 @@
     <Compile Include="MessageTests.cs" />
     <Compile Include="MyTests.cs" />
     <Compile Include="PaymentTests.cs" />
-    <Compile Include="QuizImporter.cs" />
     <Compile Include="TangoTests.cs" />
     <Compile Include="TestHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

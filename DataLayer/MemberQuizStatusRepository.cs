@@ -51,24 +51,6 @@ namespace DataLayer
                         select stats).SingleOrDefault();
         }
 
-        public List<MemberQuizStatus> GetLatestFiveCompletedQuizHistories(int accountInformationId, DateTime fromTime)
-        {
-            var connection = _connectionProvider.CreateConnection();
-                return (from stats in connection.Query<MemberQuizStatus>()
-                        where stats.Member.AccountInformation.Id == accountInformationId 
-                       && stats.DateCompleted >= fromTime && stats.Completed
-                        select stats).ToList();
-        }
-
-        public List<MemberQuizStatus> GetInRange(int acctInfoId, DateTime start, DateTime end)
-        {
-            var connection = _connectionProvider.CreateConnection();
-                return (from stats in connection.Query<MemberQuizStatus>()
-                        where stats.Member.AccountInformation.Id == acctInfoId
-                       && stats.DateCompleted >= start && stats.DateCompleted<= end.Date.AddHours(24)
-                        select stats).ToList();
-        }
-
         public List<MemberQuizStatus> GetNonPayedForCompletedQuizzes()
         {
             var connection = _connectionProvider.CreateConnection();

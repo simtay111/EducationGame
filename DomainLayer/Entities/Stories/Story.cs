@@ -8,7 +8,6 @@ namespace DomainLayer.Entities.Stories
         public virtual string Name { get; set; }
         public virtual int StoryOrder { get; set; }
         public virtual string Summary { get; set; }
-        public virtual string InfoReferences { get; set; }
         public string MessageLessonText { get; set; }
         public AccountInformation AccountInformation { get; set; }
     }

@@ -9,7 +9,7 @@ using NHibernate.Linq;
 
 namespace DataLayer
 {
-    public class AccountRepository : IAccountRepository
+    public class AccountRepository : IAccountRepository, ILogginEntityProvider
     {
         private readonly IConnectionProvider _connectionProvider;
         private ISession _connection;
@@ -25,19 +25,19 @@ namespace DataLayer
             _connection.Delete(acct);
         }
 
-        public Account GetByLoginEmail(string email)
-        {
-            return GetUserByEmail(email);
-        }
-
         private Account GetUserByEmail(string email)
         {
             return (from acct in _connection.Query<Account>() where acct.Email == email.ToUpper() select acct).SingleOrDefault();
         }
 
-        public void Save(Account account)
+        public void Save<T>(T account)
         {
             _connection.SaveOrUpdate(account);
+        }
+
+        public IHaveAuthorizationCredentials GetByLoginEmail(string email)
+        {
+            return (IHaveAuthorizationCredentials)GetUserByEmail(email);
         }
 
         public void SaveAccountInformation(AccountInformation accountInformation)
@@ -112,5 +112,4 @@ namespace DataLayer
                     select accounts).ToList();
         }
     }
-
 }

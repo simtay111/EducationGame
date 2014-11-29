@@ -5,13 +5,13 @@ namespace DomainLayer.Authentication
 {
     public class LoginRequestHandler : ILoginRequestHandler
     {
-        private readonly IAccountRepository _accountRepository;
+        private readonly ILogginEntityProvider _loginableEntityProvider;
         private readonly IAuthenticateUsers _authenticateUsers;
         private readonly IPasswordMatcher _passwordMatcher;
 
-        public LoginRequestHandler(IAccountRepository accountRepository, IAuthenticateUsers authenticateUsers, IPasswordMatcher passwordMatcher)
+        public LoginRequestHandler(ILogginEntityProvider loginableEntityProvider, IAuthenticateUsers authenticateUsers, IPasswordMatcher passwordMatcher)
         {
-            _accountRepository = accountRepository;
+            _loginableEntityProvider = loginableEntityProvider;
             _authenticateUsers = authenticateUsers;
             _passwordMatcher = passwordMatcher;
         }
@@ -21,19 +21,16 @@ namespace DomainLayer.Authentication
             if (string.IsNullOrEmpty(request.UserName) || string.IsNullOrEmpty(request.Password))
                 return new LoginResponse { Status = ResponseCode.RequestNotFinished };
 
-            var user = _accountRepository.GetByLoginEmail(request.UserName);
+            var user = _loginableEntityProvider.GetByLoginEmail(request.UserName);
 
             if (user == null || !_passwordMatcher.IsMatch(request.Password, user))
                 return new LoginResponse { Status = ResponseCode.WrongAccountInformation };
 
             _authenticateUsers.AuthenticateUser(request.Session, user);
-            user.AccountInformation.LastAccountSignedOn = user.Id;
-            _accountRepository.SaveAccountInformation(user.AccountInformation);
             
             return new LoginResponse
                 {
-                    AccountId = user.Id,
-                    AccountInfoId = user.AccountInformation.Id
+                    RecordId = user.Id,
                 };
         }
     }
@@ -55,7 +52,7 @@ namespace DomainLayer.Authentication
     public class LoginResponse
     {
         public ResponseCode Status { get; set; }
-        public int AccountId { get; set; }
+        public int RecordId { get; set; }
         public int AccountInfoId { get; set; }
     }
 }

@@ -26,9 +26,7 @@ namespace DomainLayer.Accounts
         {
             var acctInfo = _accountRepository.GetAcctInfoById(acctInfoId);
             var status = new AccountCompletionStatus();
-            status.BasicInfoIsComplete = (IsOfficeNameNotEmpty(acctInfo) && IsOfficePhoneNotEmpty(acctInfo));
             status.PaymentSetupIsComplete = IsTheAccountPayedFor(acctInfo);
-            status.NotifyEmailsIsComplete = (IsNotifyEmail1NotEmpty(acctInfo));
             status.AssistantAccountsNeedsSome = (AreThereNoAssistantAccounts(userEmail));
             status.AccountIsUsable = status.BasicInfoIsComplete && status.PaymentSetupIsComplete;
             return status;
@@ -41,11 +39,6 @@ namespace DomainLayer.Accounts
             return !_accountRepository.GetAssistantAccountsFromPrimary(userEmail).Any();
         }
 
-        private static bool IsNotifyEmail1NotEmpty(AccountInformation acctInfo)
-        {
-            return !string.IsNullOrEmpty(acctInfo.NotifyEmail1);
-        }
-
         private bool IsTheAccountPayedFor(AccountInformation acctInfo)
         {
             var isPayedFor = acctInfo.DatePayedThrough.Date >= DateTime.Now.Date;
@@ -56,16 +49,6 @@ namespace DomainLayer.Accounts
             }
 
             return isPayedFor;
-        }
-
-        private static bool IsOfficePhoneNotEmpty(AccountInformation acctInfo)
-        {
-            return !string.IsNullOrEmpty(acctInfo.OfficePhone);
-        }
-
-        private static bool IsOfficeNameNotEmpty(AccountInformation acctInfo)
-        {
-            return !string.IsNullOrEmpty(acctInfo.OfficeName);
         }
     }
 

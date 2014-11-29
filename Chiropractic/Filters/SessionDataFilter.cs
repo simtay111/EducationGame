@@ -39,11 +39,11 @@ namespace EducationGame.Filters
     }
     public class SessionDataSetter
     {
-        public void SetOnSession(HttpSessionStateBase session, Account acct)
+        public void SetOnSession(HttpSessionStateBase session, IHaveAuthorizationCredentials acct)
         {
             session.Add(SessionConstants.AccountId, acct.Id);
-            session.Add(SessionConstants.AcctInfoId, acct.AccountInformation.Id);
-            session.Add(SessionConstants.AcctPermissionLevel, acct.PermissionLevel);
+            //session.Add(SessionConstants.AcctInfoId, acct.AccountInformation.Id);
+            //session.Add(SessionConstants.AcctPermissionLevel, acct.PermissionLevel);
         }
     }
 }

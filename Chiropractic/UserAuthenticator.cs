@@ -8,7 +8,7 @@ namespace EducationGame
 {
     public class UserAuthenticator : IAuthenticateUsers
     {
-        public void AuthenticateUser(HttpSessionStateBase session, Account account)
+        public void AuthenticateUser(HttpSessionStateBase session, IHaveAuthorizationCredentials account)
         {
             FormsAuthentication.SetAuthCookie(account.Email, true);
             var setter = new SessionDataSetter();

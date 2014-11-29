@@ -12,7 +12,6 @@ namespace DomainLayer.RepoInterfaces
         void Delete(int id);
         void UpdateGroup(List<AwardedPrize> prizes );
         List<AwardedPrize> GetForMember(int memberId);
-        List<AwardedPrize> GetInRange(int acctInfoId, DateTime start, DateTime end);
         List<AwardedPrize> GetOrdered();
         List<AwardedPrize> GetNonBilledRedeemedTangoAwards();
     }

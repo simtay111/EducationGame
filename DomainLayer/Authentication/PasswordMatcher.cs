@@ -7,7 +7,7 @@ namespace DomainLayer.Authentication
 {
     public class PasswordMatcher : IPasswordMatcher
     {
-        public bool IsMatch(string unhashedPassword, Account account)
+        public bool IsMatch(string unhashedPassword, IHaveAuthorizationCredentials account)
         {
             return IsMatch(unhashedPassword, account.PasswordSalt, account.Password);
         }
@@ -26,7 +26,7 @@ namespace DomainLayer.Authentication
 
     public interface IPasswordMatcher
     {
-        bool IsMatch(string unhashedPassword, Account account);
+        bool IsMatch(string unhashedPassword, IHaveAuthorizationCredentials account);
         bool IsMatch(string unhashedPassword, string salt, string password);
     }
 }

@@ -59,14 +59,6 @@ namespace DataLayer
                      where prize.Member.Id == memberId
                      select prize).ToList();
         }
-        public List<AwardedPrize> GetInRange(int acctInfoId, DateTime start, DateTime end)
-        {
-            var connection = _connectionProvider.CreateConnection();
-                return (from awardedPrize in connection.Query<AwardedPrize>()
-                        where awardedPrize.Member.AccountInformation.Id == acctInfoId
-                       && awardedPrize.IssueDate>= start && awardedPrize.IssueDate <= end.Date.AddHours(24)
-                        select awardedPrize).ToList();
-        }
 
         public List<AwardedPrize> GetOrdered()
         {

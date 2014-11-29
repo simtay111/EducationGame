@@ -51,13 +51,7 @@
     <Compile Include="AccountPrizeRepository.cs" />
     <Compile Include="Mappings\AccountPrizeMapping.cs" />
     <Compile Include="RewardDisclaimerRepository.cs" />
-    <Compile Include="DefaultQuestionRepository.cs" />
-    <Compile Include="DefaultSlideRepository.cs" />
-    <Compile Include="DefaultStoryRepository.cs" />
     <Compile Include="Mappings\RewardDisclaimerMapping.cs" />
-    <Compile Include="Mappings\DefaultQuestionMapping.cs" />
-    <Compile Include="Mappings\DefaultSlideMapping.cs" />
-    <Compile Include="Mappings\DefaultStoryMapping.cs" />
     <Compile Include="PaymentAuditRepository.cs" />
     <Compile Include="Mappings\PaymentAuditMapping.cs" />
     <Compile Include="TangoAuditRepository.cs" />

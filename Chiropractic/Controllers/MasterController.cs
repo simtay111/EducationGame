@@ -24,41 +24,6 @@ namespace EducationGame.Controllers
             return View();
         }
 
-        public JsonDotNetResult ActivateAllAccounts()
-        {
-            var accountRepo = new AccountRepository(new ConnectionProvider());
-            accountRepo.ActivateAllAccounts();
-            return new JsonDotNetResult { JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        }
-
-        public JsonDotNetResult AwardsOrderReport()
-        {
-            var awardsRepo = new AwardedPrizeRepository(new ConnectionProvider());
-            var awards = awardsRepo.GetNonBilledRedeemedTangoAwards().GroupBy(x => x.DateOrdered.Date);
-            return new JsonDotNetResult { JsonRequestBehavior = JsonRequestBehavior.AllowGet, Data = awards };
-        }
-
-        public JsonDotNetResult GetCurrentAwards()
-        {
-            var prizeRepo = new PrizeRepository(new ConnectionProvider());
-            var items = prizeRepo.GetAllPublicPrizes();
-            return new JsonDotNetResult { Data = items, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        }
-
-        public JsonDotNetResult GetAwardChoices()
-        {
-            var fetcher = new AvailableItemFetcher(new ServiceProxy());
-            var items = fetcher.Fetch();
-            return new JsonDotNetResult { Data = items, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        }
-
-        [HttpPost]
-        public JsonDotNetResult RemoveAward(RemoveRewardRequest request)
-        {
-            var prizeRepo = new PrizeRepository(new ConnectionProvider());
-            prizeRepo.DeleteAvailable(request.Id);
-            return new JsonDotNetResult();
-        }
 
         [HttpPost]
         public JsonDotNetResult AddAward(AddRewardRequest request)
@@ -79,43 +44,6 @@ namespace EducationGame.Controllers
         }
 
         [HttpPost]
-        public JsonDotNetResult OrderGames()
-        {
-            //var receiptRepo = new ReceiptRepository(new ConnectionProvider());
-            //var paymentProcessor = new PaymentProcessor(new PaymentAuditRepository(new ConnectionProvider()));
-            //var memberQuizStatusRepo = new MemberQuizStatusRepository(new ConnectionProvider());
-            //var awardCharger = new QuizCharger(receiptRepo, memberQuizStatusRepo, paymentProcessor);
-            //awardCharger.Charge();
-            return new JsonDotNetResult();
-
-        }
-
-        [HttpPost]
-        public JsonDotNetResult SendReceipts()
-        {
-            var receiptRepo = new ReceiptRepository(new ConnectionProvider());
-
-            var nonSentReceipts = receiptRepo.GetNonSentReceipt();
-            var receiptSender = new ReceiptSender(new EmailSender(new AuditLogRepository(new ConnectionProvider())),
-                                                  new SummaryBuilder(new AccountRepository(new ConnectionProvider()),
-                                                                     new AccountInfoDataUpdater(
-                                                                         new AccountRepository(new ConnectionProvider()),
-                                                                         new MemberRepository(new ConnectionProvider()))));
-            Console.WriteLine("Receipts to Send: " + nonSentReceipts.Count());
-            foreach (var nonSentReceipt in nonSentReceipts)
-            {
-                var cc = string.IsNullOrEmpty(nonSentReceipt.AccountInformation.NotifyEmail2)
-                             ? ""
-                             : nonSentReceipt.AccountInformation.NotifyEmail2;
-                Console.WriteLine("Sent receipt: " + nonSentReceipt.AccountInformation.NotifyEmail1);
-                receiptSender.SendReceipt(nonSentReceipt.AccountInformation.NotifyEmail1, nonSentReceipt, cc);
-                receiptRepo.Save(nonSentReceipt);
-            }
-
-            return new JsonDotNetResult();
-        }
-
-        [HttpPost]
         public JsonDotNetResult UpdateAcctId(int acctId)
         {
             var accountRepo = new AccountRepository(new ConnectionProvider());
@@ -128,39 +56,6 @@ namespace EducationGame.Controllers
             Session[SessionConstants.AcctInfoId] = current.AccountInformation.Id;
 
             return new JsonDotNetResult();
-        }
-
-        [HttpPost]
-        public JsonDotNetResult OrderAwards()
-        {
-            var awardsRepo = new AwardedPrizeRepository(new ConnectionProvider());
-            var receiptRepo = new ReceiptRepository(new ConnectionProvider());
-            var paymentProcessor = new PaymentProcessor(new PaymentAuditRepository(new ConnectionProvider()));
-            var gameCharger = new AwardCharger(awardsRepo, receiptRepo, paymentProcessor);
-            gameCharger.Charge();
-
-            return new JsonDotNetResult();
-        }
-
-        public JsonDotNetResult OrderHistory(DateTime start, DateTime end)
-        {
-            var tangoProvider = new TangoAcctInfoProvider();
-            var request = new OrderHistoryRequestData
-                {
-                    account_identifier = tangoProvider.GetAcctInfo(),
-                    customer = tangoProvider.GetCustomer(),
-                    offset = 0,
-                    limit = 100,
-                    start_date = start.Date,
-                    end_date = end.Date.AddHours(24)
-                };
-
-            var orderHistoryFetcher = new OrderHistoryFetcher(new ServiceProxy());
-
-            var response = orderHistoryFetcher.GetCurrentStatus(request);
-
-            return new JsonDotNetResult { Data = response, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-
         }
     }
 

@@ -4,11 +4,9 @@ using DomainLayer.Entities;
 
 namespace DomainLayer.RepoInterfaces
 {
-    public interface IAccountRepository
+    public interface IAccountRepository : IDataAccess
     {
         void Delete(Account acct);
-        Account GetByLoginEmail(string email);
-        void Save(Account account);
         void SaveAccountInformation(AccountInformation accountInformation);
         AccountInformation GetAccountInformation(string name);
         List<Account> GetAssistantAccountsFromPrimary(string primaryUserName);

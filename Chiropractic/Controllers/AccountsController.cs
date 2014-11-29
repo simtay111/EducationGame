@@ -29,32 +29,6 @@ namespace EducationGame.Controllers
         }
 
         [Authorize]
-        [AuthorizationFilter(RolesStatic.SuperUser)]
-        public JsonDotNetResult GetAssistantAccounts()
-        {
-            var accountRepo = new AccountRepository(new ConnectionProvider());
-            var accounts = accountRepo.GetAssistantAccountsFromPrimary(User.Identity.Name.ToUpper());
-
-            return new JsonDotNetResult
-            {
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet,
-                Data = new
-                {
-                    accounts
-                }
-            };
-        }
-
-        [Authorize]
-        [AuthorizationFilter(RolesStatic.SuperUser)]
-        public JsonDotNetResult DeleteAsstAcct(Account acct)
-        {
-            var accountRepo = new AccountRepository(new ConnectionProvider());
-            accountRepo.Delete(acct);
-            return new JsonDotNetResult();
-        }
-
-        [Authorize]
         public JsonDotNetResult GetAccountInformation()
         {
             var accountRepo = new AccountRepository(new ConnectionProvider());
@@ -69,31 +43,13 @@ namespace EducationGame.Controllers
         {
             var accountRepo = new AccountRepository(new ConnectionProvider());
             var existingAccount = accountRepo.GetAcctInfoById(model.Id);
-            existingAccount.OfficeName = model.OfficeName;
-            existingAccount.NotifyEmail1 = model.NotifyEmail1;
-            existingAccount.NotifyEmail2 = model.NotifyEmail2;
-            existingAccount.OfficePhone = model.OfficePhone;
+            existingAccount.CompanyName = model.CompanyName;
 
             accountRepo.SaveAccountInformation(existingAccount);
 
             return new JsonDotNetResult();
         }
 
-        [Authorize]
-        public JsonDotNetResult GetAccountInfoSummary()
-        {
-            var acctInfoId = (int) Session[SessionConstants.AcctInfoId];
-            var acctId = (int) Session[SessionConstants.AccountId];
-            var accountRepo = new AccountRepository(new ConnectionProvider());
-            var acct = accountRepo.GetById(acctId);
-            var updater = new AccountInfoDataUpdater(accountRepo, new MemberRepository(new ConnectionProvider()));
-            var acctInfo = accountRepo.GetAcctInfoById(acctInfoId);
-
-            var summaryBuilder = new SummaryBuilder(accountRepo, updater);
-            var nameValue = summaryBuilder.BuildSummary(acctInfoId);
-
-            return new JsonDotNetResult { Data = new { acct, acctInfo, summaries = nameValue }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-        }
 
         [Authorize]
         public JsonDotNetResult GetAccountCompletionState()
@@ -114,19 +70,6 @@ namespace EducationGame.Controllers
                            Data = resultData,
                            JsonRequestBehavior = JsonRequestBehavior.AllowGet
                        };
-        }
-
-        [Authorize]
-        public JsonDotNetResult GetLatestHistory()
-        {
-            var accountRepo = new AccountRepository(new ConnectionProvider());
-            var acctInfo = accountRepo.GetAcctInfoById((int)Session[SessionConstants.AcctInfoId]);
-            var memberQuizRepo = new MemberQuizStatusRepository(new ConnectionProvider());
-            var history =
-                memberQuizRepo.GetLatestFiveCompletedQuizHistories(acctInfo.Id, DateTime.Now.AddHours(-8))
-                              .OrderByDescending(x => x.DateCompleted)
-                              .Take(10);
-            return new JsonDotNetResult { Data = history, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
     }
     public class ChangePermissionsModel

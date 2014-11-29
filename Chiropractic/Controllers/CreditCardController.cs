@@ -46,7 +46,7 @@ namespace EducationGame.Controllers
             if (response.Error != null)
             {
                 var message = String.Format("Failed to authorize CC with id: {0} for account {1} with id {2}",
-                                            model.Token, acctInfo.OfficeName, acctInfo.Id);
+                                            model.Token, acctInfo.CompanyName, acctInfo.Id);
                 acctInfo.CreditCardToken = 0;
                 acctInfoRepo.SaveAccountInformation(acctInfo);
                 var emailSender = new EmailSender(new AuditLogRepository(new ConnectionProvider()));
@@ -98,12 +98,11 @@ namespace EducationGame.Controllers
             var acctInfo = acctRepo.GetAcctInfoById((int)Session[SessionConstants.AcctInfoId]);
 
             var hasCc = acctInfo.CreditCardToken > 0;
-            var cost = acctInfo.CostPerQuiz.ToString().Replace("0", "");
             var price = acctInfo.SubscriptionCost == 97 ? 1 : 2;
             var subscriptionThrough = acctInfo.DatePayedThrough;
             var payedOnce = acctInfo.PayedOnce;
 
-            return new JsonDotNetResult { JsonRequestBehavior = JsonRequestBehavior.AllowGet, Data = new { hasCcOnFile = hasCc, cost, autoRenew = acctInfo.Autopay, price, subscriptionThrough, payedOnce } };
+            return new JsonDotNetResult { JsonRequestBehavior = JsonRequestBehavior.AllowGet, Data = new { hasCcOnFile = hasCc,  autoRenew = acctInfo.Autopay, price, subscriptionThrough, payedOnce } };
         }
 
         [HttpPost]

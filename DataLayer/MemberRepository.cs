@@ -19,21 +19,6 @@ namespace DataLayer
             _connection = _connectionProvider.CreateConnection();
         }
 
-        public List<Member> GetMembersByAccountInfo(int accountInfoId, bool includeInactive)
-        {
-            if (includeInactive)
-            {
-                return
-                    (from members in _connection.Query<Member>()
-                     where members.AccountInformation.Id == accountInfoId
-                     select members).ToList();
-            }
-            return
-                (from members in _connection.Query<Member>()
-                 where members.AccountInformation.Id == accountInfoId && !members.Inactive
-                 select members).ToList();
-        }
-
         public int Save(Member member)
         {
             _connection.SaveOrUpdate(member);
@@ -83,27 +68,21 @@ namespace DataLayer
             return 0;
         }
 
+        public Member GetByLoginEmail(string email)
+        {
+            return GetUserByEmail(email);
+        }
+
+        private Member GetUserByEmail(string email)
+        {
+            return (from acct in _connection.Query<Member>() where acct.Email == email.ToUpper() select acct).SingleOrDefault();
+        }
+
         public void ChangeActievState(int memberId, bool isInactive)
         {
             var member = _connection.Get<Member>(memberId);
             member.Inactive = isInactive;
             _connection.Update(member);
-        }
-
-        public List<Member> GetByPhoneNumber(string phoneNumber)
-        {
-            return
-                (from member in _connection.Query<Member>()
-                 where member.PhoneNumber == phoneNumber.Trim()
-                 select member).ToList();
-        }
-
-        public Member GetMemberByPhoneAndAccountId(string phoneNumber, int accountInfoId)
-        {
-            return
-                    (from member in _connection.Query<Member>()
-                     where member.PhoneNumber == phoneNumber.Trim() && member.AccountInformation.Id == accountInfoId
-                     select member).FirstOrDefault();
         }
     }
 }

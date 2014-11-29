@@ -36,7 +36,7 @@ namespace EducationGame.Controllers
             var wasSuccessful = (response.Status != ResponseCode.Success) ? false : true;
              if (wasSuccessful)
              {
-                 Session.Add(SessionConstants.AccountId, response.AccountId);
+                 Session.Add(SessionConstants.AccountId, response.RecordId);
                  Session.Add(SessionConstants.AcctInfoId, response.AccountInfoId);
              }
 

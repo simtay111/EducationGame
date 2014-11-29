@@ -142,7 +142,6 @@
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\CreditCardController.cs" />
     <Compile Include="Controllers\MasterController.cs" />
-    <Compile Include="Controllers\MessagingController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TutorialController.cs" />
@@ -162,6 +161,7 @@
     <Compile Include="SessionConstants.cs" />
     <Compile Include="UserAuthenticator.cs" />
     <Content Include="bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\AngularUi\uirouter.js" />
     <Content Include="Content\Backload\content-types\128\Excel.png" />
     <Content Include="Content\Backload\content-types\128\File.png" />
     <Content Include="Content\Backload\content-types\128\FileNotFound.png" />
@@ -331,6 +331,7 @@
     <Content Include="CustomCss\PrintoutCss.css" />
     <Content Include="CustomCss\OfficePages.css" />
     <Content Include="CustomCss\Quiz.css" />
+    <Content Include="CustomCss\V2StyleSheet.css" />
     <Content Include="CustomScripts\Admin\SetNewAcctId.js" />
     <Content Include="CustomScripts\Admin\TangoOrderHistoryReport.js" />
     <Content Include="CustomScripts\Admin\AwardsOrderReport.js" />
@@ -630,6 +631,7 @@
     <Content Include="Scripts\Better2Web-jquery\.hgignore" />
     <Content Include="Scripts\Better2Web-jquery\.hgtags" />
     <Content Include="Scripts\Better2Web-jquery\readme.md" />
+    <Content Include="Scripts\isotope\isotope.min.js" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_af-na.js" />
     <Content Include="Scripts\i18n\angular-locale_af-za.js" />
@@ -899,6 +901,11 @@
     <Content Include="Templates\Members\ManageMembersPanel.html" />
     <Content Include="Templates\FirstPanel.html" />
     <Content Include="Templates\Registration\RegisterPanel.html" />
+    <Content Include="V2Scripts\game\game.js" />
+    <Content Include="V2Scripts\quizzes\quiz_item.js" />
+    <Content Include="V2Scripts\quizzes\quiz_search.js" />
+    <Content Include="V2Templates\quizzes\quiz_item.html" />
+    <Content Include="V2Templates\quizzes\quiz_search.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -936,17 +943,16 @@
     <Content Include="Views\Reports\Index.cshtml" />
     <Content Include="Views\Tutorial\Index.cshtml" />
     <Content Include="Views\Home\WhoAreYou.cshtml" />
-    <Content Include="Views\Home\PrintableDaily.cshtml" />
     <Content Include="Views\Tutorial\Advanced.cshtml" />
     <Content Include="Views\Prizes\Index.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
-    <Content Include="Views\Home\UpdateDailyToken.cshtml" />
     <Content Include="Views\Home\ContactUs.cshtml" />
     <Content Include="Views\Home\Features.cshtml" />
     <Content Include="Views\Home\Pricing.cshtml" />
     <Content Include="Views\Home\Faq.cshtml" />
     <Content Include="Views\Home\Index2.cshtml" />
     <Content Include="Views\Home\Index3.cshtml" />
+    <Content Include="Views\Home\Index5.cshtml" />
     <None Include="Web.Backload.Default.config" />
     <None Include="Web.Backload.xsd">
       <SubType>Designer</SubType>

@@ -1,0 +1,9 @@
+﻿<div class="row">
+    <h1>Search</h1>
+    <button class="btn btn-default" ng-click="sortBy('company')">Company</button>
+    <button class="btn btn-default" ng-click="sortBy('name')">Name</button>
+    <button class="btn btn-default" ng-click="sortBy('points')">Points</button>
+    <div id="QuizItemsContainer" class="row">
+        <div ng-repeat="item in items" quiz-item="item"></div>
+    </div>
+</div>

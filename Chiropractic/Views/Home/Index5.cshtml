@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Education Game</title>
+    <meta name="viewport" content="width=device-width" />
+    <link type="text/css" href="~/bootstrap/fonts/glyphicons-halflings-regular.ttf" />
+    <link type="text/css" rel="stylesheet" href="~/Bootstrap/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="~/Bootstrap/css/bootstrap-theme.min.css" />
+    <link type="text/css" rel="stylesheet" href="~/CustomCss/HomeStyle3.css" />
+    <link type="text/css" rel="stylesheet" href="~/Content/introjs.min.css" />
+    <link type="text/css" rel="stylesheet" href="~/CustomCss/V2StyleSheet.css" />
+    <link rel="stylesheet" href="~/Content/font-awesome-4.2.0/css/font-awesome.min.css" />
+    <script type="text/javascript" src="~/Scripts/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/moment.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/underscore.min.js"></script>
+    <script type="text/javascript" src="~/Bootstrap/js/bootstrap.js"></script>
+    <script src="~/Scripts/intro.min.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/angular-resource.min.js"></script>
+    <script src="~/Scripts/angular-route.min.js"></script>
+    <script src="~/Scripts/angular-touch.min.js"></script>
+    <script src="~/Content/AngularUi/uirouter.js"></script>
+    <script src="~/Scripts/isotope/isotope.min.js"></script>
+    <script src="~/V2Scripts/quizzes/quiz_search.js"></script>
+    <script src="~/V2Scripts/quizzes/quiz_item.js"></script>
+    <script src="~/V2Scripts/game/game.js"></script>
+    <script src="~/V2Scripts/rewards/rewards.js"></script>
+</head>
+<style>
+    * {
+        color: white;
+    }
+</style>
+<script>
+    angular.module("MainModule", ['ui.router', 'Quizzes', 'Game', 'Rewards']).controller("MainController", function ($scope) {
+        $scope.name = "Simon";
+    }).config(['$stateProvider', '$urlRouterProvider',
+function ($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise("/quizSearch");
+    $stateProvider.state("quizSearch", {
+        url: "/quizSearch",
+        controller: "quizSearch",
+        templateUrl: "/V2Templates/quizzes/quiz_search.html"
+    });
+}]);
+</script>
+<body>
+    <div ng-app="MainModule" class="container" ng-controller="MainController">
+        <div ui-view></div>
+    </div>
+</body>
+</html>

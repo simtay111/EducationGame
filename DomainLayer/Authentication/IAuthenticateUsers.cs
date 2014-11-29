@@ -5,6 +5,6 @@ namespace DomainLayer.Authentication
 {
     public interface IAuthenticateUsers
     {
-        void AuthenticateUser(HttpSessionStateBase session, Account account);
+        void AuthenticateUser(HttpSessionStateBase session, IHaveAuthorizationCredentials account);
     }
 }

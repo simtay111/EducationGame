@@ -1,24 +1,27 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using DataLayer;
 using DomainLayer;
 using DomainLayer.Authentication;
 using DomainLayer.Email;
-using DomainLayer.Stories;
+using DomainLayer.Entities;
 
 namespace EducationGame.Controllers
 {
     public class RegisterController : Controller
     {
-        private readonly ICreateUserRequestHandler _createUserRequestHandler;
+        private readonly RegisterUserHandler _createUserRequestHandler;
 
-        public RegisterController(ICreateUserRequestHandler createUserRequestHandler)
+        public RegisterController(RegisterUserHandler createUserRequestHandler)
         {
             _createUserRequestHandler = createUserRequestHandler;
         }
 
         public RegisterController()
         {
-            _createUserRequestHandler = new CreateUserRequestHandler(new EmailSender(new AuditLogRepository(new ConnectionProvider())), new AccountRepository(new ConnectionProvider()), new PrizeRepository(new ConnectionProvider()), new PasswordHasher(), new NewAccountStoryAdder(new SlideRepository(new ConnectionProvider()), new StoryRepository(new ConnectionProvider()), new QuestionRepository(new ConnectionProvider()),new DefaultQuestionRepository(new ConnectionProvider()), new DefaultSlideRepository(new ConnectionProvider()), new DefaultStoryRepository(new ConnectionProvider())));
+            _createUserRequestHandler =
+                new CreateAccountRequestHandler(new AccountRepository(new ConnectionProvider()), 
+                    new PasswordHasher(), new EmailSender(new AuditLogRepository(new ConnectionProvider())));
         }
         public ActionResult Index()
         {
@@ -28,7 +31,10 @@ namespace EducationGame.Controllers
         [HttpPost]
         public JsonResult RegisterUser(RegistrationModel model)
         {
-            var response = _createUserRequestHandler.Handle(new CreateUserRequest
+            try
+            {
+                var accountRepository = new AccountRepository(new ConnectionProvider());
+                var response = _createUserRequestHandler.Handle(new CreateUserRequest
                 {
                     UserName = model.Username,
                     Password = model.Password,
@@ -36,24 +42,45 @@ namespace EducationGame.Controllers
                     PermissionLevel = RolesStatic.SuperUser
                 });
 
-            if (response.Status == ResponseCode.Success)
-            {
-                var loginController = new LoginRequestHandler(new AccountRepository(new ConnectionProvider()),
-                                                              new UserAuthenticator(), new PasswordMatcher());
+
+                var accountInformation = new AccountInformation();
+                accountInformation.CreationDate = DateTime.Now;
+                accountInformation.DatePayedThrough = DateTime.Now.AddDays(-2);
+                accountRepository.SaveAccountInformation(accountInformation);
+                for (int i = 1; i <= Constants.MaxPrizeCats; i++)
+                {
+                    var prize = new CustomPrize { AccountInformation = accountInformation, Points = 0 };
+                    new PrizeRepository(new ConnectionProvider()).Save(prize);
+                }
+                ((Account)response.Account).AccountInformation = accountInformation;
+
+                accountRepository.Save(response.Account);
+
+                var loginController = new LoginRequestHandler(accountRepository,
+                    new UserAuthenticator(), new PasswordMatcher());
 
                 loginController.Handle(new LoginRequest
-                    {
-                        UserName = model.Username,
-                        Password = model.Password,
-                        Session = Session
-                    });
+                {
+                    UserName = model.Username,
+                    Password = model.Password,
+                    Session = Session
+                });
+                return new JsonResult
+                {
+                    Data =
+                        new { Successful = true }
+                };
+            }
+            catch (CreateUserException exception)
+            {
+                return new JsonResult { Data = new { Successful = false, Reason = exception.CreateMessage } };
             }
 
-            return new JsonResult {Data = new { Successful = response.Status == ResponseCode.Success, Reason = response.Status.ToString() }};
         }
         [HttpPost]
         public JsonResult RegisterAssistant(RegistrationModel model)
         {
+            var accountRepository = new AccountRepository(new ConnectionProvider());
             var response = _createUserRequestHandler.Handle(new CreateUserRequest
                 {
                     UserName = model.Username,
@@ -64,7 +91,13 @@ namespace EducationGame.Controllers
                     CreationAccount = User.Identity.Name
                 });
 
-            return new JsonResult {Data = new { Successful = response.Status == ResponseCode.Success, Reason = response.Status.ToString() }};
+            if (!string.IsNullOrEmpty(User.Identity.Name))
+            {
+                var accountInformation = accountRepository.GetAccountInformation(User.Identity.Name);
+                ((Account)response.Account).AccountInformation = accountInformation;
+            }
+
+            return new JsonResult { Data = new { Successful = response.Status == ResponseCode.Success, Reason = response.Status.ToString() } };
         }
     }
 

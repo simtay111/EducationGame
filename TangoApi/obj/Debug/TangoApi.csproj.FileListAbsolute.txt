@@ -5,3 +5,10 @@ C:\Users\Simtay111\Documents\GitHub\Chiropractic\TangoApi\bin\Debug\Newtonsoft.J
 C:\Users\Simtay111\Documents\GitHub\Chiropractic\TangoApi\obj\Debug\TangoApi.dll
 C:\Users\Simtay111\Documents\GitHub\Chiropractic\TangoApi\obj\Debug\TangoApi.pdb
 C:\Users\Simtay111\Documents\GitHub\Chiropractic\TangoApi\obj\Debug\TangoApi.csprojResolveAssemblyReference.cache
+C:\Users\Simtay111\Documents\GitHub\EducationGame\TangoApi\bin\Debug\TangoApi.dll
+C:\Users\Simtay111\Documents\GitHub\EducationGame\TangoApi\bin\Debug\TangoApi.pdb
+C:\Users\Simtay111\Documents\GitHub\EducationGame\TangoApi\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Simtay111\Documents\GitHub\EducationGame\TangoApi\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Simtay111\Documents\GitHub\EducationGame\TangoApi\obj\Debug\TangoApi.csprojResolveAssemblyReference.cache
+C:\Users\Simtay111\Documents\GitHub\EducationGame\TangoApi\obj\Debug\TangoApi.dll
+C:\Users\Simtay111\Documents\GitHub\EducationGame\TangoApi\obj\Debug\TangoApi.pdb

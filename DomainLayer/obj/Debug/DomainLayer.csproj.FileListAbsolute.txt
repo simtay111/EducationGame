@@ -44,3 +44,5 @@ C:\Users\Simtay111\Documents\GitHub\EducationGame\DomainLayer\bin\Debug\WePaySDK
 C:\Users\Simtay111\Documents\GitHub\EducationGame\DomainLayer\obj\Debug\DomainLayer.csprojResolveAssemblyReference.cache
 C:\Users\Simtay111\Documents\GitHub\EducationGame\DomainLayer\obj\Debug\DomainLayer.dll
 C:\Users\Simtay111\Documents\GitHub\EducationGame\DomainLayer\obj\Debug\DomainLayer.pdb
+C:\Users\Simtay111\Documents\GitHub\EducationGame\DomainLayer\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Simtay111\Documents\GitHub\EducationGame\DomainLayer\bin\Debug\Newtonsoft.Json.xml

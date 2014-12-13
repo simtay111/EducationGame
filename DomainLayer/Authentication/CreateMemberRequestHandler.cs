@@ -34,7 +34,7 @@ namespace DomainLayer.Authentication
 
         protected abstract void SendEmail(IHaveAuthorizationCredentials record);
 
-        public void ValidateRequest(CreateUserRequest request)
+        private void ValidateRequest(CreateUserRequest request)
         {
             if (AllFieldsAreNotFilledOut(request))
                 throw new CreateUserException("All the fields must be filled out");
@@ -49,7 +49,7 @@ namespace DomainLayer.Authentication
                 throw new CreateUserException("Your password and confirm password do not match");
         }
 
-        public IHaveAuthorizationCredentials GetUserByEmail(string userName)
+        private IHaveAuthorizationCredentials GetUserByEmail(string userName)
         {
             return LogginEntityProvider.GetByLoginEmail(userName);
         }
@@ -67,12 +67,12 @@ namespace DomainLayer.Authentication
         }
 
 
-        public void HashPasswordAndSave(IHaveAuthorizationCredentials record)
+        private void HashPasswordAndSave(IHaveAuthorizationCredentials record)
         {
             PasswordHasher.HashPasswordForUser(record);
             LogginEntityProvider.Save(record);
         }
-        public abstract IHaveAuthorizationCredentials CreateEntityFromRequest(CreateUserRequest request);
+        protected abstract IHaveAuthorizationCredentials CreateEntityFromRequest(CreateUserRequest request);
     }
 
     public class CreateUserException : Exception
@@ -94,7 +94,7 @@ namespace DomainLayer.Authentication
         {
         }
 
-        public override IHaveAuthorizationCredentials CreateEntityFromRequest(CreateUserRequest request)
+        protected override IHaveAuthorizationCredentials CreateEntityFromRequest(CreateUserRequest request)
         {
             return new Member
                               {
@@ -121,7 +121,7 @@ namespace DomainLayer.Authentication
             EmailSender.SendEmail(record.Email, body, "Welcome to PracticeOwl");
         }
 
-        public override IHaveAuthorizationCredentials CreateEntityFromRequest(CreateUserRequest request)
+        protected override IHaveAuthorizationCredentials CreateEntityFromRequest(CreateUserRequest request)
         {
             return new Account
             {

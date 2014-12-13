@@ -41,5 +41,11 @@ namespace DataLayer
                 (from slide in connection.Query<Slide>() select slide)
                     .ToList();
         }
+
+        public Slide GetById(int slideId)
+        {
+            var connection = _connectionProvider.CreateConnection();
+            return connection.Get<Slide>(slideId);
+        }
     }
 }

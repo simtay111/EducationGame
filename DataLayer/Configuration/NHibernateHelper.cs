@@ -33,7 +33,7 @@ namespace DataLayer.Configuration
 
         private static void InitializeSessionFactory()
         {
-            var connectionString = ConfigurationManager.ConnectionStrings[Constants.ConnectionStringName].ConnectionString;
+            var connectionString = ConfigurationManager.ConnectionStrings[SystemConstants.ConnectionStringName].ConnectionString;
             _sessionFactory = Fluently.Configure()
                 .Database(MsSqlConfiguration.MsSql2008
                               .ConnectionString(connectionString)

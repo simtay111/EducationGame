@@ -34,13 +34,20 @@ namespace DataLayer
         {
             var connection = _connectionProvider.CreateConnection();
             connection.Delete(connection.Load(typeof(Story), id));
-            ;
         }
 
         public Story GetById(int storyId)
         {
             var connection = _connectionProvider.CreateConnection();
             return connection.Get<Story>(storyId);
+        }
+
+        public List<Story> GetPublicStories()
+        {
+            var connection = _connectionProvider.CreateConnection();
+            return
+                (from story in connection.Query<Story>() where story.IsPublic select story)
+                    .ToList();
         }
     }
 }

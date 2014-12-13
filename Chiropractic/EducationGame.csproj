@@ -353,6 +353,7 @@
     <Content Include="CustomScripts\Reports\AwardedPrizeReport.js" />
     <Content Include="CustomScripts\Stories\story_management.js" />
     <Content Include="CustomScripts\Stories\story_summary.js" />
+    <Content Include="EducationGame.csproj.DotSettings.user" />
     <Content Include="Images\blue-tile.jpg" />
     <Content Include="Images\cost2.jpg" />
     <Content Include="Images\costs.jpg" />
@@ -901,11 +902,17 @@
     <Content Include="Templates\Members\ManageMembersPanel.html" />
     <Content Include="Templates\FirstPanel.html" />
     <Content Include="Templates\Registration\RegisterPanel.html" />
+    <Content Include="V2Scripts\config\home.js" />
     <Content Include="V2Scripts\game\game.js" />
     <Content Include="V2Scripts\quizzes\quiz_item.js" />
     <Content Include="V2Scripts\quizzes\quiz_search.js" />
+    <Content Include="V2Templates\game\game_step.html" />
+    <Content Include="V2Templates\game\game_start.html" />
+    <Content Include="V2Templates\game\game_base.html" />
     <Content Include="V2Templates\quizzes\quiz_item.html" />
     <Content Include="V2Templates\quizzes\quiz_search.html" />
+    <Content Include="V2Templates\rewards\browse_rewards.html" />
+    <Content Include="V2Templates\rewards\reward_item.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -966,6 +973,7 @@
     <Folder Include="Images\NewFolder1\" />
     <Folder Include="Models\" />
     <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="V2Templates\home\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

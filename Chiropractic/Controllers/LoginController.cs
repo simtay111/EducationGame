@@ -9,16 +9,19 @@ namespace EducationGame.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly ILoginRequestHandler _loginRequestHandler;
+        private readonly ILoginRequestHandler _loginAccountRequestHandler;
+        private LoginRequestHandler _loginMemberRequestHandler;
 
-        public LoginController(ILoginRequestHandler loginRequestHandler)
+        public LoginController(ILoginRequestHandler loginAccountRequestHandler)
         {
-            _loginRequestHandler = loginRequestHandler;
+            _loginAccountRequestHandler = loginAccountRequestHandler;
         }
 
         public LoginController()
         {
-            _loginRequestHandler = new LoginRequestHandler(new AccountRepository(new ConnectionProvider()), new UserAuthenticator(),
+            _loginAccountRequestHandler = new LoginRequestHandler(new AccountRepository(new ConnectionProvider()), new UserAuthenticator(),
+                                                       new PasswordMatcher());
+            _loginMemberRequestHandler = new LoginRequestHandler(new MemberRepository(new ConnectionProvider()), new UserAuthenticator(),
                                                        new PasswordMatcher());
         }
 
@@ -28,22 +31,26 @@ namespace EducationGame.Controllers
         }
 
         [HttpPost]
-        //[AllowCrossSiteJson]
-        public JsonResult Login(LoginModel loginModel)
+        public JsonResult LoginAccount(LoginModel loginModel)
         {
-            var response = _loginRequestHandler.Handle(new LoginRequest {Password = loginModel.Password, UserName = loginModel.Username, Session = Session});
+            LoginResponse response = null;
+            if (loginModel.IsAccount)
+                response = _loginAccountRequestHandler.Handle(new LoginRequest { Password = loginModel.Password, UserName = loginModel.Username, Session = Session });
+            else
+            {
+                response = _loginMemberRequestHandler.Handle(new LoginRequest { Password = loginModel.Password, UserName = loginModel.Username, Session = Session });
+            }
 
-            var wasSuccessful = (response.Status != ResponseCode.Success) ? false : true;
-             if (wasSuccessful)
-             {
-                 Session.Add(SessionConstants.AccountId, response.RecordId);
-                 Session.Add(SessionConstants.AcctInfoId, response.AccountInfoId);
-             }
+            var wasSuccessful = (response.Status == ResponseCode.Success);
+            if (wasSuccessful)
+            {
+                Session.Add(SessionConstants.AccountId, response.RecordId);
+                Session.Add(SessionConstants.IsAccount, loginModel.IsAccount);
+            }
 
-            return new JsonResult { Data = new {successfulLogin = wasSuccessful, reason = response.Status.ToString() }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            return new JsonResult { Data = new { successfulLogin = wasSuccessful, reason = response.Status.ToString() }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
-        //[HttpPost]
         public void Logout()
         {
             FormsAuthentication.SignOut();
@@ -52,7 +59,7 @@ namespace EducationGame.Controllers
         [HttpPost]
         public JsonDotNetResult CheckAuthorization()
         {
-            return new JsonDotNetResult {Data = new {isAuthorized = HttpContext.User.Identity.IsAuthenticated}};
+            return new JsonDotNetResult { Data = new { isAuthorized = HttpContext.User.Identity.IsAuthenticated } };
         }
     }
 
@@ -60,7 +67,7 @@ namespace EducationGame.Controllers
     {
         public string Username { get; set; }
         public string Password { get; set; }
-
+        public bool IsAccount { get; set; }
         public bool SuccessfulLogin { get; set; }
     }
 }

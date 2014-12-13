@@ -9,7 +9,7 @@
             };
 
             $scope.customerLogin = function () {
-                $http.post('/login/login', { Username: $scope.loginName, Password: $scope.password }).
+                $http.post('/login/loginAccount', { Username: $scope.loginName, Password: $scope.password, isAccount: false }).
                     success(function(data) {
                         if (!data.successfulLogin) {
                             $scope.errors = "Could not login with the credentials you specified";

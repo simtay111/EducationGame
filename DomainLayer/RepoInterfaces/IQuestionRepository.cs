@@ -9,5 +9,6 @@ namespace DomainLayer.RepoInterfaces
         void Save(Question model);
         void Delete(int id);
         List<Question> GetAll();
+        Question GetById(int questionId);
     }
 }

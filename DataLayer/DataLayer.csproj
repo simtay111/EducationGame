@@ -49,7 +49,9 @@
     <Compile Include="ConnectionProvider.cs" />
     <Compile Include="AwardedPrizeRepository.cs" />
     <Compile Include="AccountPrizeRepository.cs" />
+    <Compile Include="StoryToDoItemRepository.cs" />
     <Compile Include="Mappings\AccountPrizeMapping.cs" />
+    <Compile Include="Mappings\StoryToDoItemMapping.cs" />
     <Compile Include="RewardDisclaimerRepository.cs" />
     <Compile Include="Mappings\RewardDisclaimerMapping.cs" />
     <Compile Include="PaymentAuditRepository.cs" />
@@ -70,7 +72,6 @@
     <Compile Include="Mappings\ForgotPasswordTokenMapping.cs" />
     <Compile Include="Mappings\MemberMapping.cs" />
     <Compile Include="Mappings\MemberQuizStatusMapping.cs" />
-    <Compile Include="Mappings\CustomPrizeMapping.cs" />
     <Compile Include="Mappings\QuestionMapping.cs" />
     <Compile Include="Mappings\SlideMapping.cs" />
     <Compile Include="Mappings\StoryMapping.cs" />

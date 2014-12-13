@@ -10,7 +10,6 @@ namespace DomainLayer.RepoInterfaces
         void Save(MemberQuizStatus status);
         void Delete(int id);
         MemberQuizStatus GetById(int statusId);
-        MemberQuizStatus GetByToken(int token, int memberId);
-        List<MemberQuizStatus> GetNonPayedForCompletedQuizzes();
+        MemberQuizStatus GetByStoryIdAndMemberId(int storyId, int memberId);
     }
 }

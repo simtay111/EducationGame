@@ -9,5 +9,6 @@ namespace DomainLayer.RepoInterfaces
         void Save(Slide model);
         void Delete(int id);
         List<Slide> GetAll();
+        Slide GetById(int slideId);
     }
 }

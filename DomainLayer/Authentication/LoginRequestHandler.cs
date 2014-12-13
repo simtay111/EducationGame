@@ -30,7 +30,7 @@ namespace DomainLayer.Authentication
             
             return new LoginResponse
                 {
-                    RecordId = user.Id,
+                    RecordId = user.Id
                 };
         }
     }
@@ -53,6 +53,5 @@ namespace DomainLayer.Authentication
     {
         public ResponseCode Status { get; set; }
         public int RecordId { get; set; }
-        public int AccountInfoId { get; set; }
     }
 }

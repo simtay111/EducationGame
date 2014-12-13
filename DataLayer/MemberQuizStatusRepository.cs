@@ -43,20 +43,10 @@ namespace DataLayer
                 return connection.Get<MemberQuizStatus>(statusId);
         }
 
-        public MemberQuizStatus GetByToken(int token, int memberId)
+        public MemberQuizStatus GetByStoryIdAndMemberId(int storyId, int memberId)
         {
             var connection = _connectionProvider.CreateConnection();
-                return (from stats in connection.Query<MemberQuizStatus>()
-                        where stats.Member.Id == memberId && stats.GeneratedToken == token
-                        select stats).SingleOrDefault();
-        }
-
-        public List<MemberQuizStatus> GetNonPayedForCompletedQuizzes()
-        {
-            var connection = _connectionProvider.CreateConnection();
-                return (from stats in connection.Query<MemberQuizStatus>()
-                        where !stats.PayedFor && stats.Completed
-                        select stats).ToList();
+                return (from stats in connection.Query<MemberQuizStatus>() where stats.Member.Id == memberId && stats.StoryId == storyId select stats ).SingleOrDefault();
         }
     }
 }

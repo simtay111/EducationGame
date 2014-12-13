@@ -5,27 +5,47 @@ using DomainLayer;
 using DomainLayer.Authentication;
 using DomainLayer.Email;
 using DomainLayer.Entities;
+using EducationGame.Controllers.CustomResults;
 
 namespace EducationGame.Controllers
 {
     public class RegisterController : Controller
     {
-        private readonly RegisterUserHandler _createUserRequestHandler;
-
-        public RegisterController(RegisterUserHandler createUserRequestHandler)
-        {
-            _createUserRequestHandler = createUserRequestHandler;
-        }
+        private readonly RegisterUserHandler _createAccountRequestHandler;
+        private CreateMemberRequestHandler _createMemberRequestHandler;
 
         public RegisterController()
         {
-            _createUserRequestHandler =
-                new CreateAccountRequestHandler(new AccountRepository(new ConnectionProvider()), 
+            _createAccountRequestHandler =
+                new CreateAccountRequestHandler(new AccountRepository(new ConnectionProvider()),
+                    new PasswordHasher(), new EmailSender(new AuditLogRepository(new ConnectionProvider())));
+            _createMemberRequestHandler =
+                new CreateMemberRequestHandler(new MemberRepository(new ConnectionProvider()),
                     new PasswordHasher(), new EmailSender(new AuditLogRepository(new ConnectionProvider())));
         }
+
         public ActionResult Index()
         {
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult RegisterMember(RegistrationModel model)
+        {
+            try
+            {
+                var response = _createMemberRequestHandler.Handle(new CreateUserRequest
+                {
+                    UserName = model.Username,
+                    Password = model.Password,
+                    ConfirmPass = model.ConfirmPassword,
+                });
+                return new JsonDotNetResult { Data = new { Successful = true } };
+            }
+            catch (CreateUserException exception)
+            {
+                return new JsonDotNetResult { Data = new { Successful = false, Reason = exception.CreateMessage } };
+            }
         }
 
         [HttpPost]
@@ -34,25 +54,24 @@ namespace EducationGame.Controllers
             try
             {
                 var accountRepository = new AccountRepository(new ConnectionProvider());
-                var response = _createUserRequestHandler.Handle(new CreateUserRequest
+                var response = _createAccountRequestHandler.Handle(new CreateUserRequest
                 {
                     UserName = model.Username,
                     Password = model.Password,
                     ConfirmPass = model.ConfirmPassword,
-                    PermissionLevel = RolesStatic.SuperUser
                 });
 
-
-                var accountInformation = new AccountInformation();
-                accountInformation.CreationDate = DateTime.Now;
-                accountInformation.DatePayedThrough = DateTime.Now.AddDays(-2);
-                accountRepository.SaveAccountInformation(accountInformation);
-                for (int i = 1; i <= Constants.MaxPrizeCats; i++)
+                var accountInformation = new AccountInformation
                 {
-                    var prize = new CustomPrize { AccountInformation = accountInformation, Points = 0 };
-                    new PrizeRepository(new ConnectionProvider()).Save(prize);
-                }
-                ((Account)response.Account).AccountInformation = accountInformation;
+                    CreationDate = DateTime.Now,
+                    DatePayedThrough = DateTime.Now.AddDays(-2)
+                };
+                accountRepository.SaveAccountInformation(accountInformation);
+                var account = ((Account)response.Account);
+                account.PermissionLevel = RolesStatic.SuperUser;
+                account.AccountInformation = accountInformation;
+                Session[SessionConstants.AcctInfoId] = accountInformation.Id;
+                Session[SessionConstants.AcctPermissionLevel] = RolesStatic.SuperUser;
 
                 accountRepository.Save(response.Account);
 
@@ -81,7 +100,7 @@ namespace EducationGame.Controllers
         public JsonResult RegisterAssistant(RegistrationModel model)
         {
             var accountRepository = new AccountRepository(new ConnectionProvider());
-            var response = _createUserRequestHandler.Handle(new CreateUserRequest
+            var response = _createAccountRequestHandler.Handle(new CreateUserRequest
                 {
                     UserName = model.Username,
                     Password = model.Password,

@@ -23,6 +23,7 @@
     <script src="~/scripts/BootstrapPlugin/FileInput.js"></script>
     <script src="~/Scripts/angular-ui/ui-utils.js"></script>
     <script src="~/Scripts/angular-ui/ui-utils.min.js"></script>
+    <script src="~/Content/AngularUi/uirouter.js"></script>
     <script src="~/scripts/FileUpload/load-image.debug.js"></script>
     <script src="~/scripts/FileUpload/canvas-to-blob.debug.js"></script>
     <script src="~/scripts/FileUpload/jqueryui/jquery.ui.widget.js"></script>
@@ -135,16 +136,6 @@
         <ul class="nav navbar-nav" id="NavBar">
             @if (HttpContext.Current.User.Identity.IsAuthenticated)
             {
-                <li id="UserHomeLink"><a href="/Home/UserHome"><i class="fa fa-home"></i>My Home</a></li>
-                <li id="PatientsLink"><a href="/Members"><i class="fa fa-male"></i>Patients</a></li>
-                if (((int)Session[SessionConstants.AcctPermissionLevel]) >= 100)
-                {
-                <li id="AccountsLink"><a href="/Accounts/Manage"><i class="fa fa-gear"></i>Account</a></li>
-                <li id="LessonsLink"><a href="/Stories/MyStories"><i class="fa fa-soccer-ball-o"></i>Games</a></li>
-                <li id="ReportsLink"><a href="/Reports"><i class="fa fa-bar-chart"></i>Reports</a></li>
-                }
-                <li id="TutorialsLink"><a href="/Tutorial"><i class="fa fa-question"></i>Tutorial</a></li>
-                <li onclick="tabsHelpIntro()"><a><i class="fa fa-road"></i>Walk-Through</a></li>
             }
         </ul>
         <ul class="nav navbar-nav navbar-right">

@@ -9,9 +9,9 @@ namespace DataLayer.Mappings
         {
             Id(x => x.Id);
             Map(x => x.Name);
-            Map(x => x.StoryOrder);
             Map(x => x.Summary).Length(4000);
             Map(x => x.MessageLessonText);
+            Map(x => x.IsPublic);
             References(x => x.AccountInformation).Column("AccountInformationId");
         } 
     }

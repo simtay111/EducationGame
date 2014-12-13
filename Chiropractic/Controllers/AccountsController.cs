@@ -24,7 +24,7 @@ namespace EducationGame.Controllers
 
         public JsonDotNetResult GetLogoUrl()
         {
-            var url = Constants.ImageBaseUrl + (int)Session[SessionConstants.AcctInfoId] + Constants.ImageExt;
+            var url = SystemConstants.ImageBaseUrl + (int)Session[SessionConstants.AcctInfoId] + SystemConstants.ImageExt;
             return new JsonDotNetResult { Data = new { url }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 

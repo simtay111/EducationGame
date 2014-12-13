@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using System.IO;
 using System.Linq;
 using DataLayer;
@@ -7,6 +8,7 @@ using DomainLayer.Authentication;
 using DomainLayer.Email;
 using DomainLayer.Entities;
 using DomainLayer.Entities.Quizes;
+using DomainLayer.Entities.Stories;
 using EducationGame.Controllers;
 using NHibernate.Linq;
 using NUnit.Framework;
@@ -33,42 +35,62 @@ namespace TestLibrary
         [Test]
         public void CreatseDb()
         {
-            TangoCredentials.Identifier = "PracticeOwlTest";
-            TangoCredentials.Key = "UXFnQvLunCciAOsiTQzgFkX9XGT9MbiKHKqAwbdvFhqc6MGXe8gewpTkA";
-            TangoCredentials.Endpoint = "https://sandbox.tangocard.com/raas/v1";
+            //TangoCredentials.Identifier = "PracticeOwlTest";
+            //TangoCredentials.Key = "UXFnQvLunCciAOsiTQzgFkX9XGT9MbiKHKqAwbdvFhqc6MGXe8gewpTkA";
+            //TangoCredentials.Endpoint = "https://sandbox.tangocard.com/raas/v1";
             CreateMembers();
+            CreateSampleStory();
             TestConnectionProvider.Session.Flush();
-            new DisclaimerBuilder().BuildDescriptionAndSkuData();
-            TestConnectionProvider.Session.Flush();
+        }
 
-
-            //AddTangoPrizes();
-
-            //new TestConnectionProvider().CreateConnection()
-            //                            .CreateSQLQuery("update member set totalpoints = 5000")
-            //                            .ExecuteUpdate();
-            //new TestConnectionProvider().CreateConnection()
-            //                            .CreateSQLQuery("update accountInformation set creditcardtoken = 1690002520")
-            //                            .ExecuteUpdate();
-
-            //new CorbetteDataBuilder().Build();
-            TestConnectionProvider.Session.Flush();
+        private void CreateSampleStory()
+        {
+            var storyRepo = new StoryRepository(new TestConnectionProvider());
+            var slideRepo = new SlideRepository(new TestConnectionProvider());
+            var questionRepo = new QuestionRepository(new TestConnectionProvider());
+            var accountRepo = new AccountRepository(new TestConnectionProvider());
+            var accountInformation = new AccountInformation { Autopay = false, CompanyName = "Test Company", CreationDate = DateTime.Now, CreditCardToken = 0, DatePayedThrough = DateTime.Now, PayedOnce = true, SubscriptionCost = 99 };
+            accountRepo.SaveAccountInformation(accountInformation);
+            var story = new Story
+            {
+                AccountInformation = accountInformation, MessageLessonText = "A new lesson starts here",
+                Name = "New Lesson",
+                IsPublic = true,
+                Summary = "This is a summary"
+            };
+            storyRepo.Save(story);
+            slideRepo.Save(new Slide
+            {
+                Story = story,
+                Body = "Slide 1 body",
+                Title = "Slide 1 Title"
+            });
+            slideRepo.Save(new Slide
+            {
+                Story = story,
+                Body = "Slide 2 body",
+                Title = "Slide 2 Title"
+            });
+            questionRepo.Save(new Question
+            {
+                AnswerBool = true,
+                CorrectAnswer = "correct answer 1",
+                WrongAnswer =  "wrong answer 1",
+                Query = "Query bro 1"
+            });
+            questionRepo.Save(new Question
+            {
+                AnswerBool = true,
+                CorrectAnswer = "correct answer 2",
+                WrongAnswer =  "wrong answer 2",
+                Query = "Query bro 2"
+            });
         }
 
         private static void AddTangoPrizes()
         {
             var desiredSkus = new List<string>
                 {
-                    "AMZN-E-V-STD",
-                    "APPLBS-E-500-STD",
-                    "BSTB-E-500-STD",
-                    "FACE-E-V-STD",
-                    "FAND-E-500-STD",
-                    "REII-E-500-STD",
-                    "RESTDOTCOM-E-2500-STD",
-                    "SEPH-E-V-STD",
-                    "TRGT-E-500-BULS",
-                    "XBOX-E-500-STD",
                     "TNGO-E-V-STD"
                 };
             var fetcher = new AvailableItemFetcher(new ServiceProxy());
@@ -86,11 +108,9 @@ namespace TestLibrary
                 var prize = new AvailablePrize
                     {
                         ImageUrl = request.Item.image_url,
-                        Cost = (request.Reward.unit_price > 0) ? (int) request.Reward.unit_price : 500,
                         Name = request.Item.description,
-                        Points = (request.Reward.unit_price > 0) ? (int) request.Reward.unit_price : 500,
+                        Points = 500,
                         Sku = request.Reward.sku,
-                        IsRange = request.Reward.unit_price == -1
                     };
                 prizeRepo.Save(prize);
                 TestConnectionProvider.Session.Flush();
@@ -113,7 +133,7 @@ namespace TestLibrary
         {
             var registerHandler =
                 new CreateAccountRequestHandler(new AccountRepository(new TestConnectionProvider()),
-                    new PasswordHasher(), new EmailSender(new AuditLogRepository(new ConnectionProvider())));
+                    new PasswordHasher(), new EmailSender(new AuditLogRepository(new TestConnectionProvider())));
 
             registerHandler.Handle(new CreateUserRequest
                                        {
@@ -124,126 +144,17 @@ namespace TestLibrary
                                        });
 
 
-            var connection = new TestConnectionProvider().CreateConnection();
+            var memberCreationHandler = new CreateMemberRequestHandler(new MemberRepository(new TestConnectionProvider()), new PasswordHasher(),
+                new EmailSender(new AuditLogRepository(new TestConnectionProvider())));
 
-            var accounts = (from acct in connection.Query<Account>() select acct).ToList();
-
-            var names = GetNames();
-
-            foreach (var account in accounts)
+            memberCreationHandler.Handle(new CreateUserRequest
             {
+                ConfirmPass = "password",
+                Password = "password",
+                PermissionLevel = 100,
+                UserName = "member@member.com"
+            });
 
-                var random = new Random();
-                var members = new List<Member>();
-                for (int i = 0; i < 1; i++)
-                {
-                    var newIndex = random.Next(names.Count);
-                    var lastName = random.Next(names.Count);
-                    Console.WriteLine(names[newIndex]);
-                    var member = new Member
-                                     {
-                                         FirstName = names[newIndex],
-                                         LastName = names[lastName],
-                                     };
-
-                    members.Add(member);
-                }
-                foreach (var mem in members)
-                    connection.Save(mem);
-            }
-        }
-
-        public void CreateMemberHistory()
-        {
-            var connection = new TestConnectionProvider().CreateConnection();
-
-            var allMembers = (from acct in connection.Query<Member>() select acct).ToList();
-
-            var random = new Random();
-            var quizes = new List<MemberQuizStatus>();
-            foreach (var member in allMembers)
-            {
-                for (int i = 0; i < 0; i++)
-                {
-                    var quizHistory = new MemberQuizStatus
-                                          {
-                                              DateCompleted = DateTime.Now.AddDays(random.Next(0, 5) * -1),
-                                              GeneratedToken = 1234,
-                                              Member = member,
-                                              PointsEarned = random.Next(0, 100),
-                                              StoryName = "Lesson on back surgery",
-                                              Completed = true
-                                          };
-                    quizes.Add(quizHistory);
-                }
-            }
-            foreach (var quiz in quizes)
-            {
-                connection.Save(quiz);
-            }
-        }
-
-        [Test]
-        [Ignore]
-        public void CanCreateDateThings()
-        {
-            var memberQuiz1 = new MemberQuizStatus { DateCompleted = DateTime.Now.AddDays(-3), Id = 5 };
-            var memberQuiz2 = new MemberQuizStatus { DateCompleted = DateTime.Now.AddDays(3), Id = 7 };
-            var memberQuiz3 = new MemberQuizStatus { DateCompleted = DateTime.Now.AddDays(0), Id = 9 };
-            var status = new List<MemberQuizStatus> { memberQuiz1, memberQuiz2, memberQuiz3 }.OrderByDescending(x => x.DateCompleted);
-            Console.WriteLine(DateTime.Now.AddMinutes(34).Date);
-
-            Assert.AreEqual(DateTime.Now.AddMinutes(34).Date, DateTime.Now.Date);
-        }
-
-        //[Test]
-        //[Ignore]
-        //public void MigratePrizeInfo()
-        //{
-        //    var connection = new TestConnectionProvider();
-
-        //    var accountInformationRepo = new AccountRepository(connection);
-        //    var acctInfo = accountInformationRepo.GetAllAccountInformations();
-        //    var prizeRepo = new PrizeRepository(connection);
-        //    var memberRepo = new MemberRepository(connection);
-        //    foreach (var acctInf in acctInfo)
-        //    {
-        //        try
-        //        {
-        //            var prizes = prizeRepo.GetForAccount(acctInf.Id).OrderBy(x => x.Points).ToList();
-        //            var prizeSnapshot = new PrizeSnapshot
-        //                {
-        //                    Prize1 = prizes[0].Name,
-        //                    Prize2 = prizes[1].Name,
-        //                    Prize3 = prizes[2].Name,
-        //                    Prize4 = prizes.Count > 3 ? prizes[3].Name : null,
-        //                    Prize1Points = prizes[0].Points,
-        //                    Prize2Points = prizes[1].Points,
-        //                    Prize3Points = prizes[2].Points,
-        //                    Prize4Points = prizes.Count > 3 ? prizes[3].Points : 0
-        //                };
-        //            prizeRepo.SaveSnapshot(prizeSnapshot);
-
-        //            var members = memberRepo.GetMembersByAccountInfo(acctInf.Id, true);
-        //            foreach (var mem in members)
-        //            {
-        //                mem.PrizeSnapshot = prizeSnapshot;
-        //                memberRepo.Save(mem);
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //           continue; 
-        //        }
-
-        //    }
-        //}
-        [Test]
-        [Ignore]
-        public void TestEmail()
-        {
-            var emailSender = new EmailSender(new AuditLogRepository(new TestConnectionProvider()));
-            emailSender.SendEmail("simtay111@gmail.com", "Meow", "A subject");
         }
     }
 }

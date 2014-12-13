@@ -9,5 +9,6 @@ namespace DomainLayer.RepoInterfaces
         void Save(Story model);
         void Delete(int id);
         Story GetById(int storyId);
+        List<Story> GetPublicStories();
     }
 }

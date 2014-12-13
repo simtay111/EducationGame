@@ -8,21 +8,15 @@ using NHibernate.Linq;
 
 namespace DataLayer
 {
-    public class MemberRepository : IMemberRepository
+    public class MemberRepository : IMemberRepository, ILogginEntityProvider
     {
         private readonly IConnectionProvider _connectionProvider;
-        private ISession _connection;
+        private readonly ISession _connection;
 
         public MemberRepository(IConnectionProvider connectionProvider)
         {
             _connectionProvider = connectionProvider;
             _connection = _connectionProvider.CreateConnection();
-        }
-
-        public int Save(Member member)
-        {
-            _connection.SaveOrUpdate(member);
-            return member.Id;
         }
 
         public void Delete(int id)
@@ -78,11 +72,14 @@ namespace DataLayer
             return (from acct in _connection.Query<Member>() where acct.Email == email.ToUpper() select acct).SingleOrDefault();
         }
 
-        public void ChangeActievState(int memberId, bool isInactive)
+        public void Save<T>(T entityToSave)
         {
-            var member = _connection.Get<Member>(memberId);
-            member.Inactive = isInactive;
-            _connection.Update(member);
+            _connection.SaveOrUpdate(entityToSave);
+        }
+
+        IHaveAuthorizationCredentials ILogginEntityProvider.GetByLoginEmail(string email)
+        {
+            return GetByLoginEmail(email);
         }
     }
 }

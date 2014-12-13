@@ -12,8 +12,7 @@ namespace DataLayer.Mappings
             Map(x => x.Name);
             Map(x => x.Sku);
             Map(x => x.ImageUrl);
-            Map(x => x.Cost);
-            Map(x => x.IsRange);
+            Map(x => x.IsPublic);
         }
     }
 }

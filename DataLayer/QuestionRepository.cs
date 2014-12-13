@@ -45,5 +45,10 @@ namespace DataLayer
                     (from question in connection.Query<Question>() select question)
                         .ToList();
         }
+
+        public Question GetById(int questionId)
+        {
+            return _connectionProvider.CreateConnection().Get<Question>(questionId);
+        }
     }
 }

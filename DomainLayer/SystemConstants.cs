@@ -1,6 +1,6 @@
 ﻿namespace DomainLayer
 {
-    public class Constants
+    public class SystemConstants
     {
         public const string ImageBaseUrl = "/Files/AcctLogos/";
         public const string ImageExt = ".jpg";

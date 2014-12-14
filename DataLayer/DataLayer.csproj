@@ -49,6 +49,8 @@
     <Compile Include="ConnectionProvider.cs" />
     <Compile Include="AwardedPrizeRepository.cs" />
     <Compile Include="AccountPrizeRepository.cs" />
+    <Compile Include="Mappings\PointsWithCompanyMapping.cs" />
+    <Compile Include="PointsWithCompanyRepository.cs" />
     <Compile Include="StoryToDoItemRepository.cs" />
     <Compile Include="Mappings\AccountPrizeMapping.cs" />
     <Compile Include="Mappings\StoryToDoItemMapping.cs" />

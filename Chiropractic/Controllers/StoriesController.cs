@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using DataLayer;
 using DomainLayer.Stories;
+using DomainLayer.Stories.Questions;
 using DomainLayer.Stories.Responses;
 using DomainLayer.Stories.State;
 using EducationGame.Controllers.CustomResults;
@@ -11,10 +12,13 @@ namespace EducationGame.Controllers
     {
         readonly GetPublicStoriesRequestHandler _getPublicStoriesRequestHandler = new GetPublicStoriesRequestHandler(new StoryRepository(new ConnectionProvider()));
         readonly GetStorySummaryHandler _storySummaryHandler = new GetStorySummaryHandler(new StoryRepository(new ConnectionProvider()));
-        readonly GetNextStepHandler _getNextStepHandler = new GetNextStepHandler(new CurrentStoryStateProvider(new StoryToDoItemRepository(new ConnectionProvider())), new StoryStepDataBuilder(new SlideRepository(new ConnectionProvider()),new QuestionRepository(new ConnectionProvider()) ));
+        readonly GetNextStepHandler _getNextStepHandler = new GetNextStepHandler(new CurrentStoryStateProvider(new StoryToDoItemRepository(new ConnectionProvider())), new StoryStepDataBuilder(new SlideRepository(new ConnectionProvider()), new QuestionRepository(new ConnectionProvider())));
         readonly StartStoryRequestHandler _startStoryRequestHandler = new StartStoryRequestHandler(new StoryRepository(new ConnectionProvider()), new SlideRepository(new ConnectionProvider()), new QuestionRepository(new ConnectionProvider()), new MemberQuizStatusRepository(new ConnectionProvider()), new MemberRepository(new ConnectionProvider()), new StoryToDoItemRepository(new ConnectionProvider()), new CurrentStoryStateProvider(new StoryToDoItemRepository(new ConnectionProvider())));
+        readonly FinishStepRequestHandler _finishStepRequestHandler = new FinishStepRequestHandler(new StoryToDoItemRepository(new ConnectionProvider()));
+        readonly AnswerQuestionHandler _answerQuestionHandler = new AnswerQuestionHandler(new QuestionRepository(new ConnectionProvider()), new StoryToDoItemRepository(new ConnectionProvider()), new PointsWithCompanyRepository(new ConnectionProvider()), new MemberRepository(new ConnectionProvider()));
 
 
+        [Authorize]
         [HttpPost]
         public JsonDotNetResult StartGame(int gameId)
         {
@@ -26,6 +30,47 @@ namespace EducationGame.Controllers
 
         }
 
+        [HttpPost]
+        [Authorize]
+        public void FinishStep(int stepId)
+        {
+            var memberId = (int)Session[SessionConstants.AccountId];
+            var request = new FinishStepRequest { StoryToDoItemId = stepId, MemberId = memberId };
+            _finishStepRequestHandler.Handle(request);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public JsonDotNetResult AnswerQuestion(int stepId, bool answer)
+        {
+            var memberId = (int)Session[SessionConstants.AccountId];
+            var request = new AnswerQuestionRequest
+            {
+                Answer = answer,
+                MemberId = memberId,
+                StoryToDoItemId = stepId
+            };
+
+            try
+            {
+                _answerQuestionHandler.Handle(request);
+            }
+            catch (AnswerQuestionException ex)
+            {
+                return new JsonDotNetResult();
+            }
+            return new JsonDotNetResult();
+        }
+
+        [Authorize]
+        public JsonDotNetResult FinishGame(int gameId)
+        {
+
+
+            return new JsonDotNetResult();
+        }
+
+        [Authorize]
         public JsonDotNetResult GetNextSlide(int gameId)
         {
             var memberId = (int)Session[SessionConstants.AccountId];

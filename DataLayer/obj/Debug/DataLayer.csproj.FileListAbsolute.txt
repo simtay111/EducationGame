@@ -44,8 +44,3 @@ C:\Users\Simtay111\Documents\GitHub\EducationGame\DataLayer\obj\Debug\DataLayer.
 C:\Users\Simtay111\Documents\GitHub\EducationGame\DataLayer\obj\Debug\DataLayer.dll
 C:\Users\Simtay111\Documents\GitHub\EducationGame\DataLayer\obj\Debug\DataLayer.pdb
 C:\Users\Simtay111\Documents\GitHub\EducationGame\DataLayer\bin\Debug\Newtonsoft.Json.xml
-C:\Users\Simtay111\Documents\GitHub\EducationGame\DataLayer\bin\Debug\LinqToExcel.dll
-C:\Users\Simtay111\Documents\GitHub\EducationGame\DataLayer\bin\Debug\Remotion.Data.Linq.dll
-C:\Users\Simtay111\Documents\GitHub\EducationGame\DataLayer\bin\Debug\log4net.dll
-C:\Users\Simtay111\Documents\GitHub\EducationGame\DataLayer\bin\Debug\LinqToExcel.xml
-C:\Users\Simtay111\Documents\GitHub\EducationGame\DataLayer\bin\Debug\log4net.xml

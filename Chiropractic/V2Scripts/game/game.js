@@ -15,15 +15,31 @@
         $scope.step = {}
         var getNextStep = function() {
         $http.get("/stories/getNextSlide?gameId=" + params.gameId).success(function (response) {
+            if (response.noNextSlide)
+                $state.go("home");
             $scope.step = response;
         });
         };
 
         getNextStep();
-        $scope.finishStep = function() {
-            $http.post("/stories/finishStep", { stepId: $scope.step.stepId }).success(function(response) {
+        $scope.finishStep = function(stepId) {
+            $http.post("/stories/finishStep", { stepId: stepId}).success(function(response) {
                 getNextStep();
             });
+        };
+
+        $scope.answerWith = function (value) {
+            if (value == $scope.step.answer) {
+                $scope.step.wasAnswered = true;
+                $scope.step.wasCorrect = true;
+            }
+            else {
+                $scope.step.wasAnswered = true;
+            }
+            $http.post("/stories/answerQuestion", {
+                stepId: $scope.step.stepId,
+                answer: value
+            }).success(function() { $scope.showNextButton = true; });
         };
     }
     ]);

@@ -10,7 +10,7 @@
 }]).config(["$stateProvider",'$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/home');
 
-    $stateProvider.state("homeController", {
+    $stateProvider.state("home", {
         url: '/home',
         templateUrl: '/V2Templates/game/game_base.html',
         controller: 'homeController'

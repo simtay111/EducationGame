@@ -5,7 +5,13 @@ using DomainLayer.RepoInterfaces;
 
 namespace DomainLayer.Email
 {
-    public class EmailSender
+    public interface IEmailSender
+    {
+        void SendForgotPasswordToken(string username, ForgotPasswordToken forgotPasswordToken);
+        void SendEmail(string username, string body, string subject, string cc = "", bool isHtml = false);
+    }
+
+    public class EmailSender : IEmailSender
     {
         private readonly IAuditLogRepository _auditLogRepository;
 

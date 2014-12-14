@@ -87,6 +87,7 @@
     <Compile Include="Email\ReceiptSender.cs" />
     <Compile Include="Entities\AvailablePrize.cs" />
     <Compile Include="Entities\AccountPrize.cs" />
+    <Compile Include="Entities\Quizes\PointsWithCompany.cs" />
     <Compile Include="Entities\RewardDisclaimer.cs" />
     <Compile Include="Entities\PaymentAudit.cs" />
     <Compile Include="Entities\Receipt.cs" />
@@ -111,12 +112,18 @@
     <Compile Include="RepoInterfaces\IAwardedPrizeRepository.cs" />
     <Compile Include="Reports\NameValue.cs" />
     <Compile Include="Rewards\GetPublicAvailableRewardsHandler.cs" />
+    <Compile Include="Stories\FinishStepRequestHandler.cs" />
     <Compile Include="Stories\GetNextStepHandler.cs" />
     <Compile Include="Stories\GetStoriesForAcctRequestHandler.cs" />
     <Compile Include="Stories\GetPublicStoriesRequestHandler.cs" />
     <Compile Include="Stories\GetStoryHistoryForUser.cs" />
     <Compile Include="Stories\GetStorySummaryHandler.cs" />
     <Compile Include="Stories\Pocos\StoryOrderAndId.cs" />
+    <Compile Include="Stories\Questions\AnswerQuestionException.cs" />
+    <Compile Include="Stories\Questions\AnswerQuestionHandler.cs" />
+    <Compile Include="Stories\Questions\AnswerQuestionRequest.cs" />
+    <Compile Include="Stories\Questions\AnswerQuestionResponse.cs" />
+    <Compile Include="RepoInterfaces\IPointsWithCompanyRepository.cs" />
     <Compile Include="Stories\Responses\StoryStepDataBuilder.cs" />
     <Compile Include="Stories\StartStoryRequestHandler.cs" />
     <Compile Include="Stories\State\CurrentStoryStateProvider.cs" />

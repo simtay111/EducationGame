@@ -10,6 +10,7 @@ using DomainLayer.Entities;
 using DomainLayer.Entities.Quizes;
 using DomainLayer.Entities.Stories;
 using EducationGame.Controllers;
+using Moq;
 using NHibernate.Linq;
 using NUnit.Framework;
 using TangoApi;
@@ -76,14 +77,16 @@ namespace TestLibrary
                 AnswerBool = true,
                 CorrectAnswer = "correct answer 1",
                 WrongAnswer =  "wrong answer 1",
-                Query = "Query bro 1"
+                Query = "Query bro 1",
+                Story = story
             });
             questionRepo.Save(new Question
             {
                 AnswerBool = true,
                 CorrectAnswer = "correct answer 2",
                 WrongAnswer =  "wrong answer 2",
-                Query = "Query bro 2"
+                Query = "Query bro 2",
+                Story = story
             });
         }
 
@@ -131,9 +134,10 @@ namespace TestLibrary
 
         public void CreateMembers()
         {
+            var mockEmailSender = new Mock<IEmailSender>();
             var registerHandler =
                 new CreateAccountRequestHandler(new AccountRepository(new TestConnectionProvider()),
-                    new PasswordHasher(), new EmailSender(new AuditLogRepository(new TestConnectionProvider())));
+                    new PasswordHasher(), mockEmailSender.Object);
 
             registerHandler.Handle(new CreateUserRequest
                                        {

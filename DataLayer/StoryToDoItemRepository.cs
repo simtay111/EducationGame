@@ -35,5 +35,11 @@ namespace DataLayer
             var connection = _connectionProvider.CreateConnection();
             connection.Delete(connection.Load(typeof(StoryToDoItem), id));
         }
+
+        public StoryToDoItem GetById(int storyToDoItemId)
+        {
+            var connection = _connectionProvider.CreateConnection();
+            return connection.Get<StoryToDoItem>(storyToDoItemId);
+        }
     }
 }

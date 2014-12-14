@@ -1,4 +1,29 @@
-﻿<div>
-    <h1> Game step</h1>
-    {{step}}
+﻿<div ng-show="step.type == 'Slide'">
+    <h1>{{step.title}}</h1>
+    <div>{{step.body}}</div>
+    <div ng-click="finishStep(step.stepId)" class="btn btn-primary">Done</div>
+</div>
+
+<div ng-show="step.type == 'Question'">
+    {{step.question}}
+        <div ng-show="!step.wasAnswered">
+            <button ng-click="answerWith(true)" class="btn btn-lg btn-info">True</button>&nbsp;&nbsp;
+            <button ng-click="answerWith(false)" class="btn btn-lg btn-info">False</button>
+        </div>
+    <div ng-show="step.wasAnswered">
+        <div ng-show="step.wasCorrect">
+            <h3 style="color: green">CORRECT!</h3>
+            <div style="color: green">
+                {{question.correctInfo}}
+            </div>
+        </div>
+        <div ng-show="!step.wasCorrect">
+            <h3 style="color: red">OOPS!</h3>
+            <div style="color: red">
+                {{question.incorrectInfo}}
+            </div>
+        </div>
+    </div>
+    <br />
+    <div ng-show="step.wasAnswered && showNextButton" ng-click="finishStep(step.stepId)" class="btn btn-primary">Done</div>
 </div>

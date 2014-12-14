@@ -10,9 +10,9 @@ namespace DomainLayer.Authentication
     {
         protected readonly ILogginEntityProvider LogginEntityProvider;
         protected readonly IPasswordHasher PasswordHasher;
-        protected readonly EmailSender EmailSender;
+        protected readonly IEmailSender EmailSender;
 
-        protected RegisterUserHandler(ILogginEntityProvider logginEntityProvider, IPasswordHasher passwordHasher, EmailSender emailSender)
+        protected RegisterUserHandler(ILogginEntityProvider logginEntityProvider, IPasswordHasher passwordHasher, IEmailSender emailSender)
         {
             LogginEntityProvider = logginEntityProvider;
             PasswordHasher = passwordHasher;
@@ -86,7 +86,7 @@ namespace DomainLayer.Authentication
 
     public class CreateMemberRequestHandler : RegisterUserHandler
     {
-        public CreateMemberRequestHandler(ILogginEntityProvider memberRepository, IPasswordHasher passwordHasher, EmailSender emailSender) : base(memberRepository, passwordHasher, emailSender)
+        public CreateMemberRequestHandler(ILogginEntityProvider memberRepository, IPasswordHasher passwordHasher, IEmailSender emailSender) : base(memberRepository, passwordHasher, emailSender)
         {
         }
 
@@ -106,7 +106,7 @@ namespace DomainLayer.Authentication
 
     public class CreateAccountRequestHandler : RegisterUserHandler
     {
-        public CreateAccountRequestHandler(ILogginEntityProvider logginEntityProvider, IPasswordHasher passwordHasher, EmailSender emailSender) : base(logginEntityProvider, passwordHasher, emailSender)
+        public CreateAccountRequestHandler(ILogginEntityProvider logginEntityProvider, IPasswordHasher passwordHasher, IEmailSender emailSender) : base(logginEntityProvider, passwordHasher, emailSender)
         {
         }
 

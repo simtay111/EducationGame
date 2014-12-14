@@ -20,6 +20,7 @@ namespace DomainLayer.Stories
 
         public GetNextStepResponse Handle(GetNextStepRequest request)
         {
+            TraceLog.WriteLine(String.Format("GetNextStepHandler: MemberId: {0} StoryId: {1}", request.MemberId, request.StoryId));
             var storyToDoItem = _stateProvider.GetNextStep(request.MemberId, request.StoryId);
             return new GetNextStepResponse {Step = _dataBuilder.GenerateFromStoryToDoItem(storyToDoItem)};
         }

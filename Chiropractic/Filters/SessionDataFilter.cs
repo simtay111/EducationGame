@@ -38,7 +38,7 @@ namespace EducationGame.Filters
 
         private static bool RequestIsAuthenticatedButSessionFieldsAreNotFull(HttpContextBase context)
         {
-            return context.Request.IsAuthenticated && (context.Session[SessionConstants.AccountId] == null || context.Session[SessionConstants.AcctInfoId] == null || context.Session[SessionConstants.AcctPermissionLevel] == null);
+            return context.Request.IsAuthenticated && (context.Session[SessionConstants.AccountId] == null);
         }
     }
     public class SessionDataSetter
@@ -46,8 +46,6 @@ namespace EducationGame.Filters
         public void SetOnSession(HttpSessionStateBase session, IHaveAuthorizationCredentials acct)
         {
             session.Add(SessionConstants.AccountId, acct.Id);
-            //session.Add(SessionConstants.AcctInfoId, acct.AccountInformation.Id);
-            //session.Add(SessionConstants.AcctPermissionLevel, acct.PermissionLevel);
         }
     }
 }

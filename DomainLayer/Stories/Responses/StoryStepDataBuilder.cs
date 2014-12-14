@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using DomainLayer.Constants;
 using DomainLayer.Entities;
 using DomainLayer.RepoInterfaces;
@@ -20,31 +21,35 @@ namespace DomainLayer.Stories.Responses
 
         public Object GenerateFromStoryToDoItem(StoryToDoItem toDoItem)
         {
-            var response = new { };
+            dynamic response = new ExpandoObject();
             var failureResponse = new { noNextSlide = true };
 
-            response.SetProperty("type", toDoItem.Type);
-            response.SetProperty("toDoId", toDoItem.ToDoId);
-            response.SetProperty("stepId", toDoItem.Id);
+            if (toDoItem == null)
+                return failureResponse;
+
+            response.type = toDoItem.Type;
+            response.toDoId = toDoItem.ToDoId;
+            response.stepId = toDoItem.Id;
 
             if (toDoItem.Type == ToDoType.Slide)
             {
                 var slide = _slideRepository.GetById(toDoItem.ToDoId);
                 if (slide == null)
                     return failureResponse;
-                response.SetProperty("body", slide.Body);
-                response.SetProperty("title", slide.Title);
+                response.body = slide.Body;
+                response.title = slide.Title;
                 return response;
             }
-            if (toDoItem.Type == ToDoType.Slide)
+            if (toDoItem.Type == ToDoType.Question)
             {
                 var question = _questionRepository.GetById(toDoItem.ToDoId);
                 if (question == null)
                     return failureResponse;
-                response.SetProperty("question", question.Query);
-                response.SetProperty("answer", question.AnswerBool);
-                response.SetProperty("correctInfo", question.CorrectAnswer);
-                response.SetProperty("incorrectInfo", question.WrongAnswer);
+
+                response.question = question.Query;
+                response.answer = question.AnswerBool;
+                response.correctInfo = question.CorrectAnswer;
+                response.incorrectInfo = question.WrongAnswer;
                 return response;
             }
 

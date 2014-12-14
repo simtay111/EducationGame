@@ -902,10 +902,12 @@
     <Content Include="Templates\Members\ManageMembersPanel.html" />
     <Content Include="Templates\FirstPanel.html" />
     <Content Include="Templates\Registration\RegisterPanel.html" />
+    <Content Include="V2Scripts\Accounts\home.js" />
     <Content Include="V2Scripts\config\home.js" />
     <Content Include="V2Scripts\game\game.js" />
     <Content Include="V2Scripts\quizzes\quiz_item.js" />
     <Content Include="V2Scripts\quizzes\quiz_search.js" />
+    <Content Include="V2Templates\Accounts\home.html" />
     <Content Include="V2Templates\game\game_finished.html" />
     <Content Include="V2Templates\game\game_step.html" />
     <Content Include="V2Templates\game\game_start.html" />
@@ -961,6 +963,7 @@
     <Content Include="Views\Home\Index2.cshtml" />
     <Content Include="Views\Home\Index3.cshtml" />
     <Content Include="Views\Home\Index5.cshtml" />
+    <Content Include="Views\Home\AcctHome.cshtml" />
     <None Include="Web.Backload.Default.config" />
     <None Include="Web.Backload.xsd">
       <SubType>Designer</SubType>

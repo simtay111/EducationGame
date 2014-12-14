@@ -8,7 +8,13 @@ namespace EducationGame.Controllers
     {
         public ActionResult Index()
         {
+            return View("AcctHome");
             return View("UserHome");
+        }
+
+        public ActionResult AcctHome()
+        {
+            return View();
         }
 
         public ActionResult UserHome()

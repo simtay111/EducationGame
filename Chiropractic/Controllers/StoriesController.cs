@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using DataLayer;
-using DomainLayer.Authentication;
-using DomainLayer.Email;
 using DomainLayer.Stories;
+using DomainLayer.Stories.Responses;
 using DomainLayer.Stories.State;
 using EducationGame.Controllers.CustomResults;
 
@@ -15,11 +11,10 @@ namespace EducationGame.Controllers
     {
         readonly GetPublicStoriesRequestHandler _getPublicStoriesRequestHandler = new GetPublicStoriesRequestHandler(new StoryRepository(new ConnectionProvider()));
         readonly GetStorySummaryHandler _storySummaryHandler = new GetStorySummaryHandler(new StoryRepository(new ConnectionProvider()));
-        readonly GetNextStepHandler _getNextStepHandler = new GetNextStepHandler(new CurrentStoryStateProvider(new StoryToDoItemRepository(new ConnectionProvider())));
+        readonly GetNextStepHandler _getNextStepHandler = new GetNextStepHandler(new CurrentStoryStateProvider(new StoryToDoItemRepository(new ConnectionProvider())), new StoryStepDataBuilder(new SlideRepository(new ConnectionProvider()),new QuestionRepository(new ConnectionProvider()) ));
         readonly StartStoryRequestHandler _startStoryRequestHandler = new StartStoryRequestHandler(new StoryRepository(new ConnectionProvider()), new SlideRepository(new ConnectionProvider()), new QuestionRepository(new ConnectionProvider()), new MemberQuizStatusRepository(new ConnectionProvider()), new MemberRepository(new ConnectionProvider()), new StoryToDoItemRepository(new ConnectionProvider()), new CurrentStoryStateProvider(new StoryToDoItemRepository(new ConnectionProvider())));
 
 
-        [Authorize]
         [HttpPost]
         public JsonDotNetResult StartGame(int gameId)
         {
@@ -31,7 +26,6 @@ namespace EducationGame.Controllers
 
         }
 
-        [Authorize]
         public JsonDotNetResult GetNextSlide(int gameId)
         {
             var memberId = (int)Session[SessionConstants.AccountId];

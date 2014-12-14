@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DomainLayer.Constants;
 using DomainLayer.Entities;
@@ -44,7 +45,8 @@ namespace DomainLayer.Stories
                 {
                     Member = member,
                     StoryId = request.StoryId,
-                    StoryName = story.Name
+                    StoryName = story.Name,
+                    DateCompleted = DateTime.Now
                 };
 
                 _memberQuizStatusRepository.Save(newStatus);

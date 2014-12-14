@@ -22,7 +22,11 @@ namespace EducationGame.Filters
         {
             TraceLog.WriteLine("Resetting Session Data");
             var accountRepo = new AccountRepository(new ConnectionProvider());
+            var memberRepo = new MemberRepository(new ConnectionProvider());
             var acct = accountRepo.GetByLoginEmail(context.User.Identity.Name.ToUpper());
+            if (acct == null)
+                acct = memberRepo.GetByLoginEmail(context.User.Identity.Name.ToUpper());
+
             if (acct == null)
                 FormsAuthentication.SignOut();
             if (context.Session != null && acct != null)

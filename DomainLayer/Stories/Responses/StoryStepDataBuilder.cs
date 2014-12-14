@@ -25,6 +25,7 @@ namespace DomainLayer.Stories.Responses
 
             response.SetProperty("type", toDoItem.Type);
             response.SetProperty("toDoId", toDoItem.ToDoId);
+            response.SetProperty("stepId", toDoItem.Id);
 
             if (toDoItem.Type == ToDoType.Slide)
             {

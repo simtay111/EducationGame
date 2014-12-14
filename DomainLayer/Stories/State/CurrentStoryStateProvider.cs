@@ -17,7 +17,7 @@ namespace DomainLayer.Stories.State
 
         public StoryToDoItem GetNextStep(int memberId, int storyId)
         {
-            var itemsToDo = _storyToDoItemRepository.GetByMemberId(memberId);
+            var itemsToDo = _storyToDoItemRepository.GetByMemberId(memberId).Where(x => x.Story.Id == storyId).ToList();
 
             if (itemsToDo.Any(x => x.Type == ToDoType.Slide))
                 return GetByFirstByType(itemsToDo, ToDoType.Slide);

@@ -26,5 +26,9 @@
         url: '/step',
         templateUrl: '/V2Templates/game/game_step.html',
         controller: "gameStepController"
+    }).state("game.finished", {
+        url: '/finished',
+        templateUrl: '/V2Templates/game/game_finished.html',
+        controller: "gameFinishedController"
     });
 }]);

@@ -906,6 +906,7 @@
     <Content Include="V2Scripts\game\game.js" />
     <Content Include="V2Scripts\quizzes\quiz_item.js" />
     <Content Include="V2Scripts\quizzes\quiz_search.js" />
+    <Content Include="V2Templates\game\game_finished.html" />
     <Content Include="V2Templates\game\game_step.html" />
     <Content Include="V2Templates\game\game_start.html" />
     <Content Include="V2Templates\game\game_base.html" />

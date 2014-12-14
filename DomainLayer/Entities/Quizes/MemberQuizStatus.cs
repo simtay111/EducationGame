@@ -10,8 +10,6 @@ namespace DomainLayer.Entities.Quizes
 
         public virtual string StoryName { get; set; }
 
-        public virtual int PointsEarned { get; set; }
-
         public virtual int StoryId { get; set; }
 
         public virtual bool Completed { get; set; }

@@ -9,7 +9,6 @@ namespace DataLayer.Mappings
         {
             Id(x => x.Id);
             Map(x => x.DateCompleted);
-            Map(x => x.PointsEarned);
             Map(x => x.StoryName);
             Map(x => x.Completed);
             Map(x => x.StoryId);

@@ -9,6 +9,7 @@ namespace DataLayer.Mappings
         {
             Id(x => x.Id);
             Map(x => x.PayedOnce);
+            Map(x => x.CompanyName);
             Map(x => x.CreationDate);
             Map(x => x.CreditCardToken);
             Map(x => x.Autopay);

@@ -63,11 +63,18 @@ namespace EducationGame.Controllers
         }
 
         [Authorize]
+        [HttpPost]
         public JsonDotNetResult FinishGame(int gameId)
         {
+            var handler = new FinishGameHandler(new MemberQuizStatusRepository(new ConnectionProvider()),
+                new StoryToDoItemRepository(new ConnectionProvider()), new MemberRepository(new ConnectionProvider()),
+                new StoryRepository(new ConnectionProvider()), new PointsWithCompanyRepository(new ConnectionProvider()));
 
+            var memberId = (int)Session[SessionConstants.AccountId];
+            var request = new FinishGameRequest {MemberId = memberId, GameId = gameId};
+            var response = handler.Handle(request);
 
-            return new JsonDotNetResult();
+            return new JsonDotNetResult {Data = response};
         }
 
         [Authorize]

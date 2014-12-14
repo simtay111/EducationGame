@@ -112,6 +112,7 @@
     <Compile Include="RepoInterfaces\IAwardedPrizeRepository.cs" />
     <Compile Include="Reports\NameValue.cs" />
     <Compile Include="Rewards\GetPublicAvailableRewardsHandler.cs" />
+    <Compile Include="Stories\FinishGameHandler.cs" />
     <Compile Include="Stories\FinishStepRequestHandler.cs" />
     <Compile Include="Stories\GetNextStepHandler.cs" />
     <Compile Include="Stories\GetStoriesForAcctRequestHandler.cs" />

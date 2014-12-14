@@ -51,16 +51,6 @@ namespace DataLayer
                  select status).Count();
         }
 
-        public int GetTotalNumberOfPointsForMembers(List<int> memberIds)
-        {
-            var connection = _connectionProvider.CreateConnection();
-            var statusi = (from status in _connection.Query<MemberQuizStatus>()
-                           where memberIds.Contains(status.Member.Id) && status.Completed
-                           select status.PointsEarned).ToList();
-
-            if (statusi.Any()) return statusi.Sum();
-            return 0;
-        }
 
         public Member GetByLoginEmail(string email)
         {

@@ -16,7 +16,7 @@
         var getNextStep = function() {
         $http.get("/stories/getNextSlide?gameId=" + params.gameId).success(function (response) {
             if (response.noNextSlide)
-                $state.go("home");
+                $state.go("game.finished");
             $scope.step = response;
         });
         };
@@ -42,4 +42,8 @@
             }).success(function() { $scope.showNextButton = true; });
         };
     }
-    ]);
+    ]).controller("gameFinishedController", ['$scope', '$http','$stateParams', function($scope, $http, params) {
+    $http.post("/stories/finishGame", { gameId: params.gameId }).success(function(response) {
+        $scope.summary = response;
+    });
+}]);

@@ -14,7 +14,7 @@ namespace EducationGame.Controllers
         [Authorize]
         public JsonDotNetResult AddCreditCardToAccount(AddCreditCardModel model)
         {
-            var acctInfoId = (int)Session[SessionConstants.AcctInfoId];
+            var acctInfoId = SessionConstants.GetAccountInfoId((int)Session[SessionConstants.AccountId]);
 
             var usePromoCost = false;
             var promoCost = 0;
@@ -84,7 +84,7 @@ namespace EducationGame.Controllers
         public JsonDotNetResult UpdateAutoRenew(bool autoRenew)
         {
             var acctRepo = new AccountRepository(new ConnectionProvider());
-            var acctInfo = acctRepo.GetAcctInfoById((int)Session[SessionConstants.AcctInfoId]);
+            var acctInfo = acctRepo.GetAcctInfoById(SessionConstants.GetAccountInfoId((int)Session[SessionConstants.AccountId]));
 
             acctInfo.Autopay = autoRenew;
             acctRepo.SaveAccountInformation(acctInfo);
@@ -95,7 +95,7 @@ namespace EducationGame.Controllers
         public JsonDotNetResult Status()
         {
             var acctRepo = new AccountRepository(new ConnectionProvider());
-            var acctInfo = acctRepo.GetAcctInfoById((int)Session[SessionConstants.AcctInfoId]);
+            var acctInfo = acctRepo.GetAcctInfoById(SessionConstants.GetAccountInfoId((int)Session[SessionConstants.AccountId]));
 
             var hasCc = acctInfo.CreditCardToken > 0;
             var price = acctInfo.SubscriptionCost == 97 ? 1 : 2;
@@ -110,7 +110,7 @@ namespace EducationGame.Controllers
         public JsonDotNetResult BillClinic()
         {
             var acctRepo = new AccountRepository(new ConnectionProvider());
-            var acctInfo = acctRepo.GetAcctInfoById((int)Session[SessionConstants.AcctInfoId]);
+            var acctInfo = acctRepo.GetAcctInfoById(SessionConstants.GetAccountInfoId((int)Session[SessionConstants.AccountId]));
 
             if (acctInfo.DatePayedThrough.Date < DateTime.Now.Date)
             {
@@ -138,7 +138,7 @@ namespace EducationGame.Controllers
         public JsonDotNetResult UpdateSubscription(int price)
         {
             var acctRepo = new AccountRepository(new ConnectionProvider());
-            var acctInfo = acctRepo.GetAcctInfoById((int)Session[SessionConstants.AcctInfoId]);
+            var acctInfo = acctRepo.GetAcctInfoById(SessionConstants.GetAccountInfoId((int)Session[SessionConstants.AccountId]));
 
             acctInfo.SubscriptionCost = price == 1 ? 97 : 997;
             acctRepo.SaveAccountInformation(acctInfo);
@@ -150,7 +150,7 @@ namespace EducationGame.Controllers
         public JsonDotNetResult Delete()
         {
             var acctRepo = new AccountRepository(new ConnectionProvider());
-            var acctInfo = acctRepo.GetAcctInfoById((int)Session[SessionConstants.AcctInfoId]);
+            var acctInfo = acctRepo.GetAcctInfoById(SessionConstants.GetAccountInfoId((int)Session[SessionConstants.AccountId]));
 
             var paymentProcessor = new PaymentProcessor(new PaymentAuditRepository(new ConnectionProvider()));
             paymentProcessor.DeleteCcCard(acctInfo.CreditCardToken);

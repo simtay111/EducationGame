@@ -15,21 +15,6 @@ namespace EducationGame.Controllers
         {
             return View();
         }
-
-        [HttpPost]
-        public JsonDotNetResult UpdateAcctId(int acctId)
-        {
-            var accountRepo = new AccountRepository(new ConnectionProvider());
-
-            var current = accountRepo.GetById((int)Session[SessionConstants.AccountId]);
-
-            current.AccountInformation = accountRepo.GetAcctInfoById(acctId);
-
-            accountRepo.Save(current);
-            Session[SessionConstants.AcctInfoId] = current.AccountInformation.Id;
-
-            return new JsonDotNetResult();
-        }
     }
 
 

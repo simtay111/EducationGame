@@ -70,7 +70,6 @@ namespace EducationGame.Controllers
                 var account = ((Account)response.Account);
                 account.PermissionLevel = RolesStatic.SuperUser;
                 account.AccountInformation = accountInformation;
-                Session[SessionConstants.AcctInfoId] = accountInformation.Id;
                 Session[SessionConstants.AcctPermissionLevel] = RolesStatic.SuperUser;
 
                 accountRepository.Save(response.Account);

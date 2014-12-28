@@ -23,7 +23,7 @@ namespace EducationGame.Controllers
 
                 var myTool = new ImageResizerTool();
 
-                var fileName = (int)Session[SessionConstants.AcctInfoId] + SystemConstants.ImageExt;
+                var fileName = SessionConstants.GetAccountInfoId((int)Session[SessionConstants.AccountId]) + SystemConstants.ImageExt;
 
                 myTool.ResizeImageData(file, fileName, StorageRoot);
 
@@ -37,7 +37,7 @@ namespace EducationGame.Controllers
         [Authorize]
         public void Delete()
         {
-            var fileName = (int)Session[SessionConstants.AcctInfoId] + SystemConstants.ImageExt;
+            var fileName = SessionConstants.GetAccountInfoId((int)Session[SessionConstants.AccountId]) + SystemConstants.ImageExt;
             System.IO.File.Delete(StorageRoot + fileName);
         }
     }

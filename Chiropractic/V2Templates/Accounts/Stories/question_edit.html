@@ -1,0 +1,22 @@
+﻿<div >
+    <h3 class="page-header">Question Edit:</h3>
+    <div class="row">
+        <h4>Question:</h4>
+        <textarea ng-model="question.query" class="form-control"></textarea>
+    </div>
+    <div class="row">
+        <h4>Correct Answer Text:</h4>
+        <textarea ng-model="question.correctAnswer" class="form-control"></textarea>
+    </div>
+    <div class="row">
+        <h4>Wrong Answer Text:</h4>
+        <textarea ng-model="question.wrongAnswer"class="form-control"></textarea>
+    </div>
+    <div class="row">
+        <h4>Is the answer to the question true?</h4>
+        <input ng-model="question.answerBool" type="checkbox" class="form-control"/>
+    </div>
+    <div class="row">
+        <button ng-click="save()" class="btn btn-lg btn-primary">Save</button>
+    </div>
+</div>

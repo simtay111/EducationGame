@@ -55,3 +55,4 @@ C:\Users\Simtay111\Documents\GitHub\EducationGame\Chiropractic\bin\RestSharp.xml
 C:\Users\Simtay111\Documents\GitHub\EducationGame\Chiropractic\obj\Debug\EducationGame.csprojResolveAssemblyReference.cache
 C:\Users\Simtay111\Documents\GitHub\EducationGame\Chiropractic\obj\Debug\EducationGame.dll
 C:\Users\Simtay111\Documents\GitHub\EducationGame\Chiropractic\obj\Debug\EducationGame.pdb
+C:\Users\Simtay111\Documents\GitHub\EducationGame\Chiropractic\bin\Antlr3.Runtime.pdb

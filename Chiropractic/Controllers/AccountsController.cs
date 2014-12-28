@@ -24,7 +24,7 @@ namespace EducationGame.Controllers
 
         public JsonDotNetResult GetLogoUrl()
         {
-            var url = SystemConstants.ImageBaseUrl + (int)Session[SessionConstants.AcctInfoId] + SystemConstants.ImageExt;
+            var url = SystemConstants.ImageBaseUrl + SessionConstants.GetAccountInfoId((int)Session[SessionConstants.AccountId]) + SystemConstants.ImageExt;
             return new JsonDotNetResult { Data = new { url }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
@@ -56,7 +56,7 @@ namespace EducationGame.Controllers
         {
             var userEmail = User.Identity.Name.ToUpper();
             var statusGetter = new AccountCompletionStateGetter(new AccountRepository(new ConnectionProvider()), new SubscriptionCharger(new AccountRepository(new ConnectionProvider()),new ReceiptRepository(new ConnectionProvider()), new PaymentProcessor(new PaymentAuditRepository(new ConnectionProvider()))));
-            var status = statusGetter.GetStatus((int)Session[SessionConstants.AcctInfoId], userEmail);
+            var status = statusGetter.GetStatus(SessionConstants.GetAccountInfoId((int)Session[SessionConstants.AccountId]), userEmail);
             var resultData = new
                 {
                     basic = status.BasicInfoIsComplete,

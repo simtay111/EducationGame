@@ -1,3 +1,6 @@
-﻿<div>
+﻿<div ui-view>
     <h1>Stories View</h1>
+    <ul>
+        <li ng-repeat="story in stories" ui-sref="stories.edit({storyId: story.id})">{{story.name}}</li>
+    </ul>
 </div>

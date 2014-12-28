@@ -16,7 +16,15 @@ namespace EducationGame.Controllers
         readonly StartStoryRequestHandler _startStoryRequestHandler = new StartStoryRequestHandler(new StoryRepository(new ConnectionProvider()), new SlideRepository(new ConnectionProvider()), new QuestionRepository(new ConnectionProvider()), new MemberQuizStatusRepository(new ConnectionProvider()), new MemberRepository(new ConnectionProvider()), new StoryToDoItemRepository(new ConnectionProvider()), new CurrentStoryStateProvider(new StoryToDoItemRepository(new ConnectionProvider())));
         readonly FinishStepRequestHandler _finishStepRequestHandler = new FinishStepRequestHandler(new StoryToDoItemRepository(new ConnectionProvider()));
         readonly AnswerQuestionHandler _answerQuestionHandler = new AnswerQuestionHandler(new QuestionRepository(new ConnectionProvider()), new StoryToDoItemRepository(new ConnectionProvider()), new PointsWithCompanyRepository(new ConnectionProvider()), new MemberRepository(new ConnectionProvider()));
+        readonly GetStoriesForAcctRequestHandler _getStoriesForAcctRequestHandler = new GetStoriesForAcctRequestHandler(new StoryRepository(new ConnectionProvider()));
+        readonly GetEntireStoryRequestHandler _getEntireStoryRequestHandler = new GetEntireStoryRequestHandler(new StoryRepository(new ConnectionProvider()), new SlideRepository(new ConnectionProvider()), new QuestionRepository(new ConnectionProvider()));
 
+        [Authorize]
+        public JsonDotNetResult GetEntireStory(int storyId)
+        {
+            var response = _getEntireStoryRequestHandler.Handle(new GetEntireStoryRequest {StoryId = storyId});
+            return new JsonDotNetResult{Data = response, JsonRequestBehavior = JsonRequestBehavior.AllowGet};
+        }
 
         [Authorize]
         [HttpPost]
@@ -71,10 +79,10 @@ namespace EducationGame.Controllers
                 new StoryRepository(new ConnectionProvider()), new PointsWithCompanyRepository(new ConnectionProvider()));
 
             var memberId = (int)Session[SessionConstants.AccountId];
-            var request = new FinishGameRequest {MemberId = memberId, GameId = gameId};
+            var request = new FinishGameRequest { MemberId = memberId, GameId = gameId };
             var response = handler.Handle(request);
 
-            return new JsonDotNetResult {Data = response};
+            return new JsonDotNetResult { Data = response };
         }
 
         [Authorize]
@@ -88,6 +96,13 @@ namespace EducationGame.Controllers
         public JsonDotNetResult GetPublicStories()
         {
             var response = _getPublicStoriesRequestHandler.Handle(new GetPublicStoriesRequest());
+            return new JsonDotNetResult { Data = response.Stories, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
+
+        [Authorize]
+        public JsonDotNetResult GetStoriesForAccount()
+        {
+            var response = _getStoriesForAcctRequestHandler.Handle(new GetStoriesForAcctRequest { AccountId = SessionConstants.GetAccountInfoId((int)Session[SessionConstants.AccountId]) });
             return new JsonDotNetResult { Data = response.Stories, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
 
